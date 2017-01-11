@@ -39,4 +39,8 @@ jspm_packages
 # OS X internal files
 .DS_Store
 
+# build directory
+build
+
+#bundle
 bundle.js*
