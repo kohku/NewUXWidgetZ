@@ -1,3 +1,8 @@
+@tabs-height: 50px;
+@tabs-width: 100px;
+@border-width: 1px;
+@border: solid 1px #ddd;
+
 .widget {
   font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
 
@@ -7,10 +12,31 @@
 
   ul.tabs {
     display: block;
-    list-style-type: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 300px;
 
     li {
       display: block;
+      float: left;
+      width: @tabs-width;
+      height: @tabs-height;
+      border: @border;
+    }
+  }
+
+  .content {
+    clear: both;
+    min-width: 320px;
+    width: 100%;
+    border: @border;
+    background-color: #f9f9f9;
+
+    .footer {
+      min-width: 320px;
+      width: 100px;
+      background-color: #fff;
     }
   }
 }
