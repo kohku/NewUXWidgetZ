@@ -1,5 +1,5 @@
-@tabs-height: 50px;
-@tabs-width: 100px;
+@tabs-height: 40px;
+@tabs-width: 75px;
 @border-width: 1px;
 @border: solid 1px #ddd;
 @border-dev: dashed 1px #c0c0c0; // none
@@ -29,7 +29,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    min-width: 300px;
+    min-width: calc(@tabs-width * 3);
 
     li {
       display: block;
@@ -42,7 +42,7 @@
 
   .content {
     clear: both;
-    min-width: 320px;
+    min-width: 240px;
     width: 100%;
     border: @border;
     background-color: #f9f9f9;
@@ -94,7 +94,7 @@
 
       .footer {
         min-height: 4em;
-        
+
         .powered-by {
           float: right;
           margin-right: 1em;
@@ -232,7 +232,7 @@
 
     .footer {
       min-height: 3em;
-      min-width: 320px;
+      min-width: 240px;
       width: 100%;
       background-color: #fff;
       height: 100%;
