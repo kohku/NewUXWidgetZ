@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <style type="text/css">
         html, body {
-            margin: 1em;
+            /*margin: 1em;*/
+            margin: 0;
         }
     </style>
 </head>
@@ -18,11 +19,21 @@
             <li>I'm driving</li>
             <li>I'm flying</li>
         </ul>
-        <div class="content">
+        <div class="content" data-squery="max-width:446px=mobile min-width:546px=full">
             <div class="hotel">
-                <div class="form">
+                <div class="header" >
                     <label>I need a hotel near:</label>
-                    <span class="address">Location Name, 123 Street St.<br/>City Name, ST 12345<span>
+                    <span class="location-name">Location Name</span> 
+                    <span class="address1">123 Street St.</span>
+                    <span class="city">City Name</span>
+                    <span class="state-province">ST</span>
+                    <span class="zip">12345</span>
+                    <span class="country">US</span>
+                </div>
+                <div class="picture-maps">
+                    <div class="canvas"></div>
+                </div>
+                <div class="details">
                     <input class="calendar"/>
                     <select class="guest"></select>
                     <select class="rooms"></select>
@@ -31,9 +42,10 @@
                         <select class="hotel-chain"></select>
                         <select class="hotel-rating"></select>
                     </div>
+                </div>
+                <div class="action">
                     <button>Search</button>
                 </div>
-                <div class="pictureMaps"></div>
             </div>
             <div class="car"></div>
             <div class="flight"></div>
@@ -43,6 +55,7 @@
             </div>
         </div>
     </div>
+    <img src="./Sample.png"/>
     <script src="build/bundle.js"></script>
     <script src="build/lib/responsive-containers.min.js"></script>
 </body>

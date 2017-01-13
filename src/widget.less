@@ -2,6 +2,7 @@
 @tabs-width: 100px;
 @border-width: 1px;
 @border: solid 1px #ddd;
+@border-dev: dashed 1px #333; // none
 
 .widget {
   font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
@@ -44,9 +45,89 @@
     border: @border;
     background-color: #f9f9f9;
 
+    &.full {
+
+      .hotel {
+        border: @border-dev;
+
+        .header {
+          float: left;
+          width: ~"calc(100% - 96px - 2em)";          
+        }
+
+        .details {
+          clear: left;
+          display: inline-block;
+          width: ~"calc(100% - 192px - 2em)";
+          vertical-align: bottom;
+        }
+
+        .action {
+          display: inline-block;
+          width: 86px;
+        }
+
+        .picture-maps {
+          float: right;
+          width: ~"calc(96px + 2em)";
+        }
+      }
+    }
+
+    .hotel {
+
+      .details {
+        border: @border-dev;
+        margin-bottom: 1em;
+      }
+
+      .action {
+        border: @border-dev;
+        margin-bottom: 1em;
+
+        button {
+          display: block;
+          width: 86px;
+          text-transform: uppercase;
+          background-color: #0c5973;
+          border: solid 1px #5c8fa0;
+          height: 3em;
+          color: #fff;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      .picture-maps {
+        border: @border-dev;
+
+        .canvas {
+          width: 96px;
+          height: 96px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 1em;
+          margin-bottom: 1em;
+          background-color: #939598;
+          border: solid 1px #6f6f72;
+        }
+      }
+    }
+
+    .car {
+      border: @border-dev;
+      display: none;
+    }
+
+    .flight {
+      border: @border-dev;
+      display: none;
+    }
+
     .footer {
+      min-height: 100px;
       min-width: 320px;
-      width: 100px;
+      width: 100%;
       background-color: #fff;
     }
   }
