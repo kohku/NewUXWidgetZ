@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <style type="text/css">
         html, body {
-            /*margin: 1em;*/
-            margin: 0;
+            margin: 1em;
+            /*margin: 0;*/
         }
     </style>
 </head>
@@ -24,6 +24,7 @@
                 <div class="header" >
                     <label>I need a hotel near:</label>
                     <span class="location-name">Location Name</span> 
+                    <div class="edit"></div>
                     <span class="address1">123 Street St.</span>
                     <span class="city">City Name</span>
                     <span class="state-province">ST</span>
@@ -31,16 +32,24 @@
                     <span class="country">US</span>
                 </div>
                 <div class="picture-maps">
-                    <div class="canvas"></div>
+                    <div class="canvas">Picture</div>
                 </div>
                 <div class="details">
-                    <input class="calendar"/>
-                    <select class="guest"></select>
-                    <select class="rooms"></select>
+                    <input class="calendar" value="15DEC16 - 17DEC16"/>
+                    <select class="guest">
+                        <option>1 Guest</option>
+                    </select>
+                    <select class="rooms">
+                        <option>1 Room</option>
+                    </select>
                     <div class="options">
                         <label>More search options</label>
-                        <select class="hotel-chain"></select>
-                        <select class="hotel-rating"></select>
+                        <select class="hotel-chain">
+                            <option>Select Hotel Chain</option>
+                        </select>
+                        <select class="hotel-rating">
+                            <option>Select Hotel Rating</option>
+                        </select>
                     </div>
                 </div>
                 <div class="action">
@@ -51,11 +60,11 @@
             <div class="flight"></div>
             <div class="footer">
                 <div class="social"></div>
-                <div class="poweredBy"></div>
+                <div class="powered-by"></div>
             </div>
         </div>
     </div>
-    <img src="./Sample.png"/>
+    <img src="images/Sample.png" style="display:none;"/>
     <script src="build/bundle.js"></script>
     <script src="build/lib/responsive-containers.min.js"></script>
 </body>

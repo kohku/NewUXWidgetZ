@@ -14,6 +14,10 @@ module.exports = {
         include: __dirname + '/src',
       },
       {
+        test: /\.(jpg|png)$/,
+        loader: 'url-loader',
+      },
+      {
         test: /\.(css|less)$/,
         loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader!postcss-loader")
       },
