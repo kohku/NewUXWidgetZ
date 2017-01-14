@@ -32,7 +32,7 @@
                     <span class="country">US</span>
                 </div>
                 <div class="picture-maps">
-                    <div class=" flip-container" ontouchstart="this.classList.togggle('hover');">
+                    <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
                         <div class="flipper">
                             <div class="front">
                                 <div class="canvas">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="action">
-                    <button>Search</button>
+                    <button  onclick="document.querySelector('.flip-container').classList.toggle('hover');">Search</button>
                 </div>
             </div>
             <div class="car"></div>
