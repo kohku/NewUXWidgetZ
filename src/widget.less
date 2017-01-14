@@ -289,7 +289,9 @@
       margin-right: auto;
       margin-top: 1.5em;
       margin-bottom: 1em;
+
       perspective: 1000px;
+      transform-style: preserve-3d;
 
       /* flip the pane when hovered */
       //&:hover .flipper, 
@@ -313,19 +315,19 @@
           backface-visibility: hidden;
 
           position: absolute;
-          // top: 0;
-          // left: 0;
+          top: 0;
+          left: 0;
         }
 
         /* front pane, placed above back */
         .front {
-          z-index: 31;
+          z-index: 2;
           transform: rotateY(0deg);
         }
 
         /* back, initially hidden pane */
         .back {
-          transform: rotateY(180deg);
+          transform: rotateY(-180deg);
         }
       }
     }
