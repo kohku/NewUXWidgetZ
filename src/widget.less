@@ -14,16 +14,24 @@
     box-sizing: border-box;
   }
 
-  & input, & select {
+  input, select {
     display: block;
     border: 1px solid #d8bbab;
     height: 2.5em;
     color: #333;
     -webkit-appearance: none;
     background-color: #fff;
-    padding: 1em;
+    padding-left: 1em;
     box-shadow: none;
     border-radius: 0;
+    font-size: 13px;
+  }
+
+  select {
+    margin-right: .1em;
+    background-image: url(../images/dropdown.png);
+    background-repeat: no-repeat;
+    background-position: right center;
   }
 
   ul.tabs {
