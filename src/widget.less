@@ -1,8 +1,10 @@
-@tabs-height: 40px;
-@tabs-width: 75px;
+@tabs-height: 4em;
+@tabs-width: 7.5em;
+@picture-width: 114px;
 @border-width: 1px;
 @border: solid 1px #ddd;
-@border-dev: dashed 1px #c0c0c0; // none
+@border-dev: dashed 1px #c0c0c0; /* none */
+@content-background: #f9f9f9;
 
 .widget {
   font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
@@ -37,6 +39,32 @@
       width: @tabs-width;
       height: @tabs-height;
       border: @border;
+      text-align: center;
+      font-size: .85em;
+      padding-top: .25em;
+      background-repeat: no-repeat;
+
+      &.active {
+        background-color: @content-background;
+      }
+
+      &.staying {
+        background-image: url('../images/staying.png');
+        background-size: 2.5em auto;
+        background-position: 2.5em 2em;
+      }
+
+      &.driving {
+        background-image: url('../images/driving.png');
+        background-size: 1.85em auto;
+        background-position: 2.75em 2em;
+    }
+
+      &.flying {
+        background-image: url('../images/flying.png');
+        background-size: 1.75em auto;
+        background-position: 2.75em 1.75em;
+      }
     }
   }
 
@@ -45,7 +73,7 @@
     min-width: 240px;
     width: 100%;
     border: @border;
-    background-color: #f9f9f9;
+    background-color: @content-background;
 
     &.full {
 
@@ -69,8 +97,12 @@
 
           .edit {
             display: inline-block;
-            margin-left: 2em;
+            margin-left: 4em;
             float: none;
+
+            &::before{
+              background-size: 1.75em 1.75em;
+            }
           }
         }
 
@@ -103,12 +135,13 @@
     }
 
     &.mobile .hotel .header .edit {
-      margin-right: 2em;
+      margin-right: 4em;
     }
 
     .hotel {
 
       .header {
+        font-size: 13px;
         padding-top: 1.5em;
         padding-left: 1.5em;
         margin-bottom: 1em;
@@ -132,6 +165,17 @@
           border: @border-dev;
           float: right;
           margin-right: 4em;
+
+          &::before{
+            content: '';
+            display: block;
+            width: 2em;
+            height: 2em;
+            background-image: url(../images/edit-location.png);
+            background-size: 2.5em 2.5em;
+            background-repeat: no-repeat;
+            background-position-y: -.25em;
+          }
         }
       }
 
@@ -216,6 +260,25 @@
             vertical-align: middle;
             margin-right: -0.25em; /* Adjusts for spacing */
           }
+        }
+
+        .flip {
+          font-size: 10px;
+          color: #0c5973;
+          padding-top: 1.5em;
+          text-align: center;
+          width: 2.85em;
+          height: 2.85em;
+          background-image: url(../images/flip.png);
+          background-repeat: no-repeat;
+          background-size: 2em auto;
+          background-color: #fff;
+          background-position: .35em .15em;
+          position: absolute;
+          margin-top: -3.25em;
+          margin-left: 8em;
+          cursor: pointer;
+          border: @border;
         }
       }
     }
