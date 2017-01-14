@@ -11,6 +11,15 @@
             /*margin: 0;*/
         }
     </style>
+    <script>
+        window.onload = function(){
+            document.querySelectorAll('.flip').forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    document.querySelector('.flip-container').classList.toggle('hover');
+                })   
+            })
+        }
+    </script>
 </head>
 <body>
     <div class="widget">
@@ -68,7 +77,7 @@
                     </div>
                 </div>
                 <div class="action">
-                    <button  onclick="document.querySelector('.flip-container').classList.toggle('hover');">Search</button>
+                    <button>Search</button>
                 </div>
             </div>
             <div class="car"></div>
