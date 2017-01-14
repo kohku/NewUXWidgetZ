@@ -11,14 +11,34 @@
             /*margin: 0;*/
         }
     </style>
+    <link href="bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet">
+    <link href="bower_components/jquery-ui-daterangepicker/jquery.comiseo.daterangepicker.css" rel="stylesheet">
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+    <script src="bower_components/momentjs/min/moment.min.js"></script>
+    <script src="bower_components/jquery-ui-daterangepicker/jquery.comiseo.daterangepicker.js"></script>
     <script>
-        window.onload = function(){
+        $(function() { 
             document.querySelectorAll('.flip').forEach(function(btn){
                 btn.addEventListener('click', function(){
                     document.querySelector('.flip-container').classList.toggle('hover');
                 })   
             })
-        }
+
+            $('input[name="daterange"]').daterangepicker({
+                presetRanges: [],
+                initialText: 'SELECT TRAVEL DATES',
+                autoFitCalendars: true,
+                applyButtonText: 'Done',
+                icon: '',
+                applyOnMenuSelect: false,
+                datepickerOptions : {
+                    numberOfMonths : 1,
+                    minDate: 0,
+                    maxDate: null
+                }
+            })
+        });
     </script>
 </head>
 <body>
@@ -59,7 +79,7 @@
                     </div>
                 </div>
                 <div class="details">
-                    <input class="calendar" value="15DEC16 - 17DEC16"/>
+                    <input class="calendar" name="daterange" value="15DEC16 - 17DEC16"/>
                     <select class="guest">
                         <option value="1">1 Guest</option>
                         <option value="2">2 Guests</option>
