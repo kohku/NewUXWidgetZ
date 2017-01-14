@@ -32,9 +32,21 @@
                     <span class="country">US</span>
                 </div>
                 <div class="picture-maps">
-                    <div class="canvas">
-                        Picture
-                        <div class="flip">Map</div>
+                    <div class=" flip-container" ontouchstart="this.classList.togggle('hover');">
+                        <div class="flipper">
+                            <div class="front">
+                                <div class="canvas">
+                                    Picture
+                                    <div class="flip">Map</div>
+                                </div>
+                            </div>
+                            <div class="back">
+                                <div class="canvas">
+                                    Map
+                                    <div class="flip">Picture</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="details">

@@ -3,7 +3,7 @@
 @picture-width: 114px;
 @border-width: 1px;
 @border: solid 1px #ddd;
-@border-dev: dashed 1px #c0c0c0; /* none */
+@border-dev: none; /*dashed 1px #c0c0c0; */
 @content-background: #f9f9f9;
 
 .widget {
@@ -239,6 +239,10 @@
       .picture-maps {
         border: @border-dev;
 
+        .back .canvas .flip {
+          font-size: 8px;
+        }
+
         .canvas {
           width: 114px;
           height: 114px;
@@ -265,20 +269,62 @@
         .flip {
           font-size: 10px;
           color: #0c5973;
-          padding-top: 1.5em;
+          padding-top: 15px;
           text-align: center;
-          width: 2.85em;
-          height: 2.85em;
+          width: 28.5px;
+          height: 28.5px;
           background-image: url(../images/flip.png);
           background-repeat: no-repeat;
-          background-size: 2em auto;
+          background-size: 20px auto;
           background-color: #fff;
-          background-position: .35em .15em;
+          background-position: 3.5px 1.5px;
           position: absolute;
-          margin-top: -3.25em;
-          margin-left: 8em;
+          margin-top: -32.5px;
+          margin-left: 80px;
           cursor: pointer;
           border: @border;
+        }
+      }
+    }
+
+    /* entire container, keeps perspective */
+    .flip-container {
+      perspective: 1000px;
+
+      /* flip the pane when hovered */
+      &:hover .flipper, &.hover .flipper {
+        transform: rotateY(180deg);
+      }
+
+      &, .front, .back {
+        width: 114px;
+        height: 114px;
+      }
+
+      /* flip speed goes here */
+      .flipper {
+        transition: 0.6s;
+        transform-style: preserve-3d;
+        position: relative;
+
+        /* hide back of pane during swap */
+        .front, .back {
+          backface-visibility: hidden;
+
+          position: absolute;
+          // top: 0;
+          // left: 0;
+        }
+
+        /* front pane, placed above back */
+        .front {
+          z-index: 31;
+          transform: rotateY(0deg);
+        }
+
+        /* back, initially hidden pane */
+        .back {
+          transform: rotateY(180deg);
         }
       }
     }
