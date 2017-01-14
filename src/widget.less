@@ -4,8 +4,13 @@
 @border-width: 1px;
 @border: solid 1px #ddd;
 @border-dev: none; /*dashed 1px #c0c0c0; */
+@grey-50: #333;
 @content-background: #f9f9f9;
+@input-border: #d8bbab;
 @navy: #0c5973;
+@navy-boder: #5c8fa0;
+@red: #93262b;
+@white: #fff;
 
 .widget {
   font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
@@ -17,11 +22,11 @@
 
   input, select, .comiseo-daterangepicker-triggerbutton {
     display: block;
-    border: 1px solid #d8bbab;
+    border: 1px solid @input-border;
     height: 2.5em;
-    color: #333;
+    color: @grey-50;
     -webkit-appearance: none;
-    background-color: #fff;
+    background-color: @white;
     padding-left: 1em;
     box-shadow: none;
     border-radius: 0;
@@ -260,9 +265,9 @@
           width: 86px;
           text-transform: uppercase;
           background-color: @navy;
-          border: solid 1px #5c8fa0;
+          border: solid 1px @navy-boder;
           height: 3em;
-          color: #fff;
+          color: @white;
           margin-left: auto;
           margin-right: auto;
         }
@@ -280,7 +285,7 @@
           height: 114px;
           background-color: #939598;
           border: solid 1px #6f6f72;
-          color: #fff;
+          color: @white;
           text-align: center;
           font-size: 1.2em;
 
@@ -296,7 +301,7 @@
 
         .flip {
           font-size: 10px;
-          color: #0c5973;
+          color: @navy;
           padding-top: 15px;
           text-align: center;
           width: 28.5px;
@@ -304,7 +309,7 @@
           background-image: url(../images/flip.png);
           background-repeat: no-repeat;
           background-size: 20px auto;
-          background-color: #fff;
+          background-color: @white;
           background-position: 3.5px 1.5px;
           position: absolute;
           margin-top: -32.5px;
@@ -378,7 +383,7 @@
       min-height: 3em;
       min-width: 240px;
       width: 100%;
-      background-color: #fff;
+      background-color: @white;
       height: 100%;
 
       .powered-by {
@@ -392,5 +397,42 @@
         margin-right: auto;
       }
     }
+  }
+}
+
+.comiseo-daterangepicker.ui-widget {
+  font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
+  font-size: 12px;
+  padding: 0;
+
+  .comiseo-daterangepicker-presets {
+    display: none;
+  }
+
+  .comiseo-daterangepicker-presets, .comiseo-daterangepicker-calendar {
+    height: auto;
+    padding-right: 0;
+  }
+
+  .ui-datepicker {
+    padding: 0;
+    width: 20em;
+  }
+
+  .ui-widget-header {
+    border: none;
+    background: #f1f1f1;
+    padding: .75em 0;
+    border-radius: 0;
+  }
+
+  .ui-widget-content {
+    border: none;
+  }
+
+  .comiseo-daterangepicker-buttonpanel {
+    float: none;
+    width: 100%;
+    background-color: @red;
   }
 }
