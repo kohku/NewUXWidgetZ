@@ -12,6 +12,7 @@
 @navy: #0c5973;
 @navy-boder: #5c8fa0;
 @link-hover: #1db0ed;
+@date-range: #dbf4fd;
 @red: #93262b;
 @white: #fff;
 
@@ -407,6 +408,8 @@
   font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
   font-size: 12px;
   padding: 0;
+  border: 1px solid #aaa;
+  height: 18.275em;
 
   .comiseo-daterangepicker-presets {
     display: none;
@@ -415,6 +418,7 @@
   .comiseo-daterangepicker-presets, .comiseo-daterangepicker-calendar {
     height: auto;
     padding-right: 0;
+    padding-left: 0;
   }
 
   .ui-datepicker {
@@ -495,15 +499,15 @@
     }
 
     td {
-      padding: .25em;
+      padding: .25em 0;
 
       .ui-state-default {
           padding-right: .75em;
       }
 
        &.ui-state-highlight .ui-state-default  {
-         color: @white;
-         background-color: @grey-20;
+         color: @link-hover;
+         background-color: @date-range;
        }
     }
   }
@@ -512,5 +516,26 @@
     float: none;
     width: 100%;
     background-color: @red;
+    display: flex;
+    font-size: 10px;
+
+    > button {
+      flex: 1 1 100%;
+      margin: 0;
+      color: @white;
+      font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
+
+      &:first-child {
+        padding: 1em 0;
+      }
+
+      &:last-child {
+        padding: 1em 0;
+      }
+
+      &.ui-priority-primary, &.ui-priority-secondary {
+        font-weight: normal;
+      }
+    }
   }
 }
