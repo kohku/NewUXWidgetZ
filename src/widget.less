@@ -129,6 +129,16 @@
           display: inline-block;
           width: ~"calc(100% - 114px - 86px - 1em - 4em)";
           vertical-align: bottom;
+
+          .comiseo-daterangepicker-triggerbutton.ui-widget{
+            display: inline-block;
+            width: ~"calc(50% - .75em)";
+          }
+
+          .guest, .rooms {
+            width: ~"calc(25% - .75em)";
+            margin-left: .75em;
+          }
         }
 
         .action {
@@ -152,8 +162,26 @@
       }
     }
 
-    &.mobile .hotel .header .edit {
-      margin-right: 4em;
+    &.mobile {
+        .hotel .header .edit {
+        margin-right: 4em;
+      }
+
+      .hotel .details {
+        & .guest, & .rooms {
+          display: block;
+          width: 100%;
+          float: none;
+        }
+
+        .options .params {
+          .hotel-chain, .hotel-rating {
+            display: block;
+            width: 100%;
+            float: none;
+          }
+        }
+      }
     }
 
     .hotel {
@@ -227,11 +255,27 @@
         }
 
         .options {
-          &.expanded label::before{
-            border-top: .45em solid @navy;
-            border-left: .45em solid transparent;
-            border-right: .45em solid transparent;
-            border-bottom: none;
+          &.expanded {
+            label {
+              &::before{
+                border-top: .45em solid @navy;
+                border-left: .45em solid transparent;
+                border-right: .45em solid transparent;
+                border-bottom: none;
+              }
+
+              .more {
+                display: none;
+              }
+
+              .fewer {
+                display: inline;
+              }
+            }
+
+            .params {
+              display: block;
+            }
           }
 
           label {
@@ -252,12 +296,28 @@
               border-right: none;
               margin-right: .5em;
             }
+
+            .more {
+              display: inline;
+            }
+
+            .fewer {
+              display: none;
+            }
           }
 
-          select {
-            width: 100%;
+          .params {
+            display: none;
 
-            &.hotel-chain {
+            .hotel-chain {
+              display: inline-block;
+              width: ~"calc(50% - .75em)";
+              margin-bottom: 1em;
+            }
+
+            .hotel-rating {
+              float: right;
+              width: ~"calc(50% - .75em)";
               margin-bottom: 1em;
             }
           }
