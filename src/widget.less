@@ -5,10 +5,12 @@
 @border: solid 1px #ddd;
 @border-dev: none; /*dashed 1px #c0c0c0; */
 @grey-50: #333;
+@grey-30: #d3d3d3;
 @content-background: #f9f9f9;
 @input-border: #d8bbab;
 @navy: #0c5973;
 @navy-boder: #5c8fa0;
+@link-hover: #1db0ed;
 @red: #93262b;
 @white: #fff;
 
@@ -424,10 +426,72 @@
     background: #f1f1f1;
     padding: .75em 0;
     border-radius: 0;
+    font-weight: normal;
+
+    .ui-datepicker-prev {
+      top: 1em;
+      left: 1px;
+
+      &::before {
+        display: block;
+        content: '<';
+        margin-left: 1em;
+        font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
+      }
+
+      span {
+        display: none;
+      }
+    }
+
+    .ui-datepicker-prev-hover,
+    .ui-datepicker-next-hover {
+      &::before{
+        color: @link-hover;
+      }
+
+      border: none;
+      background: 0;
+    }
+
+    .ui-datepicker-next {
+      top: 1em;
+      right: 1px;
+
+      &::before {
+        display: block;
+        content: '>';
+        font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
+      }
+
+      span {
+        display: none;
+      }
+    }
   }
 
   .ui-widget-content {
     border: none;
+  }
+
+  .ui-state-default, .ui-widget-content .ui-state-default {
+    background: 0;
+    border: 0;
+  }
+
+  .ui-datepicker-calendar {
+    th {
+      font-weight: normal;
+      font-size: .85em;
+    }
+
+    tr {
+      border-top: 1px solid @grey-30;
+    }
+
+    td {
+      padding: .25em;
+    }
   }
 
   .comiseo-daterangepicker-buttonpanel {
