@@ -14,5 +14,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery-ui-daterangepicker": "https://github.com/kohku/jquery-ui-daterangepicker.git"
+  }
 }

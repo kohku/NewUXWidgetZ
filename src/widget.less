@@ -6,6 +6,7 @@
 @border-dev: none; /*dashed 1px #c0c0c0; */
 @grey-50: #333;
 @grey-30: #d3d3d3;
+@grey-20: #a4b0b5; 
 @content-background: #f9f9f9;
 @input-border: #d8bbab;
 @navy: #0c5973;
@@ -450,6 +451,10 @@
         color: @link-hover;
       }
 
+      &.ui-state-disabled::before {
+        color: #222;
+      }
+
       border: none;
       background: 0;
     }
@@ -491,6 +496,15 @@
 
     td {
       padding: .25em;
+
+      .ui-state-default {
+          padding-right: .75em;
+      }
+
+       &.ui-state-highlight .ui-state-default  {
+         color: @white;
+         background-color: @grey-20;
+       }
     }
   }
 
