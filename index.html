@@ -27,6 +27,8 @@
 
             $('.hotel .details .options label').on('click', function(event){
                 $(event.currentTarget.parentElement).toggleClass('expanded')
+
+                $('.hotel .action').toggleClass('expanded')
             })
 
             $('input[name="daterange"]').daterangepicker({

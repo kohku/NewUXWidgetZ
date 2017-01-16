@@ -144,6 +144,11 @@
         .action {
           display: inline-block;
           width: 86px;
+          margin-bottom: 4.35em;
+
+          &.expanded {
+            margin-bottom: 2.25em;
+          }
         }
 
         .picture-maps {
@@ -174,11 +179,17 @@
           float: none;
         }
 
-        .options .params {
-          .hotel-chain, .hotel-rating {
-            display: block;
-            width: 100%;
-            float: none;
+        .options {
+          &.expanded {
+            height: 9.25em;
+          }
+
+          .params {
+            .hotel-chain, .hotel-rating {
+              display: block;
+              width: 100%;
+              float: none;
+            }
           }
         }
       }
@@ -275,6 +286,7 @@
 
             .params {
               display: block;
+              height: 3.15em;
             }
           }
 
@@ -308,6 +320,7 @@
 
           .params {
             display: none;
+            height: 0;
 
             .hotel-chain {
               display: inline-block;
