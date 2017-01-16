@@ -147,7 +147,7 @@
           margin-bottom: 4.35em;
 
           &.expanded {
-            margin-bottom: 2.25em;
+            margin-bottom: 1.1em;
           }
         }
 
@@ -180,11 +180,11 @@
         }
 
         .options {
-           &.expanded .params {
-            height: 7.15em;
-          }
-
           .params {
+            .hotel-chain {
+              margin-bottom: 1em;
+            }
+
             .hotel-chain, .hotel-rating {
               display: block;
               width: 100%;
@@ -286,7 +286,6 @@
 
             .params {
               display: block;
-              height: 3.15em;
             }
           }
 
@@ -320,18 +319,15 @@
 
           .params {
             display: none;
-            height: 0;
 
             .hotel-chain {
               display: inline-block;
               width: ~"calc(50% - .75em)";
-              margin-bottom: 1em;
             }
 
             .hotel-rating {
               float: right;
               width: ~"calc(50% - .75em)";
-              margin-bottom: 1em;
             }
           }
         }
