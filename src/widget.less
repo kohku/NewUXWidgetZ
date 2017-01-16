@@ -139,12 +139,17 @@
             width: ~"calc(25% - .75em)";
             margin-left: .75em;
           }
+
+          .options.expanded .params {
+            height: 4em;
+          }
         }
 
         .action {
           display: inline-block;
           width: 86px;
-          margin-bottom: 4.35em;
+          margin-bottom: 3.35em;
+          // transition: margin-bottom 0.6s ease;
 
           &.expanded {
             margin-bottom: 1.1em;
@@ -180,6 +185,10 @@
         }
 
         .options {
+          &.expanded .params {
+            height: 8.2em;
+          }
+
           .params {
             .hotel-chain {
               margin-bottom: 1em;
@@ -238,7 +247,7 @@
 
       .details {
         border: @border-dev;
-        margin-bottom: 1em;
+        // margin-bottom: 1em;
         padding-left: 1.5em;
         padding-right: 1.5em;
 
@@ -285,7 +294,8 @@
             }
 
             .params {
-              display: block;
+              height: 4em;
+              opacity: 1;
             }
           }
 
@@ -318,7 +328,11 @@
           }
 
           .params {
-            display: none;
+            // display: none;
+            overflow: hidden;
+            height: 0;
+            opacity: 0;
+            transition: all 0.6s ease;
 
             .hotel-chain {
               display: inline-block;
