@@ -19,13 +19,20 @@
     <script src="bower_components/jquery-ui-daterangepicker/jquery.comiseo.daterangepicker.js"></script>
     <script>
         $(function() { 
-            document.querySelectorAll('.flip').forEach(function(btn){
-                btn.addEventListener('click', function(){
-                    document.querySelector('.flip-container').classList.toggle('hover');
-                })   
+            // document.querySelectorAll('.flip').forEach(function(btn){
+            //     btn.addEventListener('click', function(){
+            //         document.querySelector('.flip-container').classList.toggle('hover');
+            //     })   
+            // })
+
+            $.each($('.flip'), function(index, btn){
+                $(btn).on('click', function(){
+                    $('.flip-container').toggleClass('hover');
+                })
             })
 
             $('.hotel .details .options label').on('click', function(event){
+                event.preventDefault()
                 $(event.currentTarget.parentElement).toggleClass('expanded')
 
                 $('.hotel .action').toggleClass('expanded')

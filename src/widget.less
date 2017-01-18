@@ -29,12 +29,15 @@
     border: 1px solid @input-border;
     height: 2.5em;
     color: @grey-50;
-    -webkit-appearance: none;
     background-color: @white;
     padding-left: 1em;
     box-shadow: none;
     border-radius: 0;
     font-size: 13px;
+
+    span.ui-button-text {
+      text-transform: uppercase;
+    }
   }
 
   select {
@@ -42,6 +45,14 @@
     background-image: url(../images/dropdown.png);
     background-repeat: no-repeat;
     background-position: right center;
+    -webkit-appearance: none;
+    appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+
+    &::-ms-expand {	
+      display: none; 
+    }
   }
 
   ul.tabs {
@@ -119,6 +130,8 @@
             float: none;
 
             &::before{
+              width: 1.75em;
+              height: 1.75em;
               background-size: 1.75em 1.75em;
             }
           }
@@ -238,7 +251,7 @@
             width: 2em;
             height: 2em;
             background-image: url(../images/edit-location.png);
-            background-size: 2.5em 2.5em;
+            background-size: 2em 2em;
             background-repeat: no-repeat;
             background-position-y: -.25em;
           }
