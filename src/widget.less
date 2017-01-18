@@ -15,6 +15,7 @@
 @date-range: #dbf4fd;
 @red: #93262b;
 @white: #fff;
+@calendar-height: 18.275em;
 
 .widget {
   font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
@@ -197,6 +198,10 @@
           float: none;
         }
 
+        .comiseo-daterangepicker-triggerbutton.ui-widget.comiseo-daterangepicker-active{
+          margin-bottom: @calendar-height;
+        }
+
         .options {
           &.expanded .params {
             height: 8.2em;
@@ -270,8 +275,9 @@
           background-image:  none;
           padding-left: 0;
 
-          &.ui-button {
+          &.ui-widget {
             min-width: 15em;
+            transition: margin-bottom 0.3s ease;
           }
         }
 
@@ -509,7 +515,8 @@
   font-size: 12px;
   padding: 0;
   border: 1px solid #aaa;
-  height: 18.275em;
+  height: @calendar-height;
+  overflow: hidden;
 
   .comiseo-daterangepicker-presets {
     display: none;
@@ -589,9 +596,11 @@
   }
 
   .ui-datepicker-calendar {
+    font-size: .85em;
+
     th {
-      font-weight: normal;
-      font-size: .85em;
+       font-weight: normal;
+       font-size: .85em;
     }
 
     tr {
