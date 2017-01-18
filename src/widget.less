@@ -281,19 +281,23 @@
           }
         }
 
-        .guest {
-          display: inline-block;
+        & .guest, & .rooms {
           width: ~"calc(50% - .75em)";
           margin-bottom: 1em;
+        }
+
+        .guest {
+          display: inline-block;
         }
 
         .rooms {
           float: right;
-          width: ~"calc(50% - .75em)";
-          margin-bottom: 1em;
         }
 
         .options {
+          clear: right;
+          width: 100%;
+
           &.expanded {
             label {
               &::before{

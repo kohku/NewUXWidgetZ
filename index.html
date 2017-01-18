@@ -38,7 +38,7 @@
                 $('.hotel .action').toggleClass('expanded')
             })
 
-            $('input[name="daterange"]').daterangepicker({
+            var dp = $('input[name="daterange"]').daterangepicker({
                 presetRanges: [],
                 initialText: 'SELECT TRAVEL DATES',
                 autoFitCalendars: true,
@@ -52,6 +52,12 @@
                     minDate: 0,
                     maxDate: null,
                     dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                },
+                open: function(event, instance){
+                    var el$ = $(event.currentTarget)
+                    var offset = el$.offset()
+                    $('.comiseo-daterangepicker.ui-widget').css('top', offset.top + el$.height())
+                    $('.comiseo-daterangepicker.ui-widget').css('left', offset.left)
                 }
             })
         });
