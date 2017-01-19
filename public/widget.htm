@@ -1,17 +1,17 @@
 <div id="graphical-wdgtz-container-tabs">
-    <ul id="multi-wdgtz-list-menu" class="wdgtz_tabs multi-wdgtz-background-color">
-        <li class="wdgtz_staying wdgtz_active">
-            <a id="multi-wdgtz-a-hotel" data-ref="#multi-wdgtz-1" class="multi-wdgtz-background-img-htl">I'm staying</a>
+    <ul class="wdgtz_tabs">
+        <li class="wdgtz_staying wdgtz_active" data-key="staying">
+            <a>I'm staying</a>
         </li>
-        <li class="wdgtz_driving">
-            <a id="multi-wdgtz-a-car" data-ref="#multi-wdgtz-2" class="multi-wdgtz-background-img-car">I'm driving</a>
+        <li class="wdgtz_driving" data-key="driving">
+            <a>I'm driving</a>
         </li>
-        <li class="wdgtz_flying">
-            <a id="multi-wdgtz-a-flight" data-ref="#multi-wdgtz-3" class="multi-wdgtz-background-img-flg">I'm flying</a>
+        <li class="wdgtz_flying" data-key="flying">
+            <a>I'm flying</a>
         </li>
     </ul>
     <div class="wdgtz_content" data-squery="max-width:446px=wdgtz_mobile min-width:694px=wdgtz_full">
-        <div id="multi-wdgtz-1" class="wdgtz_hotel">
+        <div class="wdgtz_hotel" data-content="staying">
             <div class="wdgtz_header" >
                 <label>I need a hotel near:</label>
                 <span class="wdgtz_location-name">Location Name</span> 
@@ -84,9 +84,9 @@
                 <button>Search</button>
             </div>
         </div>
-        <div id="multi-wdgtz-2" class="wdgtz_car"></div>
-        <div id="multi-wdgtz-3" class="wdgtz_flight"></div>
-        <div id="wdgt-z-footer" class="wdgtz_footer">
+        <div class="wdgtz_car" data-content="driving"></div>
+        <div class="wdgtz_flight" data-content="flying"></div>
+        <div class="wdgtz_footer">
             <div class="wdgtz_social"></div>
             <div class="wdgtz_powered-by"></div>
         </div>
