@@ -10,6 +10,7 @@ import Moment from 'moment'
 import Mustache from 'mustache'
 import 'imports-loader?jQuery=jquery,moment=moment,this=>window!./jquery.comiseo.daterangepicker.js'
 import 'style-loader?css-loader!./jquery.comiseo.daterangepicker.css'
+import 'imports-loader?this=>window!./selector-queries.js'
 
 export function main(params){
 
@@ -17,15 +18,17 @@ export function main(params){
 
   let widget = new WidgetZ()
 
-  if (window.__responsive){
-    window.__responsive.run()
+  if (window.squery){
+    window.squery.run()
   }
 
   $.get('widget.htm', template => {
     let rendered = Mustache.render(template, {})
     $('#graphical-wdgtz-container').html(rendered)
 
-    window.__responsive.refresh()
+    if (window.squery){
+        window.squery.refresh()
+    }
 
     $.each($('.wdgtz_flip'), function(index, btn){
         $(btn).on('click', function(){
@@ -97,4 +100,4 @@ export function main(params){
   })
 }
 
-main();
+main(widgetZVars || {});
