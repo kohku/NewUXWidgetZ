@@ -1,0 +1,94 @@
+<div id="graphical-wdgtz-container-tabs">
+    <ul id="multi-wdgtz-list-menu" class="wdgtz_tabs multi-wdgtz-background-color">
+        <li class="wdgtz_staying wdgtz_active">
+            <a id="multi-wdgtz-a-hotel" data-ref="#multi-wdgtz-1" class="multi-wdgtz-background-img-htl">I'm staying</a>
+        </li>
+        <li class="wdgtz_driving">
+            <a id="multi-wdgtz-a-car" data-ref="#multi-wdgtz-2" class="multi-wdgtz-background-img-car">I'm driving</a>
+        </li>
+        <li class="wdgtz_flying">
+            <a id="multi-wdgtz-a-flight" data-ref="#multi-wdgtz-3" class="multi-wdgtz-background-img-flg">I'm flying</a>
+        </li>
+    </ul>
+    <div class="wdgtz_content" data-squery="max-width:446px=wdgtz_mobile min-width:694px=wdgtz_full">
+        <div id="multi-wdgtz-1" class="wdgtz_hotel">
+            <div class="wdgtz_header" >
+                <label>I need a hotel near:</label>
+                <span class="wdgtz_location-name">Location Name</span> 
+                <div class="wdgtz_edit"></div>
+                <span class="wdgtz_address1">123 Street St.</span>
+                <span class="wdgtz_city">City Name</span>
+                <span class="wdgtz_state-province">ST</span>
+                <span class="wdgtz_zip">12345</span>
+                <span class="wdgtz_country">US</span>
+            </div>
+            <div class="wdgtz_picture-maps">
+                <div class="wdgtz_flip-container" ontouchstart="this.classList.toggle('wdgtz_hover');">
+                    <div class="wdgtz_flipper">
+                        <div class="wdgtz_front">
+                            <div class="wdgtz_canvas">
+                                Picture
+                                <div class="wdgtz_flip">Map</div>
+                            </div>
+                        </div>
+                        <div class="wdgtz_back">
+                            <div class="wdgtz_canvas">
+                                Map
+                                <div class="wdgtz_flip">Picture</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wdgtz_details">
+                <input class="wdgtz_calendar" name="daterange"/>
+                <select class="wdgtz_guest">
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                </select>
+                <select class="wdgtz_rooms">
+                    <option>1 Room</option>
+                    <option>2 Rooms</option>
+                    <option>3 Rooms</option>
+                    <option>4 Rooms</option>
+                    <option>5+ Rooms</option>
+                </select>
+                <div class="wdgtz_options">
+                    <label><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
+                    <div class="wdgtz_params">
+                        <select class="wdgtz_hotel-chain">
+                            <option value="">Select Hotel Chain</option>
+                            <option id="1100" value="1100">All Best Western Hotel Brands</option>
+                            <option id="1200" value="1200">All Extended Stay Hotels</option>
+                            <option id="1600" value="1600">All Starwood Hotel Brands</option>
+                            <option id="1700" value="1700">All Wydnham Hotel Brands</option>
+                            <option id="1400" value="1400">All Hyatt Hotel Brands</option>
+                            <option id="1300" value="1300">All Hilton Hotel Brands</option>
+                            <option id="1500" value="1500">All Marriott Hotel Brands</option>
+                            <option id="1000" value="1000">All Accor Hotel Brands</option>
+                        </select>
+                        <select class="wdgtz_hotel-rating">
+                            <option value="">Select Hotel Rating</option>
+                            <option value="1">1 Star</option>
+                            <option value="2">2 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="5">5 Stars</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="wdgtz_action">
+                <button>Search</button>
+            </div>
+        </div>
+        <div id="multi-wdgtz-2" class="wdgtz_car"></div>
+        <div id="multi-wdgtz-3" class="wdgtz_flight"></div>
+        <div id="wdgt-z-footer" class="wdgtz_footer">
+            <div class="wdgtz_social"></div>
+            <div class="wdgtz_powered-by"></div>
+        </div>
+    </div>
+</div>

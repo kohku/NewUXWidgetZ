@@ -1,9 +1,10 @@
+var path = require("path");
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './src',
+  entry: './src/index.js',
   output: {
-    path: 'build',
+    path: 'public/build',
     filename: 'bundle.js',
   },
   module: {
@@ -12,6 +13,11 @@ module.exports = {
         test: /\.js/,
         loader: 'babel',
         include: __dirname + '/src',
+      },
+      { 
+        test: /\.html$/, 
+        loader: 'raw', 
+        exclude: /node_modules/ 
       },
       {
         test: /\.(jpg|png)$/,
