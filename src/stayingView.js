@@ -89,16 +89,16 @@ export class stayingView extends baseView{
     })
 
     // load hotel raiting
-    let stars = this.widget.params.find(p => p.key === 'hotel_stars')
-    if (typeof stars !== 'undefined'){
-      stars = stars.value.split(',').map(key => parseInt(key))
-    }
+    let param = this.widget.params.find(p => p.key === 'hotel_stars')
+    let stars = typeof param !== 'undefined' ? param.value.split(',').map(key => parseInt(key)) : []
 
-    service.getHotelRaiting().then(response => {
-      let result = response.filter(rating => stars.indexOf(rating.key) >= 0)
+    service.getHotelRaiting().then(all => {
+      let ratings = all.filter(rating => stars.indexOf(rating.key) >= 0)
 
-      $.each(this.content.find('.wdgtz_hotel-rating'), (index, rating) => {
-
+      $.each(this.content.find('.wdgtz_hotel-rating'), (index, element) => {
+        ratings.forEach(rating => {
+          $(element).append(`<option value="${rating.key}">${rating.value}</option>`)
+        })
       })
     })
   }
