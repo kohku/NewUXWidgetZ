@@ -1,7 +1,7 @@
 import * as axios from 'axios'
 import { Promise } from 'es6-promise'
 
-export default class WidgetService {
+export class WidgetService {
   constructor(endpointUrl){
     this.endpointUrl = endpointUrl || 'http://getmywidget.com/standalonewidget'
   }
