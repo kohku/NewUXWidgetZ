@@ -4,6 +4,7 @@
 @border-width: 1px;
 @border: solid 1px #ddd;
 @border-dev: none; /*dashed 1px #c0c0c0; */
+@grey-60: #555;
 @grey-50: #333;
 @grey-30: #d3d3d3;
 @grey-20: #a4b0b5; 
@@ -237,6 +238,13 @@
         padding-left: 1.5em;
         margin-bottom: 1em;
 
+        .editable {
+          &.wdgtz_address1, &.wdgtz_city, &.wdgtz_state-province, 
+          &.wdgtz_zip, &.wdgtz_country, &.wdgtz_full-address {
+            display: none;
+          }
+        }
+
         label, .wdgtz_location-name, .wdgtz_address1 {
           display: block;
           clear: left;
@@ -256,6 +264,7 @@
           border: @border-dev;
           float: right;
           margin-right: 4em;
+          cursor: pointer;
 
           &::before{
             content: '';
@@ -267,6 +276,10 @@
             background-repeat: no-repeat;
             background-position-y: -.25em;
           }
+        }
+
+        .wdgtz_full-address {
+          width: 55%;
         }
       }
 
@@ -413,6 +426,9 @@
           color: @white;
           text-align: center;
           font-size: 1.2em;
+          cursor: pointer;
+          background-size: 114px auto;
+          background-repeat: no-repeat;
 
           /* The ghost, nudged to maintain perfect centering */
           &:before { 
@@ -532,6 +548,15 @@
   border: 1px solid #aaa;
   height: @calendar-height;
   overflow: hidden;
+  background-color: #fff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;  
+
+  .ui-state-disabled, .ui-widget-content .ui-state-disabled, 
+  .ui-widget-header .ui-state-disabled {
+    opacity: .35;
+    background-image: none;
+  }
 
   .comiseo-daterangepicker-presets {
     display: none;
@@ -605,9 +630,20 @@
     border: none;
   }
 
+  button.ui-priority-secondary.ui-button.ui-widget {
+    opacity: .7;
+  }
+
+  button.ui-button.ui-widget{
+    background: 0;
+    border: 0;
+    font-size: 1em;
+  }
+
   .ui-state-default, .ui-widget-content .ui-state-default {
     background: 0;
     border: 0;
+    color: @grey-60;
   }
 
   .ui-datepicker-calendar {
@@ -698,11 +734,11 @@
       font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
 
       &:first-child {
-        padding: 1em 0;
+        padding: 1.5em 0;
       }
 
       &:last-child {
-        padding: 1em 0;
+        padding: 1.5em 0;
       }
 
       &.ui-priority-primary, &.ui-priority-secondary {
