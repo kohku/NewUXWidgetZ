@@ -17,10 +17,14 @@ export class stayingView extends baseView{
     // Setting up google maps loader
     GoogleMapsLoader.KEY = 'AIzaSyDOXBsxcH9pqCRm0NES6EU4wQvBDgql0ZI'
     GoogleMapsLoader.LIBRARIES = ['geometry','places']
-    GoogleMapsLoader.onLoad(google => this.loadMap(google))
+
+    GoogleMapsLoader.onLoad(google => this.getGeoMap(google))
   }
 
   initialize(){
+    // Loading maps
+    GoogleMapsLoader.load()
+
     const service = new WidgetService()
 
     if (this.state.pictureUrl){
@@ -30,9 +34,6 @@ export class stayingView extends baseView{
         canva$.html(canva$.html().replace('Picture', ''))
       })
     }
-
-    // Loading maps
-    GoogleMapsLoader.load()
 
     let location = null
     if (location){
@@ -168,27 +169,29 @@ export class stayingView extends baseView{
     })
   }
 
-  loadMap(google){
-    console.log('I just loaded google maps api')
-    const map = new google.maps.Map(document.getElementById('wdgtz_hotel-map'), { zoom: 8 })
+  getGeoMap(google){
+    let options = { zoom: 8}
+    if (!this.state.latitude && !this.state.longitude){
+      options.lat = this.state.latitude
+      options.lng = this.state.longitude
+    }
+    const map = new google.maps.Map(document.getElementById('wdgtz_hotel-map'), options)
     const geocoder = new google.maps.Geocoder()
     let address = `${this.state.address || ''} ${this.state.city || ''} ${this.state.stateProvince || ''} ${this.state.postalCode || ''} ${this.state.country || ''}`
-    // looking for latitude and longitude values
+    // get map
     geocoder.geocode({'address': address}, (results, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
+        this.state.formatAddress = results[0].formatted_address
         map.setCenter(results[0].geometry.location)
         var marker = new google.maps.Marker({ map: map, position: results[0].geometry.location })
         marker.setMap(map)
         map.setCenter(results[0].geometry.location)
-        var newlatLng = results[0].geometry.location.toString()
-        newlatLng = newlatLng.replace("(","")
-        newlatLng = newlatLng.replace(")","")
-        newlatLng = newlatLng.replace(" ","")
-        newlatLng = newlatLng.split(',')
-        this.state.latitude = newlatLng[0]
-        this.state.longitude = newlatLng[1]
+        if (!this.state.latitude && !this.state.longitude){
+          this.state.latitude = results[0].geometry.location.lat()
+          this.state.longitude = results[0].geometry.location.lng()
+        }
       } else {
-        throw Error(status)
+        console.log(status)
       }
     })
   }
