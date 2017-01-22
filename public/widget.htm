@@ -1,26 +1,27 @@
 <div id="graphical-wdgtz-container-tabs">
     <ul class="wdgtz_tabs">
-        <li class="wdgtz_staying wdgtz_active" data-key="staying">
+        <li class="{{#tabs.staying}}wdgtz_staying{{/tabs.staying}}" data-key="staying">
             <a>I'm staying</a>
         </li>
-        <li class="wdgtz_driving" data-key="driving">
+        <li class="{{#tabs.driving}}wdgtz_driving{{/tabs.driving}}" data-key="driving">
             <a>I'm driving</a>
         </li>
-        <li class="wdgtz_flying" data-key="flying">
+        <li class="{{#tabs.flying}}wdgtz_flying{{/tabs.flying}}" data-key="flying">
             <a>I'm flying</a>
         </li>
     </ul>
     <div class="wdgtz_content" data-squery="max-width:446px=wdgtz_mobile min-width:694px=wdgtz_full">
-        <div class="wdgtz_hotel" data-content="staying">
+        <div class="{{#tabs.staying}}wdgtz_hotel{{/tabs.staying}}" data-content="staying">
             <div class="wdgtz_header" >
                 <label>I need a hotel near:</label>
-                <span class="wdgtz_location-name">Location Name</span> 
+                {{#poiName}}<span class="wdgtz_location-name">{{poiName}}</span>{{/poiName}}
                 <div class="wdgtz_edit"></div>
-                <span class="wdgtz_address1">123 Street St.</span>
-                <span class="wdgtz_city">City Name</span>
-                <span class="wdgtz_state-province">ST</span>
-                <span class="wdgtz_zip">12345</span>
-                <span class="wdgtz_country">US</span>
+                {{#poiName}}{{#address}}<span class="wdgt_comma">,&nbsp;</span>{{/address}}{{/poiName}}
+                {{#address}}<span class="wdgtz_address1">{{address}}</span>{{/address}}
+                {{#city}}<span class="wdgtz_city">{{city}}</span>{{/city}}
+                {{#stateProvince}}<span class="wdgtz_state-province">{{stateProvince}}</span>{{/stateProvince}}
+                {{#postalCode}}<span class="wdgtz_zip">{{postalCode}}</span>{{/postalCode}}
+                {{#country}}<span class="wdgtz_country">{{country}}</span>{{/country}}
                 <input class="wdgtz_full-address editable"/>
             </div>
             <div class="wdgtz_picture-maps">
@@ -72,10 +73,72 @@
                 <button>Search</button>
             </div>
         </div>
-        <div class="wdgtz_car" data-content="driving"></div>
-        <div class="wdgtz_flight" data-content="flying"></div>
+        <div class="{{#tabs.driving}}wdgtz_car{{/tabs.driving}}" data-content="driving">
+            <div class="wdgtz_driving-directions">
+                <span>[Starting location] to [End location]</span>
+                <span>Driving Time and Distance: [X minutes] | [Y miles]
+            </div>
+            <label>View driving times and directions</label>
+            <label>Starting location:</label>
+            <input type="text" placeholder="Type your starting location"/>
+            <input type="text" placeholder="Enter pickup location"/>
+            <input type="text" placeholder="Enter drop-off location"/>
+            <label>Destination:</label>
+            <span class="wdgtz_location-name">Location Name</span> 
+            <div class="wdgtz_edit"></div>
+            <span class="wdgtz_address1">123 Street St.</span>
+            <span class="wdgtz_city">City Name</span>
+            <span class="wdgtz_state-province">ST</span>
+            <span class="wdgtz_zip">12345</span>
+            <span class="wdgtz_country">US</span>
+            <input class="wdgtz_full-address editable"/>
+            <button>Get directions</button>
+            <button>View driving time</button>
+            <label>Need a rental car? Check prices</label>
+            <input type="radio" value="Roundtrip"/>
+            <input type="radio" value="Oneway"/>
+            <input type="text" placeholder="Type your starting location"/>
+            <input type="date"/>
+            <select>
+                <option>Time</option>
+            </select>
+            <input type="date"/>
+            <select>
+                <option value="">Time</option>
+            </select>
+            <select>
+                <option value="Select Preferred Car Company"></option>
+            </select>
+            <button>Search</Search>
+        </div>
+        <div class="{{#tabs.flying}}wdgtz_flight{{/tabs.flying}}" data-content="flying">
+            <label>I'll fly there</label>
+            <label>Flying from:
+            <input type="text" placeholder="Enter starting airport"/>
+            <label>Flying to:</label>
+            <label>[Location]</label>
+            <div class="wdgtz_edit"></div>
+            <input class="wdgtz_calendar" name="daterange"/>
+            <select>
+                <option value="1">1 Traveler</option>
+            </select>
+            <button>Search</button>
+                <div class="wdgtz_options">
+                    <label><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
+                    <div class="wdgtz_params">
+                        <select class="wdgtz_airline">
+                            <option value="">Select Preferred Airline</option>
+                        </select>
+                        <select class="wdgtz_seat-class">
+                            <option value="">Select Preferred Seart Class</option>
+                        </select>
+                    </div>
+                </div>
+        </div>
         <div class="wdgtz_footer">
-            <div class="wdgtz_social"></div>
+            <div class="wdgtz_social {{^social}}wdgtz_hide{{/social}}">
+                <div class="addthis_sharing_toolbox"></div>
+            </div>
             <div class="wdgtz_powered-by"></div>
         </div>
     </div>

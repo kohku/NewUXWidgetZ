@@ -2,10 +2,11 @@
 const activeCss = 'wdgtz_active'
 
 export class baseView {
-  constructor(widget, selector, content){
+  constructor(widget, state, selector, content){
     this.widget = widget
     this.selector = selector
     this.content = content
+    this.state = state
 
     this._init()
   }

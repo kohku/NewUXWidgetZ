@@ -11,18 +11,17 @@ import 'style-loader?css-loader!./jquery.comiseo.daterangepicker.css'
 import { WidgetService } from './widgetService'
 
 export class stayingView extends baseView{
-  constructor(widget, selector, content){
-    super(widget, selector, content)
+  constructor(widget, state, selector, content){
+    super(widget, state, selector, content)
   }
 
   initialize(){
     const service = new WidgetService()
 
-    let pictureUrl = this.widget.params.find(p => p.key === 'wdgt_imaage_url')
-    if (pictureUrl){
+    if (this.state.pictureUrl){
       $.each(this.content.find('.wdgtz_front .wdgtz_canvas'), (index, canvas) => {
         let canva$ = $(canvas)
-        canva$.css('background-image', `url(${pictureUrl.value})`)
+        canva$.css('background-image', `url(${this.state.pictureUrl})`)
         canva$.html(canva$.html().replace('Picture', ''))
       })
     }
@@ -35,34 +34,6 @@ export class stayingView extends baseView{
         canva$.css('background-image', `url(${location})`)
         canva$.html(canva$.html().replace('Map', ''))
       })
-    }
-
-    // Set calendar range
-    let checkInDateOrDays = this.widget.params.find(p => p.key === 'check_in')
-    let checkIn = moment()
-    // is a number, calculate from now
-    if (Number.isInteger(checkInDateOrDays.value)){
-      checkIn.add(parseInt(checkInDateOrDays.value), 'days')
-    // is moment?
-    } else if (checkInDateOrDays.value instanceof moment){
-      checkIn = checkInDateOrDays.value
-    // is date string 'YYYY-MM-DD' ISO 8601 or a Date
-    } else {
-      checkIn = moment(checkInDateOrDays.value)
-    }
-
-    let checkOutDateOrDays = this.widget.params.find(p => p.key === 'check_out')
-
-    let checkOut = moment()
-    // is a number, calculate from now
-    if (Number.isInteger(checkOutDateOrDays.value)){
-      checkOut.add(parseInt(checkOutDateOrDays.value), 'days')
-    // is moment?
-    } else if (checkOutDateOrDays.value instanceof moment){
-      checkOut = checkOutDateOrDays.value
-    // is date string 'YYYY-MM-DD' ISO 8601 or a Date
-    } else {
-      checkOut = moment(checkOutDateOrDays.value)
     }
 
     let rangePicker = this.content.find('input[name="daterange"]')
@@ -112,21 +83,22 @@ export class stayingView extends baseView{
             }
         },
     })
-    rangePicker.daterangepicker("setRange", { start: checkIn.toDate(), end: checkOut.toDate() });
+    rangePicker.daterangepicker("setRange", {
+       start: this.state.checkIn.toDate(), 
+       end: this.state.checkOut.toDate() 
+    });
 
     // load guest
-    let defaultGuests = this.widget.params.find(p => p.key === 'guests')
-    if (defaultGuests){
+    if (this.state.defaultGuests){
       $.each(this.content.find('.wdgtz_guest'), (index, guests) => {
-        $(guests).val(defaultGuests.value || 1)
+        $(guests).val(this.state.defaultGuests)
       })
     }
 
     // load rooms
-    let defaultRooms = this.widget.params.find(p => p.key === 'rooms')
-    if (defaultRooms){
+    if (this.state.defaultRooms){
       $.each(this.content.find('.wdgtz_rooms'), (index, rooms) => {
-        $(rooms).val(defaultRooms.value || 1)
+        $(rooms).val(this.state.defaultRooms)
       })
     }
 
@@ -140,11 +112,8 @@ export class stayingView extends baseView{
     })
 
     // load hotel raiting
-    let param = this.widget.params.find(p => p.key === 'hotel_stars')
-    let stars = typeof param !== 'undefined' ? param.value.split(',').map(key => parseInt(key)) : []
-
     service.getHotelRaiting().then(all => {
-      let ratings = all.filter(rating => stars.indexOf(rating.key) >= 0)
+      let ratings = all.filter(rating => this.state.hotelStars.indexOf(rating.key) >= 0)
 
       $.each(this.content.find('.wdgtz_hotel-rating'), (index, element) => {
         ratings.forEach(rating => {

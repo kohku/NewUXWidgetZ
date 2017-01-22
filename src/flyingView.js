@@ -1,7 +1,7 @@
 import { baseView } from './baseView'
 
 export class flyingView extends baseView{
-  constructor(widget, selector, content){
-    super(widget, selector, content)
+  constructor(widget, state, selector, content){
+    super(widget, state, selector, content)
   }
 }
