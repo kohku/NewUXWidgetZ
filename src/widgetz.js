@@ -31,7 +31,7 @@ export class WidgetZ extends Observable {
     let appendPoiParam = params.find(p => p.key === 'append_poi')
     let poiNameParam = params.find(p => p.key === 'poi_name')
     let picUrlParam = params.find(p => p.key === 'wdgt_image_url')
-    let pictureLinkUrlParam = params.find(p => p.key === 'wdgt_link_url')
+    let widgetUrlParam = params.find(p => p.key === 'wdgt_link_url')
 
     let tabsParam = params.find(p => p.key === 'tabs')
     let latitudeParam = params.find(p => p.key === 'latitude')
@@ -145,7 +145,7 @@ export class WidgetZ extends Observable {
     state.appendPoi = !!appendPoiParam && appendPoiParam.value === 'N'
     state.socialPictureUrl = picUrlParam ? picUrlParam.value : 'http://getmywidget.com/graphicalwidget/images/tripplanz_icon.png'
     state.pictureUrl = picUrlParam ? picUrlParam.value : null
-    state.pictureLinkUrl = pictureLinkUrlParam ? pictureLinkUrlParam.value : null
+    state.widgetUrl = widgetUrlParam ? widgetUrlParam.value : null
     state.poiName = poiNameParam ? poiNameParam.value : null
 
     state.tabs = {
@@ -222,27 +222,21 @@ export class WidgetZ extends Observable {
         this.setView(this.views[0])
       }
 
-      // load guest options
-
-      // load room options
-
-      // load hotel chains
-
-      // load hotel raitings
-
-      // enable toggle in search options
-
-      // enable picture flipping
-
-      // set search url
-
-      // live cycle
-
       // Footer
       // Social
-      window.addthis_share = {
-        title: `${this.state.headerText}${this.state.appendPoi ? this.state.poiName : ''}`,
-        media: this.state.pictureUrl
+      if (this.state.social){
+        var script = document.createElement( 'script' );
+        script.setAttribute( 'src', '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57624fad76e92068' );
+        $.each($('#graphical-wdgtz-container'), (index, element) => {
+          element.appendChild(script)
+        })
+
+        window.setTimeout(() => {
+          window.addthis_share = {
+            title: `${this.state.headerText}${this.state.appendPoi ? this.state.poiName : ''}`,
+            media: this.state.pictureUrl
+          }
+        }, 250)
       }
     })
   }

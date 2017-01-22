@@ -9,10 +9,15 @@ import Moment from 'moment'
 import 'imports-loader?jQuery=jquery,moment=moment,this=>window!./jquery.comiseo.daterangepicker.js'
 import 'style-loader?css-loader!./jquery.comiseo.daterangepicker.css'
 import { WidgetService } from './widgetService'
+import GoogleMapsLoader from 'google-maps'
 
 export class stayingView extends baseView{
   constructor(widget, state, selector, content){
     super(widget, state, selector, content)
+    // Setting up google maps loader
+    GoogleMapsLoader.KEY = 'AIzaSyDOXBsxcH9pqCRm0NES6EU4wQvBDgql0ZI'
+    GoogleMapsLoader.LIBRARIES = ['geometry','places']
+    GoogleMapsLoader.onLoad(google => this.loadMap(google))
   }
 
   initialize(){
@@ -26,7 +31,9 @@ export class stayingView extends baseView{
       })
     }
 
-    // TODO: get location somewhere
+    // Loading maps
+    GoogleMapsLoader.load()
+
     let location = null
     if (location){
       $.each(this.content.find('.wdgtz_back .wdgtz_canvas'), (index, canvas) => {
@@ -131,13 +138,11 @@ export class stayingView extends baseView{
         $(element).toggleClass('editable')
       })
     })
-    
 
-    // TODO: We'll move this to mustache to save some code
-    let widgetUrl = this.widget.params.find(p => p.key === 'wdgt_link_url')
-    if (widgetUrl){
+    // Widget Url
+    if (this.state.widgetUrl){
       this.content.find('.wdgtz_front .wdgtz_canvas').on('click', event => {
-        window.open(widgetUrl.value, '_blank');
+        window.open(this.state.widgetUrl, '_blank');
       })
     }
 
@@ -155,10 +160,36 @@ export class stayingView extends baseView{
       this.content.find('.wdgtz_action').toggleClass('wdgtz_expanded')
     })
 
+    // Search
     this.content.find('.wdgtz_action button').on('click', event => {
       // TODO: do search 
       console.log('Searching')
       // window.open(url, '_blank')
+    })
+  }
+
+  loadMap(google){
+    console.log('I just loaded google maps api')
+    const map = new google.maps.Map(document.getElementById('wdgtz_hotel-map'), { zoom: 8 })
+    const geocoder = new google.maps.Geocoder()
+    let address = `${this.state.address || ''} ${this.state.city || ''} ${this.state.stateProvince || ''} ${this.state.postalCode || ''} ${this.state.country || ''}`
+    // looking for latitude and longitude values
+    geocoder.geocode({'address': address}, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location)
+        var marker = new google.maps.Marker({ map: map, position: results[0].geometry.location })
+        marker.setMap(map)
+        map.setCenter(results[0].geometry.location)
+        var newlatLng = results[0].geometry.location.toString()
+        newlatLng = newlatLng.replace("(","")
+        newlatLng = newlatLng.replace(")","")
+        newlatLng = newlatLng.replace(" ","")
+        newlatLng = newlatLng.split(',')
+        this.state.latitude = newlatLng[0]
+        this.state.longitude = newlatLng[1]
+      } else {
+        throw Error(status)
+      }
     })
   }
 }
