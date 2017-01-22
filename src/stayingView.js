@@ -46,7 +46,7 @@ export class stayingView extends baseView{
     // is moment?
     } else if (checkInDateOrDays.value instanceof moment){
       checkIn = checkInDateOrDays.value
-    // is date string 'YYYY-MM-DD' ISO 8601
+    // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
       checkIn = moment(checkInDateOrDays.value)
     }
@@ -60,7 +60,7 @@ export class stayingView extends baseView{
     // is moment?
     } else if (checkOutDateOrDays.value instanceof moment){
       checkOut = checkOutDateOrDays.value
-    // is date string 'YYYY-MM-DD' ISO 8601
+    // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
       checkOut = moment(checkOutDateOrDays.value)
     }
