@@ -39,6 +39,7 @@ export class WidgetZ extends Observable {
 
     let refIdParam = params.find(p => p.key === 'refid')
     let refClickIdParam = params.find(p => p.key === 'refclickid')
+    let refClickId2Param = params.find(p => p.key === 'refclickid2')
     let cnameParam = params.find(p => p.key === 'cname')
 
     let addressParam = params.find(p => p.key === 'address')
@@ -158,6 +159,7 @@ export class WidgetZ extends Observable {
 
     state.refId = refIdParam ? refIdParam.value : null
     state.refClickId = refClickIdParam ? refClickIdParam.value : null
+    state.refClickId2 = refClickId2Param ? refClickId2Param.value : null
     state.cname = cnameParam ? cnameParam.value : null
 
     state.address = addressParam ? addressParam.value : null

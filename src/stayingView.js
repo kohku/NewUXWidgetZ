@@ -35,17 +35,8 @@ export class stayingView extends baseView{
       })
     }
 
-    let location = null
-    if (location){
-      $.each(this.content.find('.wdgtz_back .wdgtz_canvas'), (index, canvas) => {
-        let canva$ = $(canvas)
-        canva$.css('background-image', `url(${location})`)
-        canva$.html(canva$.html().replace('Map', ''))
-      })
-    }
-
-    let rangePicker = this.content.find('input[name="daterange"]')
-    rangePicker.daterangepicker({
+    this.rangePicker = this.content.find('input[name="daterange"]')
+    this.rangePicker.daterangepicker({
         presetRanges: [],
         initialText: 'SELECT TRAVEL DATES',
         autoFitCalendars: true,
@@ -59,6 +50,10 @@ export class stayingView extends baseView{
             minDate: 0,
             maxDate: null,
             dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        },
+        change: (event, calendar) => {
+          let range = calendar.instance.getRange()
+          this.setDates(moment(range.start), moment(range.end))
         },
         open: (event, calendar) => {
             // put it at the bottomo of the control triggering the opening
@@ -91,7 +86,7 @@ export class stayingView extends baseView{
             }
         },
     })
-    rangePicker.daterangepicker("setRange", {
+    this.rangePicker.daterangepicker("setRange", {
        start: this.state.checkIn.toDate(), 
        end: this.state.checkOut.toDate() 
     });
@@ -132,41 +127,24 @@ export class stayingView extends baseView{
   }
 
   setListeners(){
-    // TODO: Setup listeners for edit
-    this.content.find('.wdgtz_edit').on('click', event => {
-      let address = $('.wdgtz_address1, .wdgtz_city, .wdgtz_state-province, .wdgtz_zip, .wdgtz_country, .wdgtz_full-address')
-      $.each(address, (index, element) => {
-        $(element).toggleClass('editable')
-      })
-    })
-
+    // Setup listeners for edit
+    this.content.find('.wdgtz_edit').on('click', event => this.toggleEditAddress(event))
     // Widget Url
     if (this.state.widgetUrl){
-      this.content.find('.wdgtz_front .wdgtz_canvas').on('click', event => {
-        window.open(this.state.widgetUrl, '_blank');
-      })
+      this.content.find('.wdgtz_front .wdgtz_canvas').on('click', event => this.openWidgetUrl(event))
     }
-
     // Flip for map picture
-    this.content.find('.wdgtz_flip').on('click', event => {
-        event.preventDefault()
-        event.stopPropagation()
-        $('.wdgtz_flip-container').toggleClass('wdgtz_hover');
-    })
-
+    this.content.find('.wdgtz_flip').on('click', event => this.flipMapPicture(event))
     // More/fewer options listeners
-    this.content.find('.wdgtz_details .wdgtz_options label').on('click', event => {
-      event.preventDefault()
-      $(event.currentTarget.parentElement).toggleClass('wdgtz_expanded')
-      this.content.find('.wdgtz_action').toggleClass('wdgtz_expanded')
-    })
+    this.content.find('.wdgtz_details .wdgtz_options label').on('click', event => this.toggleMoreFewerOptions(event))
+    // form elements
+    this.content.find('.wdgtz_guest').on('change', (event) => this.setGuests(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_rooms').on('change', (event) => this.setRooms(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_guest').on('change', (event) => this.setHotelChain(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_rooms').on('change', (event) => this.setHotelRating(parseInt(event.currentTarget.value)))
 
     // Search
-    this.content.find('.wdgtz_action button').on('click', event => {
-      // TODO: do search 
-      console.log('Searching')
-      // window.open(url, '_blank')
-    })
+    this.content.find('.wdgtz_action button').on('click', event => this.doSearch(event))
   }
 
   getGeoMap(google){
@@ -194,5 +172,84 @@ export class stayingView extends baseView{
         console.log(status)
       }
     })
+  }
+
+  toggleEditAddress(event){
+    let address = $('.wdgtz_address1, .wdgtz_city, .wdgtz_state-province, .wdgtz_zip, .wdgtz_country, .wdgtz_full-address')
+    $.each(address, (index, element) => {
+      $(element).toggleClass('editable')
+    })
+  }
+
+  openWidgetUrl(event){
+    window.open(this.state.widgetUrl, '_blank');
+  }
+
+  flipMapPicture(event){
+    event.preventDefault()
+    event.stopPropagation()
+    $('.wdgtz_flip-container').toggleClass('wdgtz_hover');
+  }
+
+  toggleMoreFewerOptions(event){
+    event.preventDefault()
+    $(event.currentTarget.parentElement).toggleClass('wdgtz_expanded')
+    this.content.find('.wdgtz_action').toggleClass('wdgtz_expanded')
+  }
+
+  setDates(start, end){
+    if (start instanceof moment){
+      this.state.checkIn = start
+    }
+    if (end instanceof moment){
+      this.state.checkOut = end
+    }
+  }
+
+  setGuests(value){
+    this.state.defaultGuests = isNaN(value) ? null : value
+  }
+
+  setRooms(value){
+    this.state.defaultRooms = isNaN(value) ? null : value
+  }
+
+  setHotelChain(value){
+    this.state.hotelChain = isNaN(value) ? null : value
+  }
+
+  setHotelRating(value){
+    this.state.hotelRating = isNaN(value) ? null : value
+  }
+
+  doSearch(event){
+    event.preventDefault()
+    event.stopPropagation()
+
+    let rooms = this.state.defaultRooms
+    let guests = this.state.defaultGuests
+    let checkIn = this.state.checkIn.format('MM/DD/YYYY')
+    let checkOut = this.state.checkOut.format('MM/DD/YYYY')
+    let hotelChain = this.state.hotelChain || ''
+    let hotelRating = this.state.hotelRating || ''
+    let latitude = this.state.latitude
+    let longitude = this.state.longitude
+    let currency = this.state.currency
+    let poiName = encodeURIComponent(this.state.poiName) //encodeURIComponent
+    let refClickId = this.state.refClickId ? encodeURIComponent(this.state.refClickId) : '' // encodeURIComponent
+    let refId = this.state.refId
+    let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
+
+    let searchUrl = `${this.state.cname}/hotels/results/?rooms=${rooms}&guests=${guests}` +
+      `&check_in=${checkIn}&check_out=${checkOut}&chain_id=${hotelChain}&star_rating=${hotelRating}` +
+      `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}` +
+      `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
+
+    if (guests === 5){
+      window.open("https://tripplanz.groupize.com/", "_blank")
+      return
+    } 
+    
+     window.open(searchUrl, "_blank")
   }
 }
