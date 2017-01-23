@@ -22,7 +22,8 @@
                 {{#stateProvince}}<span class="wdgtz_state-province">{{stateProvince}}</span>{{/stateProvince}}
                 {{#postalCode}}<span class="wdgtz_zip">{{postalCode}}</span>{{/postalCode}}
                 {{#country}}<span class="wdgtz_country">{{country}}</span>{{/country}}
-                <input class="wdgtz_full-address editable"/>
+                <input class="wdgtz_full-address" value="{{fullAddress}}"/>
+                <span class="wdgtz_full-address">{{fullAddress}}</span>
             </div>
             <div class="wdgtz_picture-maps">
                 <div class="wdgtz_flip-container" ontouchstart="this.classList.toggle('wdgtz_hover');">

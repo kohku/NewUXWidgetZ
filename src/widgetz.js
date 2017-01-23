@@ -47,6 +47,7 @@ export class WidgetZ extends Observable {
     let stateProvinceParam = params.find(p => p.key === 'stateprovince')
     let airportParam = params.find(p => p.key === 'airport')
     let postalCodeParam = params.find(p => p.key === 'postalcode')
+    let countryParam = params.find(p => p.key === 'country')
 
     let currencyParam = params.find(p => p.key === 'currency')
 
@@ -167,6 +168,9 @@ export class WidgetZ extends Observable {
     state.stateProvince = stateProvinceParam ? stateProvinceParam.value : null 
     state.airport = airportParam ? airportParam.value : null
     state.postalCode = postalCodeParam ? postalCodeParam.value : null
+    state.country = countryParam ? countryParam.value : null
+    state.fullAddress = `${state.address || ''} ${state.city || ''} ${state.stateProvince || ''} ${state.postalCode || ''} ${state.country || ''}`
+
     state.currency = currencyParam ? currencyParam.value : 'USD'
     state.checkIn = checkIn
     state.checkOut = checkOut

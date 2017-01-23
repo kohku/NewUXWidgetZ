@@ -263,10 +263,38 @@
         padding-left: 1.5em;
         margin-bottom: 1em;
 
-        .editable {
-          &.wdgtz_address1, &.wdgtz_city, &.wdgtz_state-province, 
-          &.wdgtz_zip, &.wdgtz_country, &.wdgtz_full-address {
+        input.wdgtz_full-address {
+          display: none;
+          width: 55%;
+        }
+
+        span.wdgtz_full-address {
+          display: none;
+        }
+
+        &.editable {
+          .wdgt_comma, .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
+          .wdgtz_zip, .wdgtz_country{
             display: none;
+          }
+
+          input.wdgtz_full-address {
+            display: block;
+          }
+
+          &.edited span.wdgtz_full-address {
+            display: none;
+          }
+        }
+
+        &.edited {
+          .wdgt_comma, .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
+          .wdgtz_zip, .wdgtz_country{
+            display: none;
+          }
+
+          span.wdgtz_full-address {
+            display: inline-block;
           }
         }
 
@@ -305,10 +333,6 @@
             background-repeat: no-repeat;
             background-position-y: -.25em;
           }
-        }
-
-        .wdgtz_full-address {
-          width: 55%;
         }
       }
 

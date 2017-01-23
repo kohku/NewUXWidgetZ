@@ -18,7 +18,11 @@ export class stayingView extends baseView{
     GoogleMapsLoader.KEY = 'AIzaSyDOXBsxcH9pqCRm0NES6EU4wQvBDgql0ZI'
     GoogleMapsLoader.LIBRARIES = ['geometry','places']
 
-    GoogleMapsLoader.onLoad(google => this.getGeoMap(google))
+    GoogleMapsLoader.onLoad(google => {
+      this.getGeoMap(this.state.fullAddress).then(response => {
+        this.updateMapAddress(response)
+      })
+    })
   }
 
   initialize(){
@@ -96,7 +100,7 @@ export class stayingView extends baseView{
 
   setListeners(){
     // Setup listeners for edit
-    this.content.find('.wdgtz_edit').on('click', event => this.toggleEditAddress(event))
+    this.content.find('.wdgtz_edit').on('click', event => this.toggleEditAddress())
     // Widget Url
     if (this.state.widgetUrl){
       this.content.find('.wdgtz_front .wdgtz_canvas').on('click', event => this.openWidgetUrl(event))
@@ -110,43 +114,79 @@ export class stayingView extends baseView{
     this.content.find('.wdgtz_rooms').on('change', (event) => this.setRooms(parseInt(event.currentTarget.value)))
     this.content.find('.wdgtz_guest').on('change', (event) => this.setHotelChain(parseInt(event.currentTarget.value)))
     this.content.find('.wdgtz_rooms').on('change', (event) => this.setHotelRating(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_full-address').on('blur keyup', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      if (event.type === 'blur'){
+        // removing the editable class on enter triggers a blur event
+        if ($('.wdgtz_header').hasClass('editable')){
+          this.toggleEditAddress()
+        }
+        if (this.state.fullAddress !== event.currentTarget.value){
+          // this.setFullAddress()
+          this.getGeoMap(event.currentTarget.value).then(response => {
+            let fullAddress = this.state.fullAddress
+            this.updateMapAddress(response)
+            if (fullAddress !== this.state.fullAddress){
+              this.content.find('.wdgtz_header').addClass('edited')
+            }
+          })
+        }
+      } 
 
+      if (event.keyCode == 13) {
+        // removing the editable class on enter triggers a blur event
+        this.toggleEditAddress()
+        if (this.state.fullAddress !== event.currentTarget.value){
+          // this.setFullAddress(event.currentTarget.value)
+          this.getGeoMap(event.currentTarget.value).then(response => {
+            let fullAddress = this.state.fullAddress
+            this.updateMapAddress(response)
+            if (fullAddress !== this.state.fullAddress){
+              this.content.find('.wdgtz_header').addClass('edited')
+            }
+          })
+        }
+      }
+    })
     // Search
     this.content.find('.wdgtz_action button').on('click', event => this.doSearch(event))
   }
 
-  getGeoMap(google){
-    let options = { zoom: 8}
-    if (!this.state.latitude && !this.state.longitude){
-      options.lat = this.state.latitude
-      options.lng = this.state.longitude
-    }
-    const map = new google.maps.Map(document.getElementById('wdgtz_hotel-map'), options)
-    const geocoder = new google.maps.Geocoder()
-    let address = `${this.state.address || ''} ${this.state.city || ''} ${this.state.stateProvince || ''} ${this.state.postalCode || ''} ${this.state.country || ''}`
-    // get map
-    geocoder.geocode({'address': address}, (results, status) => {
-      if (status === google.maps.GeocoderStatus.OK) {
-        this.state.formatAddress = results[0].formatted_address
-        map.setCenter(results[0].geometry.location)
-        var marker = new google.maps.Marker({ map: map, position: results[0].geometry.location })
-        marker.setMap(map)
-        map.setCenter(results[0].geometry.location)
-        if (!this.state.latitude && !this.state.longitude){
-          this.state.latitude = results[0].geometry.location.lat()
-          this.state.longitude = results[0].geometry.location.lng()
+  getGeoMap(address){
+    return new Promise((resolve, reject) => {
+      const geocoder = new google.maps.Geocoder()
+      // get map
+      geocoder.geocode({'address': address}, (response, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          resolve(response)
+          
+        } else {
+          reject(status)
         }
-      } else {
-        console.log(status)
-      }
+      })
     })
   }
 
-  toggleEditAddress(event){
-    let address = $('.wdgtz_address1, .wdgtz_city, .wdgtz_state-province, .wdgtz_zip, .wdgtz_country, .wdgtz_full-address')
-    $.each(address, (index, element) => {
-      $(element).toggleClass('editable')
-    })
+  updateMapAddress(response){
+    this.state.formatAddress = response[0].formatted_address
+    this.setFullAddress(this.state.formatAddress)
+
+    if (!this.state.latitude && !this.state.longitude){
+      this.state.latitude = response[0].geometry.location.lat()
+      this.state.longitude = response[0].geometry.location.lng()
+    }
+
+    let options = { zoom: 8}
+    const map = new google.maps.Map(document.getElementById('wdgtz_hotel-map'), options)
+    map.setCenter(response[0].geometry.location)
+    var marker = new google.maps.Marker({ map: map, position: response[0].geometry.location })
+    marker.setMap(map)
+    map.setCenter(response[0].geometry.location)
+  }
+
+  toggleEditAddress(){
+    $('.wdgtz_header').toggleClass('editable')
   }
 
   openWidgetUrl(event){
@@ -163,6 +203,12 @@ export class stayingView extends baseView{
     event.preventDefault()
     $(event.currentTarget.parentElement).toggleClass('wdgtz_expanded')
     this.content.find('.wdgtz_action').toggleClass('wdgtz_expanded')
+  }
+
+  setFullAddress(value){
+    this.state.fullAddress = value
+    this.content.find('input.wdgtz_full-address').val(value)
+    this.content.find('span.wdgtz_full-address').text(value)
   }
 
   setDates(event, calendar){
