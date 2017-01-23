@@ -51,40 +51,8 @@ export class stayingView extends baseView{
             maxDate: null,
             dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         },
-        change: (event, calendar) => {
-          let range = calendar.instance.getRange()
-          this.setDates(moment(range.start), moment(range.end))
-        },
-        open: (event, calendar) => {
-            // put it at the bottomo of the control triggering the opening
-            var el$ = $(event.currentTarget)
-            var offset = el$.offset()
-            this.content.find('.comiseo-daterangepicker.ui-widget').css('top', offset.top + el$.height())
-            this.content.find('.comiseo-daterangepicker.ui-widget').css('left', offset.left)
-
-            var range = calendar.instance.getRange()
-
-            if (range !== null){
-                if (range.start){
-                    var start = moment(range.start)
-                    $.each(this.content.find('td[data-month='+start.month()+'][data-year='+start.year()+']'), function(index, td){
-                        var el$ = $(td)
-                        if (el$.find('a').text() == start.date()){
-                            el$.addClass('start-date')
-                        }
-                    })
-                }
-                if (range.end){
-                    var end = moment(range.end)
-                    $.each(this.content.find('td[data-month='+end.month()+'][data-year='+end.year()+']'), function(index, td){
-                        var el$ = $(td)
-                        if (el$.find('a').text() == end.date()){
-                            el$.addClass('end-date')
-                        }
-                    })
-                }
-            }
-        },
+        change: (event, calendar) => this.setDates(event,calendar),
+        open: (event, calendar) => this.updateCalendar(event, calendar),
     })
     this.rangePicker.daterangepicker("setRange", {
        start: this.state.checkIn.toDate(), 
@@ -197,12 +165,45 @@ export class stayingView extends baseView{
     this.content.find('.wdgtz_action').toggleClass('wdgtz_expanded')
   }
 
-  setDates(start, end){
-    if (start instanceof moment){
-      this.state.checkIn = start
+  setDates(event, calendar){
+    let range = calendar.instance.getRange()
+        
+    if (range.start){
+      this.state.checkIn = moment(range.start)
     }
-    if (end instanceof moment){
-      this.state.checkOut = end
+    if (range.end){
+      this.state.checkOut = moment(range.end)
+    }
+  }
+
+  updateCalendar(event, calendar) {
+    // put it at the bottomo of the control triggering the opening
+    var el$ = $(event.currentTarget)
+    var offset = el$.offset()
+    this.content.find('.comiseo-daterangepicker.ui-widget').css('top', offset.top + el$.height())
+    this.content.find('.comiseo-daterangepicker.ui-widget').css('left', offset.left)
+
+    var range = calendar.instance.getRange()
+
+    if (range !== null){
+      if (range.start){
+          var start = moment(range.start)
+          $.each(this.content.find('td[data-month='+start.month()+'][data-year='+start.year()+']'), function(index, td){
+              var el$ = $(td)
+              if (el$.find('a').text() == start.date()){
+                  el$.addClass('start-date')
+              }
+          })
+      }
+      if (range.end){
+          var end = moment(range.end)
+          $.each(this.content.find('td[data-month='+end.month()+'][data-year='+end.year()+']'), function(index, td){
+              var el$ = $(td)
+              if (el$.find('a').text() == end.date()){
+                  el$.addClass('end-date')
+              }
+          })
+      }
     }
   }
 
