@@ -286,15 +286,23 @@ export class stayingView extends baseView{
     let refClickId = this.state.refClickId ? encodeURIComponent(this.state.refClickId) : '' // encodeURIComponent
     let refId = this.state.refId
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
+    let fullAddress = encodeURIComponent(this.state.fullAddress)
 
     let searchUrl = `${this.state.cname}/hotels/results/?rooms=${rooms}&guests=${guests}` +
       `&check_in=${checkIn}&check_out=${checkOut}&chain_id=${hotelChain}&star_rating=${hotelRating}` +
       `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}` +
       `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
 
-    if (guests === 5){
-      window.open("https://tripplanz.groupize.com/", "_blank")
-      return
+    if (rooms === 5){
+      searchUrl = `https://tripplanz.groupize.com/search?` + 
+      `search%5Bcheck_in%5D=${this.state.checkIn.format('YYYY-MM-DD')}&` +
+      `search%5Bcheck_out%5D=${this.state.checkOut.format('YYYY-MM-DD')}&` + 
+      `search%5Bentry_point%5D=umbrella&` +
+      `search%5Bevent_duration%5D=${this.state.checkOut.diff(this.state.checkIn, 'days')}&` +
+      `search%5Bfunction_date%5D=&search%5Blocation%5D=${fullAddress}&` +
+      `search%5Bmaximum_adults_per_room%5D=2&search%5Bmeeting_space%5D=false&` +
+      `search%5Bnumber_of_attendees%5D=&search%5Bpeople%5D=${guests}&` + 
+      `search%5Brooms%5D=5&search%5Bsleeping_rooms%5D=true`
     } 
     
      window.open(searchUrl, "_blank")
