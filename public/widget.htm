@@ -76,29 +76,38 @@
             </div>
         </div>
         <div class="{{#tabs.driving}}wdgtz_car{{/tabs.driving}}" data-content="driving">
+            <label>View driving times and directions</label>
             <div class="wdgtz_driving-directions">
                 <span>[Starting location] to [End location]</span>
                 <span>Driving Time and Distance: [X minutes] | [Y miles]
             </div>
-            <label>View driving times and directions</label>
-            <label>Starting location:</label>
-            <input type="text" placeholder="Type your starting location"/>
-            <input type="text" placeholder="Enter pickup location"/>
-            <input type="text" placeholder="Enter drop-off location"/>
-            <label>Destination:</label>
-            <span class="wdgtz_location-name">Location Name</span> 
-            <div class="wdgtz_edit"></div>
-            <span class="wdgtz_address1">123 Street St.</span>
-            <span class="wdgtz_city">City Name</span>
-            <span class="wdgtz_state-province">ST</span>
-            <span class="wdgtz_zip">12345</span>
-            <span class="wdgtz_country">US</span>
-            <input class="wdgtz_full-address editable"/>
-            <button>Get directions</button>
-            <button>View driving time</button>
+            <div class="wgdtz_starting-location">            
+                <label>Starting location:</label>
+                <input type="text" placeholder="Type your starting location"/>
+            </div>
+            <div class="wgdtz_destination">
+                <label>Destination:</label>
+                {{#poiName}}<span class="wdgtz_location-name">{{poiName}}</span>{{/poiName}}
+                <div class="wdgtz_edit"></div>
+                {{#address}}<span class="wdgtz_address1">{{address}}</span>{{/address}}
+                {{#city}}<span class="wdgtz_city">{{city}}</span>{{/city}}
+                {{#stateProvince}}<span class="wdgtz_state-province">{{stateProvince}}</span>{{/stateProvince}}
+                {{#postalCode}}<span class="wdgtz_zip">{{postalCode}}</span>{{/postalCode}}
+                {{#country}}<span class="wdgtz_country">{{country}}</span>{{/country}}
+                <input class="wdgtz_full-address" value="{{fullAddress}}"/>
+                <span class="wdgtz_full-address">{{fullAddress}}</span>
+            </div>
+            <div class="wdgtz_get-directions">
+                <button>Get directions</button>
+            </div>
+            <div class="wdgtz_view-time">
+                <button>View driving time</button>
+            </div>
             <label>Need a rental car? Check prices</label>
             <input type="radio" value="Roundtrip"/>
             <input type="radio" value="Oneway"/>
+            <input type="text" placeholder="Enter pickup location"/>
+            <input type="text" placeholder="Enter drop-off location"/>
             <input type="text" placeholder="Type your starting location"/>
             <input type="date"/>
             <select>
