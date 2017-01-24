@@ -142,6 +142,7 @@ export class WidgetZ extends Observable {
     }
 
     let socialParam = params.find(p => p.key === 'social')
+    let stylesUrlParam = params.find(p => p.key === 'stylesUrl')
 
     state.headerText = headerParam ? headerParam.value : 'Tripplanz Widget'
     state.appendPoi = !!appendPoiParam && appendPoiParam.value === 'N'
@@ -185,11 +186,16 @@ export class WidgetZ extends Observable {
     state.returnDate = returnDate
 
     state.social = socialParam ? socialParam.value === 'Y' : false
+    state.stylesUrl = stylesUrlParam ? stylesUrlParam.value : 'build/styles.css'
 
     return state
   }
 
   initWidget(){
+    // CSS
+    var cssElement = $("<link>", { rel: "stylesheet", type: "text/css", href: this.state.stylesUrl })
+    cssElement.appendTo('head')
+
     if (window.squery){
       window.squery.run()
     }
@@ -227,10 +233,6 @@ export class WidgetZ extends Observable {
       if (this.views.length > 0){
         this.setView(this.views[0])
       }
-
-      // CSS
-      // var cssElement = $("<link>", { rel: "stylesheet", type: "text/css", href: 'styles.css' })
-			// cssElement.appendTo('head')
 
       // Footer
       // Social
