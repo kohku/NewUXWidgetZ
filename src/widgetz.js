@@ -228,10 +228,14 @@ export class WidgetZ extends Observable {
         this.setView(this.views[0])
       }
 
+      // CSS
+      var cssElement = $("<link>", { rel: "stylesheet", type: "text/css", href: 'style.css' })
+			cssElement.appendTo('head')
+
       // Footer
       // Social
       if (this.state.social){
-        var script = document.createElement( 'script' );
+        let script = document.createElement( 'script' );
         script.setAttribute( 'src', '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57624fad76e92068' );
         $.each($('#graphical-wdgtz-container'), (index, element) => {
           element.appendChild(script)
