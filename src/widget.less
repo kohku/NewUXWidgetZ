@@ -1,3 +1,4 @@
+@max-width: 800px;
 @tabs-height: 4em;
 @tabs-width: 7.5em;
 @picture-width: 114px;
@@ -21,7 +22,11 @@
 #graphical-wdgtz-container {
   font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
   font-size: 11px;
-  margin: 0 auto;
+
+  .graphical-wdgtz-container-wrapper {
+    max-width: @max-width;
+    margin: 0 auto;
+  }
 
   * {
     box-sizing: border-box;
@@ -111,7 +116,6 @@
     background-color: @content-background;
 
     &.wdgtz_full {
-      max-width: 800px;
 
       .wdgtz_hotel {
         border: @border-dev;
