@@ -18,20 +18,20 @@
     <div id="graphical-wdgtz-container">
     </div>
     <script>
-        var wdgt_image_URL = "http://i1.wp.com/solutionz.com/wp-content/uploads/2015/05/newoffice-300x300.png";
-        var wdgt_link_URL = "http://solutionz.com/";
-        var eventDate = new moment().startOf("day");
-        var daysToEvent = eventDate.diff(new moment().startOf("day"), "days");
-        if (daysToEvent > 0){
-            daysToEvent = eventDate.diff(new moment().startOf("day"), "days");
-        }else {
-            daysToEvent = eventDate.diff(new moment().startOf("day"), "days");
-        }
-        var eventLength = 2;
-        var defaultCheckIn = 0;
-        var checkIn = 7;
-        var lengthOfStay = 2;
-        var checkOut = undefined;
+        // var wdgt_image_URL = "http://i1.wp.com/solutionz.com/wp-content/uploads/2015/05/newoffice-300x300.png";
+        // var wdgt_link_URL = "http://solutionz.com/";
+        // var eventDate = new moment().startOf("day");
+        // var daysToEvent = eventDate.diff(new moment().startOf("day"), "days");
+        // if (daysToEvent > 0){
+        //     daysToEvent = eventDate.diff(new moment().startOf("day"), "days");
+        // }else {
+        //     daysToEvent = eventDate.diff(new moment().startOf("day"), "days");
+        // }
+        // var eventLength = 2;
+        // var defaultCheckIn = 0;
+        // var checkIn = 7;
+        // var lengthOfStay = 2;
+        // var checkOut = undefined;
         var widgetZVars = [
             { key: "wdgt_link_url", value: "http://solutionz.com/" },
             { key: "wdgt_image_url", value: "http://i1.wp.com/solutionz.com/wp-content/uploads/2015/05/newoffice-300x300.png" },
@@ -55,17 +55,17 @@
 
             { key: "currency", value: "USD" },
 
-            { key: "check_in", value: daysToEvent - defaultCheckIn },
-            { key: "check_out", value: daysToEvent + eventLength},
+            { key: "check_in", value: 2 },
+            { key: "check_out", value: 4 },
             { key: "guests", value: 1 },
             { key: "rooms", value: 1 },
             { key: "hotel_stars", value: "1,2,3,4,5" },
 
-            { key: "pick_up", value: daysToEvent },
-            { key: "drop_off", value: daysToEvent + eventLength },
+            { key: "pick_up", value: 2 },
+            { key: "drop_off", value: 4 },
 
-            { key: "departure", value: daysToEvent },
-            { key: "return", value: daysToEvent + eventLength },
+            { key: "departure", value: 2 },
+            { key: "return", value: 4 },
             
             { key: "social", value: "Y" }
         ];
