@@ -229,7 +229,7 @@ export class WidgetZ extends Observable {
       }
 
       // CSS
-      var cssElement = $("<link>", { rel: "stylesheet", type: "text/css", href: 'style.css' })
+      var cssElement = $("<link>", { rel: "stylesheet", type: "text/css", href: 'styles.css' })
 			cssElement.appendTo('head')
 
       // Footer
