@@ -103,24 +103,132 @@
             <div class="wdgtz_view-time">
                 <button>View driving time</button>
             </div>
-            <label>Need a rental car? Check prices</label>
-            <input type="radio" value="Roundtrip"/>
-            <input type="radio" value="Oneway"/>
-            <input type="text" placeholder="Enter pickup location"/>
-            <input type="text" placeholder="Enter drop-off location"/>
-            <input type="text" placeholder="Type your starting location"/>
-            <input type="date"/>
-            <select>
-                <option>Time</option>
-            </select>
-            <input type="date"/>
-            <select>
-                <option value="">Time</option>
-            </select>
-            <select>
-                <option value="Select Preferred Car Company"></option>
-            </select>
-            <button>Search</Search>
+            <div class="wdgtz_options">
+                <label>Need a rental car? Check prices</label>
+                <div class="wdgtz_params">
+                    <input type="radio" name="trip-rule" value="roundtrip" checked/>
+                    <label>Roundtrip</label>
+                    <input type="radio" name="trip-rule" value="oneway"/>
+                    <label>Oneway</label>
+                    <input type="text" placeholder="Type your starting location" class="wdgtz_roundtrip"/>
+                    <input type="text" placeholder="Enter pickup location" class="wdgtz_oneway"/>
+                    <div class="wdgtz_pick-up">
+                        <label class="wdgtz_roundtrip">Pickup</label>
+                        <input type="date"/>
+                        <select class="wdgtz_time-select">
+                            <option value="">Time</option>
+                            <option value="">12:00 AM</option>
+                            <option value="">12:30 AM</option>
+                            <option value="">1:00 AM</option>
+                            <option value="">1:30 AM</option>
+                            <option value="">2:00 AM</option>
+                            <option value="">2:30 AM</option>
+                            <option value="">3:00 AM</option>
+                            <option value="">3:30 AM</option>
+                            <option value="">4:00 AM</option>
+                            <option value="">4:30 AM</option>
+                            <option value="">5:00 AM</option>
+                            <option value="">5:30 AM</option>
+                            <option value="">6:00 AM</option>
+                            <option value="">6:30 AM</option>
+                            <option value="">7:00 AM</option>
+                            <option value="">7:30 AM</option>
+                            <option value="">8:00 AM</option>
+                            <option value="">8:30 AM</option>
+                            <option value="">9:00 AM</option>
+                            <option value="">9:30 AM</option>
+                            <option value="">10:00 AM</option>
+                            <option value="">10:30 AM</option>
+                            <option value="">11:00 AM</option>
+                            <option value="">11:30 AM</option>
+                            <option value="">12:00 PM</option>
+                            <option value="">12:30 PM</option>
+                            <option value="">1:00 PM</option>
+                            <option value="">1:30 PM</option>
+                            <option value="">2:00 PM</option>
+                            <option value="">2:30 PM</option>
+                            <option value="">3:00 PM</option>
+                            <option value="">3:30 PM</option>
+                            <option value="">4:00 PM</option>
+                            <option value="">4:30 PM</option>
+                            <option value="">5:00 PM</option>
+                            <option value="">5:30 PM</option>
+                            <option value="">6:00 PM</option>
+                            <option value="">6:30 PM</option>
+                            <option value="">7:00 PM</option>
+                            <option value="">7:30 PM</option>
+                            <option value="">8:00 PM</option>
+                            <option value="">8:30 PM</option>
+                            <option value="">9:00 PM</option>
+                            <option value="">9:30 PM</option>
+                            <option value="">10:00 PM</option>
+                            <option value="">10:30 PM</option>
+                            <option value="">11:00 PM</option>
+                            <option value="">11:30 PM</option>
+                        </select>
+                    </div>
+                    <input type="text" placeholder="Enter drop-off location" class="wdgtz_oneway"/>
+                    <div class="wdgtz_drop-off">
+                        <label class="wdgtz_roundtrip">Pickup</label>
+                        <input type="date"/>
+                        <select class="wdgtz_time-select">
+                            <option value="">Time</option>
+                            <option value="">12:00 AM</option>
+                            <option value="">12:30 AM</option>
+                            <option value="">1:00 AM</option>
+                            <option value="">1:30 AM</option>
+                            <option value="">2:00 AM</option>
+                            <option value="">2:30 AM</option>
+                            <option value="">3:00 AM</option>
+                            <option value="">3:30 AM</option>
+                            <option value="">4:00 AM</option>
+                            <option value="">4:30 AM</option>
+                            <option value="">5:00 AM</option>
+                            <option value="">5:30 AM</option>
+                            <option value="">6:00 AM</option>
+                            <option value="">6:30 AM</option>
+                            <option value="">7:00 AM</option>
+                            <option value="">7:30 AM</option>
+                            <option value="">8:00 AM</option>
+                            <option value="">8:30 AM</option>
+                            <option value="">9:00 AM</option>
+                            <option value="">9:30 AM</option>
+                            <option value="">10:00 AM</option>
+                            <option value="">10:30 AM</option>
+                            <option value="">11:00 AM</option>
+                            <option value="">11:30 AM</option>
+                            <option value="">12:00 PM</option>
+                            <option value="">12:30 PM</option>
+                            <option value="">1:00 PM</option>
+                            <option value="">1:30 PM</option>
+                            <option value="">2:00 PM</option>
+                            <option value="">2:30 PM</option>
+                            <option value="">3:00 PM</option>
+                            <option value="">3:30 PM</option>
+                            <option value="">4:00 PM</option>
+                            <option value="">4:30 PM</option>
+                            <option value="">5:00 PM</option>
+                            <option value="">5:30 PM</option>
+                            <option value="">6:00 PM</option>
+                            <option value="">6:30 PM</option>
+                            <option value="">7:00 PM</option>
+                            <option value="">7:30 PM</option>
+                            <option value="">8:00 PM</option>
+                            <option value="">8:30 PM</option>
+                            <option value="">9:00 PM</option>
+                            <option value="">9:30 PM</option>
+                            <option value="">10:00 PM</option>
+                            <option value="">10:30 PM</option>
+                            <option value="">11:00 PM</option>
+                            <option value="">11:30 PM</option>
+                        </select>
+                    </div>
+                    <select>
+                        <option value="">Select Preferred Car Company</option>
+                    </select>
+                    <button>Search</Search>
+                </div>
+            </div>
         </div>
         <div class="{{#tabs.flying}}wdgtz_flight{{/tabs.flying}}" data-content="flying">
             <label>I'll fly there</label>
@@ -129,7 +237,7 @@
             <label>Flying to:</label>
             <label>[Location]</label>
             <div class="wdgtz_edit"></div>
-            <input class="wdgtz_calendar" name="daterange"/>
+            <input class="wdgtz_calendar" nPMe="daterange"/>
             <select>
                 <option value="1">1 Traveler</option>
             </select>

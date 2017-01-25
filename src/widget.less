@@ -200,7 +200,6 @@
           display: inline-block;
           width: 86px;
           margin-bottom: 3.35em;
-          // transition: margin-bottom 0.6s ease;
 
           &.wdgtz_expanded {
             margin-bottom: 1.1em;
@@ -223,7 +222,7 @@
           left: 50%;
           text-align: right;
 
-          & > * {
+          > * {
             position: relative;
             right: 50%;
           }
@@ -272,11 +271,11 @@
       }
     }
 
-    & > * {
+    > * {
       display: none;
     }
 
-    & > .wdgtz_active {
+    > .wdgtz_active {
       display: block;
     }
 
@@ -393,17 +392,9 @@
         }
 
         .wdgtz_options {
-          clear: right;
-          width: 100%;
 
           &.wdgtz_expanded {
             label {
-              &::before{
-                border-top: .45em solid @navy;
-                border-left: .45em solid transparent;
-                border-right: .45em solid transparent;
-                border-bottom: none;
-              }
 
               .wdgtz_more {
                 display: none;
@@ -421,23 +412,6 @@
           }
 
           label {
-            color: @navy;
-            display: block;
-            width: 100%;
-            margin-bottom: 1em;
-            text-decoration: underline;
-
-            &::before{
-              display: inline-block;
-              content: '';
-              width: 0; 
-              height: 0; 
-              border-top: .45em solid transparent;
-              border-bottom: .45em solid transparent;
-              border-left: .45em solid @navy;
-              border-right: none;
-              margin-right: .5em;
-            }
 
             .wdgtz_more {
               display: inline;
@@ -449,10 +423,6 @@
           }
 
           .wdgtz_params {
-            overflow: hidden;
-            height: 0;
-            opacity: 0;
-            transition: all 0.6s ease;
 
             .wdgtz_hotel-chain {
               display: inline-block;
@@ -585,7 +555,7 @@
 
     .wdgtz_car {
 
-      & > label {
+      > label {
         display: block;
         width: 100%;
         margin: 1em 2em;
@@ -594,29 +564,28 @@
       }
 
       .wdgtz_driving-directions {
-        width: ~"calc(100% - 3em)";
+        // width: ~"calc(100% - 3em)";
         margin: .75em 1.5em;
         background-color: @grey-30;
         padding: .75em;
-        font-size: 13px;
         text-align: center;
       }
 
       .wgdtz_starting-location {
         display: inline-block;
         width: ~"calc(50% - .75em)";
+        height: 5em;
         padding-right: .75em;
-        padding-left: 2em;
+        padding-left: 1.5em;
         margin-bottom: 1em;
-        font-size: 13px;
         float: left;
 
-        & > label {
+        > label {
           font-size: 11px;
           line-height: 1.5em;
         }
 
-        & > input {
+        > input {
           width: 100%;
         }
       }
@@ -624,14 +593,17 @@
       .wgdtz_destination {
         display: inline-block;
         width: ~"calc(50% - .75em)";
+        height: 5em;
         padding-left: .75em;
         margin-bottom: 1em;
-        font-size: 13px;
         line-height: 1.35em;
 
-        & > label {
+        > span {
+          font-size: 13px;
+        }
+
+        > label {
           display: block;
-          font-size: 11px;
           line-height: 1.5em;
         }
 
@@ -639,7 +611,7 @@
           float: right;
         }
 
-        & > input {
+        > input {
           width: 100%;
         }
 
@@ -653,6 +625,7 @@
         width: ~"calc(50% - .75em)";
         text-align: right;
         padding-right: .75em;
+        margin-bottom: 1em;
 
         button {
           margin-right: 0;
@@ -664,10 +637,119 @@
         width: ~"calc(50% - .75em)";
         text-align: left;
         padding-left: .75em;
+        margin-bottom: 1em;
 
         button {
           margin-left: 0;
         }
+      }
+
+      .wdgtz_options {
+        margin-left: 1.5em;
+        margin-right: 1.5em;
+        margin-bottom: 1em;
+
+        &.wdgtz_expanded .wdgtz_params {
+          height: 27em;
+          opacity: 1;
+          transition: all 0.3s ease;
+        }
+
+        .wdgtz_params {
+
+          input[type="radio"] {
+            display: inline-block;
+          }
+
+          > label {
+            display: inline-block;
+            height: 2.5em;
+            vertical-align: middle;
+            font-size: 13px;
+
+            &:first-of-type{
+              margin-right: 7em;
+            }
+          }
+
+          input[type="text"], select {
+            width: 100%;
+            margin-bottom: 1em;
+          }
+
+          .wdgtz_pick-up, .wdgtz_drop-off {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            > label {
+              line-height: 1.5em;
+              flex: 0 0 100%;
+            }
+
+            > input[type="date"] {
+              flex: 1 1 60%;
+            }
+
+            .wdgtz_time-select {
+              flex: 1 1 30%;
+            }
+          }
+
+          .wdgtz_oneway {
+            display: none;
+          }
+
+          &.wdgtz_trip-rule-oneway {
+            height: 28em;
+
+            .wdgtz_roundtrip {
+              display: none;
+            }
+          
+            .wdgtz_oneway {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    .wdgtz_options {
+      clear: right;
+
+      &.wdgtz_expanded > label::before {
+        border-top: .45em solid @navy;
+        border-left: .45em solid transparent;
+        border-right: .45em solid transparent;
+        border-bottom: none;
+      }
+
+      > label {
+        color: @navy;
+        display: block;
+        width: 100%;
+        margin-bottom: 1em;
+        text-decoration: underline;
+
+        &::before {
+          display: inline-block;
+          content: '';
+          width: 0; 
+          height: 0; 
+          border-top: .45em solid transparent;
+          border-bottom: .45em solid transparent;
+          border-left: .45em solid @navy;
+          border-right: none;
+          margin-right: .5em;
+        }
+      }
+
+      .wdgtz_params {
+        overflow: hidden;
+        height: 0;
+        opacity: 0;
+        transition: all 0.6s ease;
       }
     }
 
@@ -682,6 +764,7 @@
       background-color: @white;
       height: 100%;
       text-align: center;
+      padding-top: .5em;
 
       .wdgtz_social {
         transform: scale(.75);
