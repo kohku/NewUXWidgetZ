@@ -56,6 +56,7 @@
     appearance: none;
     text-indent: 0.01px;
     text-overflow: '';
+    padding-right: 2em;
 
     &::-ms-expand {	
       display: none; 
@@ -154,10 +155,6 @@
             display: inline-block;
           }
 
-          .wdgt_comma {
-            display: inline-block;
-          }
-
           .wdgtz_edit {
             display: inline-block;
             margin-right: 9em;
@@ -212,6 +209,84 @@
         }
       }
 
+      .wdgtz_car {
+        .wdgtz_starting-location, .wdgtz_destination {
+          display: inline-block;
+          width: ~"calc(50% - .75em)";
+        }
+
+        .wdgtz_starting-location {
+          float: left;
+          padding-right: .75em;
+        }
+
+        .wdgtz_destination{
+          padding-left: .75em;
+        }
+
+        .wdgtz_options.wdgtz_expanded .wdgtz_params {
+          height: 14em;
+
+          .wdgtz_roundtrip {
+            width: 30%;
+            display: inline-block;
+            vertical-align: bottom;
+          }
+
+          .wdgtz_pick-up, .wdgtz_drop-off {
+            .wdgtz_time-select {
+              padding-left: .5em;
+            }
+          }
+
+          &.wdgtz_trip-rule-oneway {
+            height: 17em;
+
+            .wdgtz_pick-up {
+              margin-right: 30%;
+            }
+            .wdgtz_drop-off {
+              margin-left: 1em;
+              margin-right: 30%;
+            }
+
+            .wdgtz_pick-up label, .wdgtz_drop-off label {
+              display: none;
+            }
+
+            .wdgtz_oneway {
+              width: 30%;
+              display: inline-flex;
+              vertical-align: bottom;
+            }
+          }
+
+          .wdgtz_pick-up {
+            width: 30%;
+            display: inline-flex;
+            vertical-align: bottom;
+            margin-left: 1em;
+          }
+
+          .wdgtz_drop-off {
+            width: 30%;
+            display: inline-flex;
+            vertical-align: bottom;
+            margin-left: -.45em;
+          }
+
+          .wdgtz_car-company {
+            width: 30%;
+            display: inline-block;
+          }
+
+          button {
+            float: right;
+            margin-right: ~"calc(10% - 1em)";
+          }
+        }
+      }
+
       .wdgtz_footer {
         min-height: 4em;
         position: relative;
@@ -236,7 +311,7 @@
     }
 
     &.wdgtz_mobile {
-        .wdgtz_hotel .wdgtz_header .wdgtz_edit {
+      .wdgtz_hotel .wdgtz_header .wdgtz_edit {
         margin-right: 4em;
       }
 
@@ -296,7 +371,7 @@
         }
 
         &.editable {
-          .wdgt_comma, .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
+          .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
           .wdgtz_zip, .wdgtz_country{
             display: none;
           }
@@ -311,7 +386,7 @@
         }
 
         &.edited {
-          .wdgt_comma, .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
+          .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
           .wdgtz_zip, .wdgtz_country{
             display: none;
           }
@@ -319,10 +394,6 @@
           span.wdgtz_full-address {
             display: inline-block;
           }
-        }
-
-        .wdgt_comma{
-          display: none;
         }
 
         label, .wdgtz_location-name, .wdgtz_address1 {
@@ -558,28 +629,30 @@
       > label {
         display: block;
         width: 100%;
-        margin: 1em 2em;
+        margin: 1em 1.35em;
         font-size: 13px;
         font-weight: bold;
       }
 
       .wdgtz_driving-directions {
-        // width: ~"calc(100% - 3em)";
         margin: .75em 1.5em;
         background-color: @grey-30;
         padding: .75em;
         text-align: center;
+        font-size: 13px;
       }
 
-      .wgdtz_starting-location {
-        display: inline-block;
-        width: ~"calc(50% - .75em)";
-        height: 5em;
-        padding-right: .75em;
+      .wdgtz_starting-location, .wdgtz_destination {
+        display: block;
+        width: 100%;
+        float: none;
         padding-left: 1.5em;
+        padding-right: 1.5em;
+        height: 5em;
         margin-bottom: 1em;
-        float: left;
+      }
 
+      .wdgtz_starting-location {
         > label {
           font-size: 11px;
           line-height: 1.5em;
@@ -590,12 +663,7 @@
         }
       }
 
-      .wgdtz_destination {
-        display: inline-block;
-        width: ~"calc(50% - .75em)";
-        height: 5em;
-        padding-left: .75em;
-        margin-bottom: 1em;
+      .wdgtz_destination {
         line-height: 1.35em;
 
         > span {
@@ -647,21 +715,17 @@
       .wdgtz_options {
         margin-left: 1.5em;
         margin-right: 1.5em;
-        margin-bottom: 1em;
 
         &.wdgtz_expanded .wdgtz_params {
           height: 27em;
           opacity: 1;
           transition: all 0.3s ease;
-        }
 
-        .wdgtz_params {
-
-          input[type="radio"] {
+          .wdgtz_trip-rule input[type="radio"] {
             display: inline-block;
           }
 
-          > label {
+          .wdgtz_trip-rule > label {
             display: inline-block;
             height: 2.5em;
             vertical-align: middle;
@@ -687,8 +751,9 @@
               flex: 0 0 100%;
             }
 
-            > input[type="date"] {
+            > input.wdgtz_datepicker {
               flex: 1 1 60%;
+              text-transform: uppercase;
             }
 
             .wdgtz_time-select {

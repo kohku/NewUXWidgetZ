@@ -1,7 +1,7 @@
 import { baseView } from './baseView'
 import $ from 'jquery'
-// import timepicker from 'timepicker'
-// import 'timepicker/jquery.timepicker.css'
+import 'jquery-ui/ui/widgets/datepicker'
+import 'jquery-ui/themes/base/base.css'
 
 export class drivingView extends baseView {
   constructor(widget, state, selector, content){
@@ -9,6 +9,12 @@ export class drivingView extends baseView {
   }
 
   initialize(){
+    this.content.find('.wdgtz_options .wdgtz_params input.wdgtz_datepicker').datepicker({
+      dateFormat: 'dMy',
+      minDate: 0,
+      maxDate: null,
+      dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    })
   }
 
   setListeners(){
