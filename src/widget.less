@@ -224,65 +224,77 @@
           padding-left: .75em;
         }
 
-        .wdgtz_options.wdgtz_expanded .wdgtz_params {
-          height: 14em;
+        .wdgtz_options {
+          &.wdgtz_expanded .wdgtz_params {
+            height: 14em;
 
-          .wdgtz_roundtrip {
-            width: 30%;
-            display: inline-block;
-            vertical-align: bottom;
-          }
-
-          .wdgtz_pick-up, .wdgtz_drop-off {
-            .wdgtz_time-select {
-              padding-left: .5em;
+            &.wdgtz_trip-rule-oneway {
+              height: 17em;
             }
           }
 
-          &.wdgtz_trip-rule-oneway {
-            height: 17em;
+          .wdgtz_params {
+
+            .wdgtz_roundtrip {
+              width: 30%;
+              display: inline-block;
+              vertical-align: bottom;
+            }
+
+            .wdgtz_pick-up, .wdgtz_drop-off {
+              .wdgtz_time-select {
+                padding-left: .5em;
+              }
+            }
+
+            &.wdgtz_trip-rule-oneway {
+
+              .wdgtz_pick-up {
+                margin-right: 30%;
+              }
+              .wdgtz_drop-off {
+                margin-left: 1em;
+                margin-right: 30%;
+              }
+
+              .wdgtz_pick-up label, .wdgtz_drop-off label {
+                display: none;
+              }
+
+              .wdgtz_oneway {
+                width: 30%;
+                display: inline-flex;
+                vertical-align: bottom;
+              }
+
+              button {
+                margin-right: ~"calc(40% - 1em)";
+              }
+            }
 
             .wdgtz_pick-up {
-              margin-right: 30%;
-            }
-            .wdgtz_drop-off {
-              margin-left: 1em;
-              margin-right: 30%;
-            }
-
-            .wdgtz_pick-up label, .wdgtz_drop-off label {
-              display: none;
-            }
-
-            .wdgtz_oneway {
               width: 30%;
               display: inline-flex;
               vertical-align: bottom;
+              margin-left: 1em;
             }
-          }
 
-          .wdgtz_pick-up {
-            width: 30%;
-            display: inline-flex;
-            vertical-align: bottom;
-            margin-left: 1em;
-          }
+            .wdgtz_drop-off {
+              width: 30%;
+              display: inline-flex;
+              vertical-align: bottom;
+              margin-left: -.45em;
+            }
 
-          .wdgtz_drop-off {
-            width: 30%;
-            display: inline-flex;
-            vertical-align: bottom;
-            margin-left: -.45em;
-          }
+            .wdgtz_car-company {
+              width: 30%;
+              display: inline-block;
+            }
 
-          .wdgtz_car-company {
-            width: 30%;
-            display: inline-block;
-          }
-
-          button {
-            float: right;
-            margin-right: ~"calc(10% - 1em)";
+            button {
+              float: right;
+              margin-right: ~"calc(10% - 1em)";
+            }
           }
         }
       }
@@ -717,7 +729,14 @@
         margin-right: 1.5em;
 
         &.wdgtz_expanded .wdgtz_params {
-          height: 27em;
+          height: 27.5em;
+
+          &.wdgtz_trip-rule-oneway {
+            height: 28.75em;
+          }
+        }
+
+        .wdgtz_params {
           opacity: 1;
           transition: all 0.3s ease;
 
@@ -766,7 +785,6 @@
           }
 
           &.wdgtz_trip-rule-oneway {
-            height: 28em;
 
             .wdgtz_roundtrip {
               display: none;

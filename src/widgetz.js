@@ -1,6 +1,7 @@
 import './widget.less'
 import { Observable } from './observable'
 import $ from 'jquery'
+import Promise from 'es6-promise'
 // import 'jquery-ui/ui/widget'
 // import 'jquery-ui/ui/widgets/button'
 // import 'jquery-ui/ui/widgets/datepicker'
@@ -193,63 +194,72 @@ export class WidgetZ extends Observable {
 
   initWidget(){
     // CSS
-    var cssElement = $("<link>", { rel: "stylesheet", type: "text/css", href: this.state.stylesUrl })
-    cssElement.appendTo('head')
-
-    if (window.squery){
-      window.squery.run()
-    }
-
-    // loading widget
-    $.get('widget.htm', template => {
-      let rendered = Mustache.render(template, this.state)
-      $('#graphical-wdgtz-container').html(rendered)
-
-      if (window.squery){
-          window.squery.refresh()
-      }
-
-      // loading tabs and setting up listeners
-      $.each($('ul.wdgtz_tabs > li'), (index, li) => {
-        let selector = $(li)
-        let key = selector.data('key')
-        let content = $(`.wdgtz_content > *[data-content=${selector.data('key')}]`)
-        switch(key){
-          case 'staying':
-            this.views.push(new stayingView(this, this.state, selector, content))
-            break
-          case 'driving':
-            this.views.push(new drivingView(this, this.state, selector, content))
-            break
-          case 'flying':
-            this.views.push(new flyingView(this, this.state, selector, content))
-            break
-          default:
-            throw error(`Undefined view ${key}`)
-        }
+    // I'm going to use a promise to get the css
+    // That way due to browser cache it's gonna be available after I create the link to the file
+    new Promise((resolve, reject) => {
+      $.get(this.state.stylesUrl).done(()=>{
+        var cssElement = $("<link>", { rel: "stylesheet", type: "text/css", href: this.state.stylesUrl })
+        cssElement.appendTo('head')
+        resolve()
+      }).fail(() => {
+        reject()
       })
-
-      // set initial view
-      if (this.views.length > 0){
-        this.setView(this.views[0])
+    }).then(() => {
+      if (window.squery){
+        window.squery.run()
       }
 
-      // Footer
-      // Social
-      if (this.state.social){
-        let script = document.createElement( 'script' );
-        script.setAttribute( 'src', '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57624fad76e92068' );
-        $.each($('#graphical-wdgtz-container'), (index, element) => {
-          element.appendChild(script)
+      // loading widget
+      $.get('widget.htm', template => {
+        let rendered = Mustache.render(template, this.state)
+        $('#graphical-wdgtz-container').html(rendered)
+
+        if (window.squery){
+            window.squery.refresh()
+        }
+
+        // loading tabs and setting up listeners
+        $.each($('ul.wdgtz_tabs > li'), (index, li) => {
+          let selector = $(li)
+          let key = selector.data('key')
+          let content = $(`.wdgtz_content > *[data-content=${selector.data('key')}]`)
+          switch(key){
+            case 'staying':
+              this.views.push(new stayingView(this, this.state, selector, content))
+              break
+            case 'driving':
+              this.views.push(new drivingView(this, this.state, selector, content))
+              break
+            case 'flying':
+              this.views.push(new flyingView(this, this.state, selector, content))
+              break
+            default:
+              throw error(`Undefined view ${key}`)
+          }
         })
 
-        window.setTimeout(() => {
-          window.addthis_share = {
-            title: `${this.state.headerText}${this.state.appendPoi ? this.state.poiName : ''}`,
-            media: this.state.pictureUrl
-          }
-        }, 250)
-      }
+        // set initial view
+        if (this.views.length > 0){
+          this.setView(this.views[0])
+        }
+
+        // Footer
+        // Social
+        if (this.state.social){
+          let script = document.createElement( 'script' );
+          script.setAttribute( 'src', '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57624fad76e92068' );
+          $.each($('#graphical-wdgtz-container'), (index, element) => {
+            element.appendChild(script)
+          })
+
+          window.setTimeout(() => {
+            window.addthis_share = {
+              title: `${this.state.headerText}${this.state.appendPoi ? this.state.poiName : ''}`,
+              media: this.state.pictureUrl
+            }
+          }, 250)
+        }
+      })
     })
   }
 
