@@ -228,6 +228,10 @@
 
         .wdgtz_destination{
           padding-left: .75em;
+
+          .wdgtz_country {
+            margin-right: 1em;
+          }
         }
 
         .wdgtz_options {
@@ -359,6 +363,19 @@
           }
         }
       }
+
+      .wdgtz_car .wdgtz_destination {
+        height: auto;
+
+        .wdgtz_address1 {
+          display: block;
+        }
+        
+        input.wdgtz_full-address {
+          width: 80%;
+          margin-right: 1em;
+        }
+      }
     }
 
     > * {
@@ -427,26 +444,6 @@
 
         .wdgtz_country {
           margin-right: 7em;
-        }
-
-        .wdgtz_edit {
-          font-size: 13px;
-          display: inline-block;
-          height: 1.25em;
-          width: 1em;
-          border: @border-dev;
-          cursor: pointer;
-
-          &::before{
-            content: '';
-            display: block;
-            width: 2em;
-            height: 2em;
-            background-image: url(../images/edit-location.png);
-            background-size: 2em 2em;
-            background-repeat: no-repeat;
-            background-position-y: -.25em;
-          }
         }
       }
 
@@ -690,6 +687,10 @@
       .wdgtz_destination {
         line-height: 1.35em;
 
+        .wdgtz_location-name {
+          display: block;
+        }
+
         > span {
           font-size: 13px;
         }
@@ -699,8 +700,8 @@
           line-height: 1.5em;
         }
 
-        .wdgtz_edit {
-          // float: right;
+        .wdgtz_country {
+          margin-right: 7em;
         }
 
         > input {
@@ -709,6 +710,37 @@
 
         .wdgtz_full-address {
           display: none;
+        }
+
+        input.wdgtz_full-address {
+          width: 80%;
+          margin-right: 2.5em;
+        }
+
+        &.editable {
+          .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
+          .wdgtz_zip, .wdgtz_country{
+            display: none;
+          }
+
+          input.wdgtz_full-address {
+            display: inline-block;
+          }
+
+          &.edited span.wdgtz_full-address {
+            display: none;
+          }
+        }
+
+        &.edited {
+          .wdgtz_address1, .wdgtz_city, .wdgtz_state-province, 
+          .wdgtz_zip, .wdgtz_country{
+            display: none;
+          }
+
+          span.wdgtz_full-address {
+            display: inline-block;
+          }
         }
       }
 
@@ -807,6 +839,26 @@
             }
           }
         }
+      }
+    }
+
+    .wdgtz_edit {
+      font-size: 13px;
+      display: inline-block;
+      height: 1.25em;
+      width: 1em;
+      border: @border-dev;
+      cursor: pointer;
+
+      &::before{
+        content: '';
+        display: block;
+        width: 2em;
+        height: 2em;
+        background-image: url(../images/edit-location.png);
+        background-size: 2em 2em;
+        background-repeat: no-repeat;
+        background-position-y: -.25em;
       }
     }
 

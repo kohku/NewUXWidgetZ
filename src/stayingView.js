@@ -186,7 +186,7 @@ export class stayingView extends baseView{
   }
 
   toggleEditAddress(){
-    $('.wdgtz_header').toggleClass('editable')
+    this.content.find('.wdgtz_header').toggleClass('editable')
   }
 
   openWidgetUrl(event){
