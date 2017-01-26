@@ -150,15 +150,21 @@
             float: left;
           }
 
-          label, .wdgtz_location-name, .wdgtz_address1, .wdgtz_country {
+          .wdgtz_location-name {
+            display: block;
+          }
+
+          label, .wdgtz_address1, .wdgtz_country {
             clear: none;
             display: inline-block;
           }
 
+          .wdgtz_country {
+            margin-right: 4.5em;
+          }
+
           .wdgtz_edit {
             display: inline-block;
-            margin-right: 9em;
-            float: right;
 
             &::before{
               width: 1.75em;
@@ -323,9 +329,6 @@
     }
 
     &.wdgtz_mobile {
-      .wdgtz_hotel .wdgtz_header .wdgtz_edit {
-        margin-right: 4em;
-      }
 
       .wdgtz_hotel .wdgtz_details {
         & .wdgtz_guest, & .wdgtz_rooms {
@@ -379,7 +382,8 @@
         }
 
         input.wdgtz_full-address {
-          width: 55%;
+          width: 60%;
+          margin-right: 4.5em;
         }
 
         &.editable {
@@ -389,7 +393,7 @@
           }
 
           input.wdgtz_full-address {
-            display: block;
+            display: inline-block;
           }
 
           &.edited span.wdgtz_full-address {
@@ -408,7 +412,11 @@
           }
         }
 
-        label, .wdgtz_location-name, .wdgtz_address1 {
+        .wdgtz_location-name {
+          display: block;
+        }
+
+        label, .wdgtz_address1 {
           display: block;
           clear: left;
         }
@@ -417,12 +425,16 @@
           display: inline-block;
         }
 
+        .wdgtz_country {
+          margin-right: 7em;
+        }
+
         .wdgtz_edit {
+          font-size: 13px;
+          display: inline-block;
           height: 1.25em;
           width: 1em;
           border: @border-dev;
-          float: right;
-          margin-right: 4em;
           cursor: pointer;
 
           &::before{
@@ -688,7 +700,7 @@
         }
 
         .wdgtz_edit {
-          float: right;
+          // float: right;
         }
 
         > input {

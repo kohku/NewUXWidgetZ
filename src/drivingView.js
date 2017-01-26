@@ -9,6 +9,7 @@ export class drivingView extends baseView {
   }
 
   initialize(){
+
     this.content.find('.wdgtz_options .wdgtz_params input.wdgtz_datepicker').datepicker({
       dateFormat: 'dMy',
       minDate: 0,

@@ -15,7 +15,6 @@
             <div class="wdgtz_header" >
                 <label>I need a hotel near:</label>
                 {{#poiName}}<span class="wdgtz_location-name">{{poiName}}</span>{{/poiName}}
-                <div class="wdgtz_edit"></div>
                 {{#address}}<span class="wdgtz_address1">{{address}}</span>{{/address}}
                 {{#city}}<span class="wdgtz_city">{{city}}</span>{{/city}}
                 {{#stateProvince}}<span class="wdgtz_state-province">{{stateProvince}}</span>{{/stateProvince}}
@@ -23,6 +22,7 @@
                 {{#country}}<span class="wdgtz_country">{{country}}</span>{{/country}}
                 <input class="wdgtz_full-address" value="{{fullAddress}}"/>
                 <span class="wdgtz_full-address">{{fullAddress}}</span>
+                <div class="wdgtz_edit"></div>
             </div>
             <div class="wdgtz_picture-maps">
                 <div class="wdgtz_flip-container" ontouchstart="this.classList.toggle('wdgtz_hover');">
@@ -87,7 +87,6 @@
             <div class="wdgtz_destination">
                 <label>Destination:</label>
                 {{#poiName}}<span class="wdgtz_location-name">{{poiName}}</span>{{/poiName}}
-                <div class="wdgtz_edit"></div>
                 {{#address}}<span class="wdgtz_address1">{{address}}</span>{{/address}}
                 {{#city}}<span class="wdgtz_city">{{city}}</span>{{/city}}
                 {{#stateProvince}}<span class="wdgtz_state-province">{{stateProvince}}</span>{{/stateProvince}}
@@ -95,6 +94,7 @@
                 {{#country}}<span class="wdgtz_country">{{country}}</span>{{/country}}
                 <input class="wdgtz_full-address" value="{{fullAddress}}"/>
                 <span class="wdgtz_full-address">{{fullAddress}}</span>
+                <div class="wdgtz_edit"></div>
             </div>
             <div class="wdgtz_get-directions">
                 <button>Get directions</button>
