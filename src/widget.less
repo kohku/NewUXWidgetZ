@@ -364,16 +364,22 @@
         }
       }
 
-      .wdgtz_car .wdgtz_destination {
-        height: auto;
+      .wdgtz_car {
+          .wdgtz_destination {
+          height: auto;
 
-        .wdgtz_address1 {
-          display: block;
+          .wdgtz_address1 {
+            display: block;
+          }
+
+          input.wdgtz_full-address {
+            width: 80%;
+            margin-right: 1em;
+          }
         }
-        
-        input.wdgtz_full-address {
-          width: 80%;
-          margin-right: 1em;
+
+        .wdgtz_options .wdgtz_params .wdgtz_trip-rule > label:first-of-type {
+          margin-right: 5em;
         }
       }
     }
@@ -449,9 +455,16 @@
 
       .wdgtz_details {
         border: @border-dev;
-        // margin-bottom: 1em;
         padding-left: 1.5em;
         padding-right: 1.5em;
+
+        &:before {
+          display: block;
+          position: relative;
+          content: 'Check in / check out:';
+          font-size: 11px;
+          top: -.25em;
+        }
 
         .wdgtz_calendar {
           display: inline-block;
