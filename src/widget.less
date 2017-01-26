@@ -310,24 +310,24 @@
       }
 
       .wdgtz_footer {
+        flex-direction: row;
+        justify-content: space-between;
         min-height: 4em;
-        position: relative;
+
+        .wdgtz_my-itineraries {
+          margin-top: 1em;
+        }
 
         .wdgtz_social {
-          float: left;
-          position: relative;
-          left: 50%;
-          text-align: right;
-
-          > * {
-            position: relative;
-            right: 50%;
-          }
+          flex: 1 1 310px;
         }
 
         .wdgtz_powered-by {
-          float: right;
-          margin-right: 1em;
+          flex: 1 1 130px;
+
+          :after {
+            margin-right: 1.5em;
+          }
         }
       }
     }
@@ -918,7 +918,8 @@
     }
 
     .wdgtz_footer {
-      display: block;
+      display: flex;
+      flex-direction: column;
       min-height: 3em;
       width: 100%;
       background-color: @white;
@@ -926,19 +927,37 @@
       text-align: center;
       padding-top: .5em;
 
+      .wdgtz_my-itineraries {
+        flex: 1 1 auto;
+        display: block;
+        margin-bottom: .5em;
+
+        a, a:hover, a:active, a:visited {
+          text-decoration: underline;
+          color: @navy;
+        }
+      }
+
       .wdgtz_social {
+        flex: 1 1 auto;
         transform: scale(.75);
       }
 
       .wdgtz_powered-by {
-        width: 191px;
-        height: 30px;
-        background-image: url('../images/poweredby_tripplanz.png');
-        background-repeat: no-repeat;
-        margin-top: .5em;
-        margin-bottom: 1em;
-        margin-left: auto;
-        margin-right: auto;
+        flex: 1 1 auto;
+
+        &:after {
+          display: block;
+          content: '';
+          width: 191px;
+          height: 30px;
+          background-image: url('../images/poweredby_tripplanz.png');
+          background-repeat: no-repeat;
+          margin-top: .5em;
+          margin-bottom: 1em;
+          margin-left: auto;
+          margin-right: auto;
+        }
       }
     }
   }
