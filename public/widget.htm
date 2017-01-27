@@ -235,16 +235,17 @@
         </div>
         <div class="{{#tabs.flying}}wdgtz_flight{{/tabs.flying}}" data-content="flying">
             <label>I'll fly there</label>
-            <label>Flying from:
-            <input type="text" placeholder="Enter starting airport"/>
+            <label>Flying from:</label>
+            <input type="text" class="wdgtz_starting-airport" placeholder="Enter starting airport"/>
             <label>Flying to:</label>
-            <label>[Location]</label>
-            <div class="wdgtz_edit"></div>
-            <input class="wdgtz_calendar" nPMe="daterange"/>
-            <select>
+            <div class="wdgtz_location">
+                <label>[Location]</label>
+                <div class="wdgtz_edit"></div>
+            </div>
+            <input class="wdgtz_calendar" name="daterange"/>
+            <select class="wdgtz_traveler">
                 <option value="1">1 Traveler</option>
             </select>
-            <button>Search</button>
             <div class="wdgtz_options">
                 <label><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
                 <div class="wdgtz_params">
@@ -256,6 +257,7 @@
                     </select>
                 </div>
             </div>
+            <button>Search</button>
         </div>
         <div class="wdgtz_footer">
             <div class="wdgtz_my-itineraries"><a target="_blank" href="https://secure.rezserver.com/hotels/help/review/?refid={{refId}}&refclickid={{refClickId}}&refclickid2={{refClickId2}}">My Itineraries</a></div>

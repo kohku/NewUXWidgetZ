@@ -914,7 +914,65 @@
     }
 
     .wdgtz_flight {
-      border: @border-dev;
+      padding: 1.5em 1.5em .25em 1.5em;
+
+      label {
+        display: block;
+        width: 100%;
+        font-size: 11px;
+        line-height: 1.5em;
+  
+        &:first-of-type {
+          font-size: 13px;
+          margin-bottom: 1em;
+          line-height: 1.175em;
+        }
+      }
+
+      .wdgtz_starting-airport {
+        width: 100%;
+        margin-bottom: 1em;
+      }
+
+      .wdgtz_location {
+        display: flex;
+        margin-bottom: 1em;
+
+        label {
+          flex: 1 1 80%;
+        }
+
+        .wdgtz_edit {
+          flex: 0 0 2em;
+        }
+      }
+
+      .wdgtz_calendar, .comiseo-daterangepicker-triggerbutton {
+        width : 100%;
+        margin-bottom: 1em;
+      }
+
+      .wdgtz_traveler {
+        width: 100%;
+        margin-bottom: 1em;
+      }
+
+      .wdgtz_options.wdgtz_expanded .wdgtz_params {
+        opacity: 1;
+        height: 8em;
+
+        .wdgtz_airline, .wdgtz_seat-class {
+          width: 100%;
+        }
+
+        .wdgtz_airline {
+          margin-bottom: 1em;
+        }
+      }
+
+      button {
+        margin-bottom: .5em;
+      }
     }
 
     .wdgtz_footer {
