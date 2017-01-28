@@ -564,17 +564,15 @@
           }
         }
 
-        & .wdgtz_guest, & .wdgtz_rooms {
+        & .wdgtz_guest {
+          display: inline-block;
+          width: ~"calc(50% - .75em)";
+        }
+        
+        & .wdgtz_rooms {
+          float: right;
           width: ~"calc(50% - .75em)";
           margin-bottom: 1em;
-        }
-
-        .wdgtz_guest {
-          display: inline-block;
-        }
-
-        .wdgtz_rooms {
-          float: right;
         }
 
         .wdgtz_options {
