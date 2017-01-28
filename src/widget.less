@@ -309,6 +309,83 @@
         }
       }
 
+      .wdgtz_flight {
+        .wdgtz_details {
+          display: inline-block;
+          width: ~"calc(100% - 85px - 1em)";
+          padding-right: 0;
+
+          .wdgtz_flying-from, .wdgtz_flying-to {
+            display: inline-block;
+            width: 27%;
+          }
+
+          .wdgtz_flying-to {
+            width: 30%;
+          }
+          
+          .wdgtz_flying-to{
+            padding-left: .5em;
+            vertical-align: top;
+          }
+
+          .wdgtz_calendar, .comiseo-daterangepicker-triggerbutton.ui-widget, .wdgtz_traveler {
+            display: inline-block;
+            width: 24%;
+            min-width: 24%;
+            vertical-align: bottom;
+          }
+
+          .wdgtz_calendar, .comiseo-daterangepicker-triggerbutton.ui-widget {
+            padding-left: .5em;
+            padding-right: .5em;
+          }
+
+          .wdgtz_traveler {
+            width: 17%;
+            min-width: 17%;
+          }
+
+          .wdgtz_options {
+          
+            &.wdgtz_expanded .wdgtz_params {
+              height: 4em;
+            }
+
+            .wdgtz_airline {
+              display: inline-block;
+              width: 32%;
+            }
+
+            .wdgtz_seat-class {
+              display: inline-block;
+              width: 37%;
+            }
+          }
+        }
+
+        .wdgtz_action {
+          &.wdgtz_expanded {
+            vertical-align: bottom;
+            margin-bottom: 1.5em;
+
+            button {
+              position: relative;
+              margin-right: calc(100% + .5em);
+            }
+          }
+
+          display: inline-block;
+          width: ~"calc(80px + 1em)";
+          vertical-align: top;
+          margin-top: 1.5em;
+
+          button {
+            margin-right: .5em;
+          }
+        }
+      }
+
       .wdgtz_footer {
         flex-direction: row;
         justify-content: space-between;
@@ -918,65 +995,76 @@
     }
 
     .wdgtz_flight {
-      padding: 1.5em 1.5em .25em 1.5em;
-
-      label {
+      > label {
         display: block;
         width: 100%;
-        font-size: 11px;
-        line-height: 1.5em;
-  
-        &:first-of-type {
-          font-size: 13px;
-          margin-bottom: 1em;
-          line-height: 1.175em;
-        }
+        font-size: 13px;
+        margin-bottom: .5em;
+        line-height: 1.175em;
+        padding-top: 1em;
+        padding-left: 1.5em;
       }
 
-      .wdgtz_starting-airport {
-        width: 100%;
-        margin-bottom: 1em;
-      }
-
-      .wdgtz_location {
-        display: flex;
-        margin-bottom: 1em;
+      .wdgtz_details {
+        padding: 0 1.5em .25em 1.5em;
 
         label {
-          flex: 1 1 80%;
+          display: block;
+          width: 100%;
+          font-size: 11px;
+          line-height: 1.5em;
         }
 
-        .wdgtz_edit {
-          flex: 0 0 2em;
+        .wdgtz_starting-airport {
+          width: 100%;
+          margin-bottom: 1em;
+        }
+
+        .wdgtz_location {
+          display: flex;
+          margin-bottom: 1em;
+
+          label {
+            font-size: 13px;
+            flex: 1 1 80%;
+          }
+
+          .wdgtz_edit {
+            flex: 0 0 2em;
+          }
+        }
+
+        .wdgtz_calendar, .comiseo-daterangepicker-triggerbutton {
+          width : 100%;
+          margin-bottom: 1em;
+          transition: margin-bottom 0.3s ease;
+        }
+
+        .wdgtz_traveler {
+          width: 100%;
+          margin-bottom: 1em;
+        }
+
+        .wdgtz_airline, .wdgtz_seat-class {
+          width: 100%;
+        }
+
+        .wdgtz_airline {
+          margin-bottom: 1em;
+        }
+
+        .wdgtz_options.wdgtz_expanded .wdgtz_params {
+          opacity: 1;
+          height: 8em;
         }
       }
 
-      .wdgtz_calendar, .comiseo-daterangepicker-triggerbutton {
-        width : 100%;
-        margin-bottom: 1em;
-        transition: margin-bottom 0.3s ease;
-      }
-
-      .wdgtz_traveler {
-        width: 100%;
-        margin-bottom: 1em;
-      }
-
-      .wdgtz_airline, .wdgtz_seat-class {
-        width: 100%;
-      }
-
-      .wdgtz_airline {
-        margin-bottom: 1em;
-      }
-
-      .wdgtz_options.wdgtz_expanded .wdgtz_params {
-        opacity: 1;
-        height: 8em;
-      }
-
-      button {
+      .wdgtz_action {
         margin-bottom: .5em;
+
+        button {
+          transition: all 0.3s ease;
+        }
       }
     }
 

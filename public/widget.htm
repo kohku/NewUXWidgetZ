@@ -235,29 +235,37 @@
         </div>
         <div class="{{#tabs.flying}}wdgtz_flight{{/tabs.flying}}" data-content="flying">
             <label>I'll fly there</label>
-            <label>Flying from:</label>
-            <input type="text" class="wdgtz_starting-airport" placeholder="Enter starting airport"/>
-            <label>Flying to:</label>
-            <div class="wdgtz_location">
-                <label>[Location]</label>
-                <div class="wdgtz_edit"></div>
-            </div>
-            <input class="wdgtz_calendar" name="daterange"/>
-            <select class="wdgtz_traveler">
-                <option value="1">1 Traveler</option>
-            </select>
-            <div class="wdgtz_options">
-                <label><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
-                <div class="wdgtz_params">
-                    <select class="wdgtz_airline">
-                        <option value="">Select Preferred Airline</option>
-                    </select>
-                    <select class="wdgtz_seat-class">
-                        <option value="">Select Preferred Seart Class</option>
-                    </select>
+            <div class="wdgtz_details">
+                <div class="wdgtz_flying-from">
+                    <label>Flying from:</label>
+                    <input type="text" class="wdgtz_starting-airport" placeholder="Enter starting airport"/>
+                </div>
+                <div class="wdgtz_flying-to">
+                    <label>Flying to:</label>
+                    <div class="wdgtz_location">
+                        <label>[Location]</label>
+                        <div class="wdgtz_edit"></div>
+                    </div>
+                </div>
+                <input class="wdgtz_calendar" name="daterange"/>
+                <select class="wdgtz_traveler">
+                    <option value="1">1 Traveler</option>
+                </select>
+                <div class="wdgtz_options">
+                    <label><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
+                    <div class="wdgtz_params">
+                        <select class="wdgtz_airline">
+                            <option value="">Select Preferred Airline</option>
+                        </select>
+                        <select class="wdgtz_seat-class">
+                            <option value="">Select Preferred Seart Class</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <button>Search</button>
+            <div class="wdgtz_action">
+                <button>Search</button>
+            </div>
         </div>
         <div class="wdgtz_footer">
             <div class="wdgtz_my-itineraries"><a target="_blank" href="https://secure.rezserver.com/hotels/help/review/?refid={{refId}}&refclickid={{refClickId}}&refclickid2={{refClickId2}}">My Itineraries</a></div>
