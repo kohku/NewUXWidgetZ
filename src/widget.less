@@ -1080,6 +1080,34 @@
         }
       }
 
+      .wdgtz_flying-to {
+
+        &.editable {
+          input.wdgtz_full-address {
+            display: block;
+            flex: 1 1 80%;
+          }
+          .wdgtz_location > label {
+            display: none;
+          }
+        }
+
+        &.edited {
+          span.wdgtz_full-address {
+            display: block;
+            flex: 1 1 80%;
+          }
+          .wdgtz_location > label {
+            display: none;
+          }
+        }
+
+        .wdgtz_full-address {
+          display: none;
+          font-size: 13px;
+        }
+      }
+
       .wdgtz_action {
         margin-bottom: .5em;
 

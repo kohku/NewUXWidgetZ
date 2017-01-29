@@ -8,6 +8,7 @@ import 'jquery-ui/themes/base/base.css'
 import Moment from 'moment'
 import 'imports-loader?jQuery=jquery,moment=moment,this=>window!./jquery.comiseo.daterangepicker.js'
 import 'style-loader?css-loader!./jquery.comiseo.daterangepicker.css'
+import { WidgetService } from './widgetService'
 
 export class flyingView extends baseView {
   constructor(widget, state, selector, content){
@@ -53,10 +54,95 @@ export class flyingView extends baseView {
   }
 
   setListeners() {
+    // Setup listeners for edit
+    this.content.find('.wdgtz_edit').on('click', event => {
+      this.toggleEditAddress()
+      this.content.find('input.wdgtz_full-address').focus()
+    })
     // More/fewer options listeners
     this.content.find('.wdgtz_options label').on('click', event => this.toggleMoreFewerOptions(event))
+    this.content.find('.wdgtz_flying-to input.wdgtz_full-address').on('blur keyup', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      if (event.type === 'blur' && this.content.find('.wdgtz_flying-to').hasClass('editable')){
+        // removing the editable class on enter triggers a blur event
+        if (this.state.fullAddress !== event.currentTarget.value){
+          this.getGeoMap(event.currentTarget.value).then(response => {
+            let fullAddress = this.state.fullAddress
+            this.state.formatAddress = response[0].formatted_address
+            this.setFullAddress(this.state.formatAddress)
+            if (fullAddress !== this.state.fullAddress){
+              this.content.find('.wdgtz_flying-to').addClass('edited')
+            }
+
+            if (fullAddress !== this.state.fullAddress){
+              this.content.find('.wdgtz_flying-to').addClass('edited')
+            }
+
+            if (!this.state.latitude && !this.state.longitude){
+              this.state.latitude = response[0].geometry.location.lat()
+              this.state.longitude = response[0].geometry.location.lng()
+            }
+            
+            this.toggleEditAddress()
+          })
+        } else {
+          this.toggleEditAddress()
+        }
+      } 
+      if (event.keyCode == 27) {
+        this.toggleEditAddress()
+      }
+      if (event.keyCode == 13) {
+        // removing the editable class on enter triggers a blur event
+        if (this.state.fullAddress !== event.currentTarget.value){
+          this.getGeoMap(event.currentTarget.value).then(response => {
+            let fullAddress = this.state.fullAddress
+            this.state.formatAddress = response[0].formatted_address
+            this.setFullAddress(this.state.formatAddress)
+
+            if (fullAddress !== this.state.fullAddress){
+              this.content.find('.wdgtz_flying-to').addClass('edited')
+            }
+
+            if (!this.state.latitude && !this.state.longitude){
+              this.state.latitude = response[0].geometry.location.lat()
+              this.state.longitude = response[0].geometry.location.lng()
+            }
+
+            this.toggleEditAddress()
+          })
+        } else {
+          this.toggleEditAddress()
+        }
+      }
+    })
     // Search
     this.content.find('.wdgtz_action').on('click', event => this.doSearch(event))
+  }
+
+  getGeoMap(address){
+    return new Promise((resolve, reject) => {
+      const geocoder = new google.maps.Geocoder()
+      // get map
+      geocoder.geocode({'address': address}, (response, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          resolve(response)
+        } else {
+          reject(status)
+        }
+      })
+    })
+  }
+
+  toggleEditAddress(){
+    this.content.find('.wdgtz_flying-to').toggleClass('editable')
+  }
+
+  setFullAddress(value){
+    this.state.fullAddress = value
+    this.content.find('input.wdgtz_full-address').val(value)
+    this.content.find('span.wdgtz_full-address').text(value)
   }
 
   setDates(event, calendar){
@@ -104,7 +190,7 @@ export class flyingView extends baseView {
     $(event.currentTarget.parentElement).toggleClass('wdgtz_expanded')
     this.content.find('.wdgtz_action').toggleClass('wdgtz_expanded')
   }
-  
+
   doSearch(event){
     event.preventDefault()
     event.stopPropagation()
