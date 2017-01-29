@@ -794,6 +794,23 @@
           line-height: 1.5em;
         }
 
+        &.edited {
+          .wdgtz_address1, .wdgtz_city, .wdgtz_state-province,
+          .wdgtz_zip, .wdgtz_country {
+            display: none;
+          }
+
+          span.wdgtz_full-address {
+            display: block;
+          }
+        }
+
+        &.editable {
+          input.wdgtz_full-address {
+            display: block;
+          }
+        }
+
         .wdgtz_country {
           margin-right: 7em;
         }

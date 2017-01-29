@@ -99,7 +99,10 @@ export class stayingView extends baseView{
 
   setListeners(){
     // Setup listeners for edit
-    this.content.find('.wdgtz_edit').on('click', event => this.toggleEditAddress())
+    this.content.find('.wdgtz_edit').on('click', event => {
+      this.toggleEditAddress()
+      this.content.find('input.wdgtz_full-address').focus()
+    })
     // Widget Url
     if (this.state.widgetUrl){
       this.content.find('.wdgtz_front .wdgtz_canvas').on('click', event => this.openWidgetUrl(event))
@@ -116,35 +119,57 @@ export class stayingView extends baseView{
     this.content.find('.wdgtz_full-address').on('blur keyup', (event) => {
       event.preventDefault()
       event.stopPropagation()
-      if (event.type === 'blur'){
+      if (event.type === 'blur' && this.content.find('.wdgtz_header').hasClass('editable')) {
         // removing the editable class on enter triggers a blur event
-        if ($('.wdgtz_header').hasClass('editable')){
+        if (this.state.fullAddress !== event.currentTarget.value){
+          this.getGeoMap(event.currentTarget.value).then(response => {
+            let fullAddress = this.state.fullAddress
+            this.state.formatAddress = response[0].formatted_address
+            this.setFullAddress(this.state.formatAddress)
+
+            if (fullAddress !== this.state.fullAddress){
+              this.content.find('.wdgtz_header').addClass('edited')
+            }
+
+            if (!this.state.latitude && !this.state.longitude){
+              this.state.latitude = response[0].geometry.location.lat()
+              this.state.longitude = response[0].geometry.location.lng()
+            }
+
+            this.updateMapAddress(response)
+            this.toggleEditAddress()
+          })
+        } else {
           this.toggleEditAddress()
         }
-        if (this.state.fullAddress !== event.currentTarget.value){
-          // this.setFullAddress()
-          this.getGeoMap(event.currentTarget.value).then(response => {
-            let fullAddress = this.state.fullAddress
-            this.updateMapAddress(response)
-            if (fullAddress !== this.state.fullAddress){
-              this.content.find('.wdgtz_header').addClass('edited')
-            }
-          })
-        }
-      } 
+      }
 
+      if (event.keyCode == 27) {
+        this.toggleEditAddress()
+      }
+      
       if (event.keyCode == 13) {
         // removing the editable class on enter triggers a blur event
-        this.toggleEditAddress()
         if (this.state.fullAddress !== event.currentTarget.value){
-          // this.setFullAddress(event.currentTarget.value)
           this.getGeoMap(event.currentTarget.value).then(response => {
             let fullAddress = this.state.fullAddress
-            this.updateMapAddress(response)
+            this.state.formatAddress = response[0].formatted_address
+            this.setFullAddress(this.state.formatAddress)
+
             if (fullAddress !== this.state.fullAddress){
               this.content.find('.wdgtz_header').addClass('edited')
             }
+
+            if (!this.state.latitude && !this.state.longitude){
+              this.state.latitude = response[0].geometry.location.lat()
+              this.state.longitude = response[0].geometry.location.lng()
+            }
+
+            this.toggleEditAddress()
+            this.updateMapAddress(response)
           })
+        } else {
+          this.toggleEditAddress()
         }
       }
     })
@@ -159,7 +184,6 @@ export class stayingView extends baseView{
       geocoder.geocode({'address': address}, (response, status) => {
         if (status === google.maps.GeocoderStatus.OK) {
           resolve(response)
-          
         } else {
           reject(status)
         }
@@ -168,14 +192,6 @@ export class stayingView extends baseView{
   }
 
   updateMapAddress(response){
-    this.state.formatAddress = response[0].formatted_address
-    this.setFullAddress(this.state.formatAddress)
-
-    if (!this.state.latitude && !this.state.longitude){
-      this.state.latitude = response[0].geometry.location.lat()
-      this.state.longitude = response[0].geometry.location.lng()
-    }
-
     let options = { zoom: 8}
     const map = new google.maps.Map(document.getElementById('wdgtz_hotel-map'), options)
     map.setCenter(response[0].geometry.location)
