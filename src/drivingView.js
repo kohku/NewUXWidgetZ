@@ -14,7 +14,6 @@ export class drivingView extends baseView {
   /*
   TODO LIST
 
-  Search
   Edit location address
 
   Get directions
@@ -31,6 +30,7 @@ export class drivingView extends baseView {
   Drop off autocomplete (airport or place)
   autocomplete style
   Car company (web service)
+  Search
 
   */
 
@@ -52,6 +52,10 @@ export class drivingView extends baseView {
         })
       },
       minLength: 2,
+      select: (event, ui) => {
+        this.state.pickUpType = ui.item.type 
+        this.state.pickUpPlace = ui.item.key 
+      },
     })
 
     $('.wdgtz__drop-off__location').autocomplete({
@@ -69,6 +73,10 @@ export class drivingView extends baseView {
         })
       },
       minLength: 2,
+      select: (event, ui) => {
+        this.state.dropOffType = ui.item.type
+        this.state.dropOffPlace = ui.item.key
+      },
     })
 
     this.content.find('.wdgtz_options .wdgtz_params input.wdgtz_datepicker').datepicker({
@@ -103,6 +111,27 @@ export class drivingView extends baseView {
   setListeners(){
     // Setup listeners for edit
     this.content.find('.wdgtz_destination').on('click', event => this.toggleEditAddress())
+    this.content.find('wdgtz_starting-location input').on('change', event => this.setStartingLocation(event.target.value))
+    this.content.find('input.wdgtz_full-address').on('change', event => this.setFullAddress(event.target.value))
+
+    $('.wdgtz__pick-up__location').on('change', (event) => {
+      if (!ui.item.type){
+        this.state.pickUpType = null 
+        this.state.pickUpPlace = null 
+      }
+    })
+
+    $('.wdgtz__drop-off__location').on('change', (event) => {
+      if (!ui.item.type){
+        this.state.dropOffType = null 
+        this.state.dropOffPlace = null 
+      }
+    })
+
+    $('.wdgtz_trip-rule input[type="radio"]').on('change', (event) => {
+      this.state.oneWay = event.target.value === 'oneway'
+    })
+
     // More/fewer options listeners
     this.content.find('.wdgtz_options > label').on('click', event => this.toggleRentalCarOptions(event))
     this.content.find('.wdgtz_options .wdgtz_params input[type="radio"]').on('change', event => this.toggleTripRule(event))
@@ -141,8 +170,43 @@ export class drivingView extends baseView {
         }
       }
     })
-    // Search
+
+    $('.wdgtz_pick-up .wdgtz_time-select').on('change', event => this.setPickUpTime(event.target.value))
+
+    $('.wdgtz_drop-off .wdgtz_time-select').on('change', event => this.setDropOffTime(event.target.value))
+
+    $('.wdgtz_car-company').on('change', event => this.setCarCompany(event.target.value))
+    
+   // Search
     this.content.find('.wdgtz_action').on('click', event => this.doSearch(event))
+  }
+
+  setPickUpTime(value){
+    if (value){
+      let parts = value.split(':')
+      this.state.pickUp.set('hour', parseInt(parts[0]))
+      this.state.pickUp.set('minute', parseInt(parts[1]))
+    }
+  }
+
+  setDropOffTime(value){
+    if (value){
+      let parts = value.split(':')
+      this.state.dropOff.set('hour', parseInt(parts[0]))
+      this.state.dropOff.set('minute', parseInt(parts[1]))
+    }
+  }
+
+  setStartingLocation(value){
+    this.state.startingLocation = value
+  }
+
+  setFullAddress(value){
+    this.state.fullAddress = value
+  }
+
+  setCarCompany(value) {
+    this.state.carCompany = value ? value : null
   }
 
   toggleEditAddress(){
@@ -166,12 +230,21 @@ export class drivingView extends baseView {
     event.preventDefault()
     event.stopPropagation()
 
-    let rooms = this.state.defaultRooms
-    let guests = this.state.defaultGuests
-    let checkIn = this.state.checkIn.format('MM/DD/YYYY')
-    let checkOut = this.state.checkOut.format('MM/DD/YYYY')
-    let hotelChain = this.state.hotelChain || ''
-    let hotelRating = this.state.hotelRating || ''
+    debugger
+    let pickUpDate = this.state.pickUp.format('MM/DD/YYYY')
+    let pickUpTime = this.state.pickUp.format('hh:mm')
+    let dropOffDate = this.state.dropOff.format('MM/DD/YYYY')
+    let dropOffTime = this.state.dropOff.format('hh:mm')
+
+    let fromPlace = this.state.startingLocation
+    let toPlace = this.state.fullAddress
+    let pickUpAirport = this.state.pickUpType === 'AIR' ? this.state.pickUpPlace : null 
+    let pickUpCity = this.state.pickUpType === 'CITY' ? this.state.pickUpPlace : null
+    let dropOffAirport = this.state.dropOffType === 'AIR' ? this.state.dropOffPlace : null
+    let dropOffCity = this.state.dropOffType === 'CITY' ? this.state.dropOffPlace : null
+    let carCompany = this.state.carCompany
+    let oneWay = this.state.oneWay || false
+
     let latitude = this.state.latitude
     let longitude = this.state.longitude
     let currency = this.state.currency
@@ -181,23 +254,15 @@ export class drivingView extends baseView {
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
     let fullAddress = encodeURIComponent(this.state.fullAddress)
 
-    let searchUrl = `${this.state.cname}/hotels/results/?rooms=${rooms}&guests=${guests}` +
-      `&check_in=${checkIn}&check_out=${checkOut}&chain_id=${hotelChain}&star_rating=${hotelRating}` +
+    let searchUrl = `${this.state.cname}/car_rentals/results/?` +
+      `&from_place=${fromPlace}&to_place=${toPlace}&check_time=&check_directions=` +
+      `&rs_pu_date=${pickUpDate}&rs_pu_time=${pickUpTime}&rs_do_date=${dropOffDate}&rs_do_time=${dropOffTime}` +
+      `&rs_pu_airport=${pickUpAirport}&rs_pu_cityid=${pickUpCity}` +
+      `&rs_do_airport=${dropOffAirport}&rs_do_cityid=${dropOffCity}` + 
+      `&rs_company=${carCompany}&dropoff=${oneWay}` +
       `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}` +
       `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
 
-    if (rooms === 5){
-      searchUrl = `https://tripplanz.groupize.com/search?` + 
-      `search%5Bcheck_in%5D=${this.state.checkIn.format('YYYY-MM-DD')}&` +
-      `search%5Bcheck_out%5D=${this.state.checkOut.format('YYYY-MM-DD')}&` + 
-      `search%5Bentry_point%5D=umbrella&` +
-      `search%5Bevent_duration%5D=${this.state.checkOut.diff(this.state.checkIn, 'days')}&` +
-      `search%5Bfunction_date%5D=&search%5Blocation%5D=${fullAddress}&` +
-      `search%5Bmaximum_adults_per_room%5D=2&search%5Bmeeting_space%5D=false&` +
-      `search%5Bnumber_of_attendees%5D=&search%5Bpeople%5D=${guests}&` + 
-      `search%5Brooms%5D=5&search%5Bsleeping_rooms%5D=true`
-    } 
-    
      window.open(searchUrl, "_blank")
   }
 }
