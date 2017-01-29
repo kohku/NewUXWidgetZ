@@ -105,5 +105,16 @@ export class WidgetService {
       })
     })
   }
+
+  getAirVendors(){
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.endpointUrl}/airvendor/get`).then(response => {
+        let sorted = response.data.sort((a, b) => a.Name.localeCompare(b.Name))
+        resolve(sorted)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
 

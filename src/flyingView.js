@@ -28,6 +28,8 @@ export class flyingView extends baseView {
   */
 
   initialize(){
+    const service = new WidgetService()
+
     this.rangePicker = this.content.find('input[name="daterange"]')
     this.rangePicker.daterangepicker({
         presetRanges: [],
@@ -51,7 +53,15 @@ export class flyingView extends baseView {
        start: this.state.departure.toDate(), 
        end: this.state.returnDate.toDate() 
     })
-  }
+
+    $.each($('.wdgtz_airline'), (index, element) => {
+      service.getAirVendors().then(all => {
+        all.forEach(vendor => {
+          $(element).append(`<option value="${vendor.Code}">${vendor.Name}</option>`)
+        })
+      })
+    })
+ }
 
   setListeners() {
     // Setup listeners for edit
