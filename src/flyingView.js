@@ -14,6 +14,18 @@ export class flyingView extends baseView {
     super(widget, state, selector, content)
   }
 
+  /*
+  TODO LIST
+
+  From and to airport code/city
+
+  Preferred airline
+  Preferred seat class
+
+  Search
+
+  */
+
   initialize(){
     this.rangePicker = this.content.find('input[name="daterange"]')
     this.rangePicker.daterangepicker({
@@ -31,7 +43,7 @@ export class flyingView extends baseView {
             maxDate: null,
             dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         },
-        change: (event, calendar) => this.setDates(event,calendar),
+        change: (event, calendar) => this.setDates(event, calendar),
         open: (event, calendar) => this.updateCalendar(event, calendar),
     })
     this.rangePicker.daterangepicker("setRange", {
@@ -65,25 +77,23 @@ export class flyingView extends baseView {
 
     var range = calendar.instance.getRange()
 
-    if (range !== null){
-      if (range.start){
-          var start = moment(range.start)
-          $.each(this.content.find('td[data-month='+start.month()+'][data-year='+start.year()+']'), function(index, td){
-              var el$ = $(td)
-              if (el$.find('a').text() == start.date()){
-                  el$.addClass('start-date')
-              }
-          })
-      }
-      if (range.end){
-          var end = moment(range.end)
-          $.each(this.content.find('td[data-month='+end.month()+'][data-year='+end.year()+']'), function(index, td){
-              var el$ = $(td)
-              if (el$.find('a').text() == end.date()){
-                  el$.addClass('end-date')
-              }
-          })
-      }
+    if (!!range && range.start){
+      var start = moment(range.start)
+      $.each(this.content.find('td[data-month='+start.month()+'][data-year='+start.year()+']'), function(index, td){
+          var el$ = $(td)
+          if (el$.find('a').text() == start.date()){
+              el$.addClass('start-date')
+          }
+      })
+    }
+    if (!!range && range.end){
+      var end = moment(range.end)
+      $.each(this.content.find('td[data-month='+end.month()+'][data-year='+end.year()+']'), function(index, td){
+          var el$ = $(td)
+          if (el$.find('a').text() == end.date()){
+              el$.addClass('end-date')
+          }
+      })
     }
   }
 

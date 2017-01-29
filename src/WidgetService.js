@@ -47,27 +47,63 @@ export class WidgetService {
   }
 
   getCarCompanies(){
-    return axios.get(`${this.endpointUrl}/Car/get`)
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.endpointUrl}/Car/get`).then(response => {
+        resolve(response.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 
   getCountries(){
-    return axios.get(`${this.endpointUrl}/Countryes/get`)
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.endpointUrl}/Countryes/get`).then(response => {
+        resolve(response.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 
   getCarPickup(query){
-    return axios.get(`${this.endpointUrl}/car/pickup?query=${query}`)
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.endpointUrl}/car/pickup?query=${query}`).then(response => {
+        resolve(response.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 
   getCarDropoff(query){
-    return axios.get(`${this.endpointUrl}/car/dropoff?query=${query}`)
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.endpointUrl}/car/dropoff?query=${query}`).then(response => {
+        resolve(response.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 
   getAirOriginDestination(query){
-    return axios.get(`${this.endpointUrl}/Airport/OriginDestination?query=${query}`)
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.endpointUrl}/Airport/OriginDestination?query=${query}`).then(response => {
+        resolve(response.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 
   getAirVendor(query){
-    return axios.get(`${this.endpointUrl}/airvendor/search?query=${query}`)
+    return new Promise((resolve, reject) => {
+      axios.get(`${this.endpointUrl}/airvendor/search?query=${query}`).then(response => {
+        resolve(response.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
 

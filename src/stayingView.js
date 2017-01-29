@@ -55,8 +55,8 @@ export class stayingView extends baseView{
             maxDate: null,
             dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         },
-        // change: (event, calendar) => this.setDates(event,calendar),
-        // open: (event, calendar) => this.updateCalendar(event, calendar),
+        change: (event, calendar) => this.setDates(event, calendar),
+        open: (event, calendar) => this.updateCalendar(event, calendar),
     })
     this.rangePicker.daterangepicker("setRange", {
        start: this.state.checkIn.toDate(), 
@@ -78,8 +78,8 @@ export class stayingView extends baseView{
     }
 
     // load hotel chain
-    service.getHotelChains().then(all => {
-      $.each(this.content.find('.wdgtz_hotel-chain'), (index, element) => {
+    $.each(this.content.find('.wdgtz_hotel-chain'), (index, element) => {
+      service.getHotelChains().then(all => {
         all.forEach(chain => {
           $(element).append(`<option value="${chain.key}">${chain.value}</option>`)
         })
@@ -87,10 +87,9 @@ export class stayingView extends baseView{
     })
 
     // load hotel raiting
-    service.getHotelRaiting().then(all => {
-      let ratings = all.filter(rating => this.state.hotelStars.indexOf(rating.key) >= 0)
-
-      $.each(this.content.find('.wdgtz_hotel-rating'), (index, element) => {
+    $.each(this.content.find('.wdgtz_hotel-rating'), (index, element) => {
+      service.getHotelRaiting().then(all => {
+        let ratings = all.filter(rating => this.state.hotelStars.indexOf(rating.key) >= 0)
         ratings.forEach(rating => {
           $(element).append(`<option value="${rating.key}">${rating.value}</option>`)
         })
@@ -231,25 +230,23 @@ export class stayingView extends baseView{
 
     var range = calendar.instance.getRange()
 
-    if (range !== null){
-      if (range.start){
-          var start = moment(range.start)
-          $.each(this.content.find('td[data-month='+start.month()+'][data-year='+start.year()+']'), function(index, td){
-              var el$ = $(td)
-              if (el$.find('a').text() == start.date()){
-                  el$.addClass('start-date')
-              }
-          })
-      }
-      if (range.end){
-          var end = moment(range.end)
-          $.each(this.content.find('td[data-month='+end.month()+'][data-year='+end.year()+']'), function(index, td){
-              var el$ = $(td)
-              if (el$.find('a').text() == end.date()){
-                  el$.addClass('end-date')
-              }
-          })
-      }
+    if (!!range && range.start){
+      var start = moment(range.start)
+      $.each(this.content.find('td[data-month='+start.month()+'][data-year='+start.year()+']'), function(index, td){
+          var el$ = $(td)
+          if (el$.find('a').text() == start.date()){
+              el$.addClass('start-date')
+          }
+      })
+    }
+    if (!!range && range.end){
+      var end = moment(range.end)
+      $.each(this.content.find('td[data-month='+end.month()+'][data-year='+end.year()+']'), function(index, td){
+          var el$ = $(td)
+          if (el$.find('a').text() == end.date()){
+              el$.addClass('end-date')
+          }
+      })
     }
   }
 
