@@ -628,6 +628,7 @@
 
 		function open(event) {
 			if (!isOpen) {
+				reset()
 				triggerButton.getElement().addClass(classname + '-active');
 				$mask.show();
 				isOpen = true;

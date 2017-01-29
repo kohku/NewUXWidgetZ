@@ -55,8 +55,8 @@ export class stayingView extends baseView{
             maxDate: null,
             dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         },
-        change: (event, calendar) => this.setDates(event,calendar),
-        open: (event, calendar) => this.updateCalendar(event, calendar),
+        // change: (event, calendar) => this.setDates(event,calendar),
+        // open: (event, calendar) => this.updateCalendar(event, calendar),
     })
     this.rangePicker.daterangepicker("setRange", {
        start: this.state.checkIn.toDate(), 
