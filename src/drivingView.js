@@ -20,14 +20,18 @@ export class drivingView extends baseView {
     const service = new WidgetService()
 
     $('.wdgtz__pick-up__location').autocomplete({
+      autoFocus: true,
       source: (request, response) => {
         service.getCarPickup(request.term).then(suggestions => {
           let matchByKey = suggestions.find(item => item.key === request.term)
-
           if (matchByKey){
             response([matchByKey])
+            this.setPickUpLocation(matchByKey)
           } else {
             response(suggestions)
+            if (suggestions.length === 1){
+              this.setPickUpLocation(suggestions[0])
+            }
           }
         }).catch(error => {
           response(error.status || error.message)
@@ -41,14 +45,18 @@ export class drivingView extends baseView {
     })
 
     $('.wdgtz__drop-off__location').autocomplete({
+      autoFocus: true,
       source: (request, response) => {
         service.getCarDropoff(request.term).then(suggestions => {
           let matchByKey = suggestions.find(item => item.key === request.term)
-
           if (matchByKey){
             response([matchByKey])
+            this.setDropOffLocation(matchByKey)
           } else {
             response(suggestions)
+            if (suggestions.length === 1){
+              this.setDropOffLocation(suggestions[0])
+            }
           }
         }).catch(error => {
           response(error.status || error.message)
@@ -90,6 +98,22 @@ export class drivingView extends baseView {
         })
       })
     })
+  }
+
+  setPickUpLocation(item){
+   this.state.flyingFromType = item.type
+   this.state.flyingFrom = item.key
+   this.content.find('.wdgtz__pick-up__location').val(item.value)
+   // move to button
+   this.content.find('.wdgtz_pick-up .wdgtz_datepicker').focus()
+  }
+
+  setDropOffLocation(item){
+   this.state.flyingFromType = item.type
+   this.state.flyingFrom = item.key
+   this.content.find('.wdgtz__drop-off__location').val(item.value)
+   // move to button
+   this.content.find('.wdgtz_drop-off .wdgtz_datepicker').focus()
   }
 
   setListeners(){

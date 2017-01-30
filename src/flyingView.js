@@ -19,14 +19,18 @@ export class flyingView extends baseView {
     const service = new WidgetService()
 
     this.content.find('.wdgtz_starting-airport').autocomplete({
+      autoFocus: true,
       source: (request, response) => {
         service.getAirOriginDestination(request.term).then(suggestions => {
           let matchByKey = suggestions.find(item => item.key === request.term)
-
           if (matchByKey){
             response([matchByKey])
+            this.setStartingPoint(matchByKey)
           } else {
             response(suggestions)
+            if (suggestions.length === 1){
+              this.setStartingPoint(suggestions[0])
+            }
           }
         }).catch(error => {
           response(error.status || error.message)
@@ -40,6 +44,7 @@ export class flyingView extends baseView {
     })
 
     this.content.find('.wdgtz_flying-to input.wdgtz_full-address').autocomplete({
+      autoFocus: true,
       source: (request, response) => {
         service.getAirOriginDestination(request.term).then(suggestions => {
           let matchByKey = suggestions.find(item => item.key === request.term)
@@ -102,6 +107,14 @@ export class flyingView extends baseView {
         })
       })
     })
+ }
+
+ setStartingPoint(item){
+   this.state.flyingFromType = item.type
+   this.state.flyingFrom = item.key
+   this.content.find('.wdgtz_starting-airport').val(item.value)
+   // move to button
+   this.content.find('.wdgtz_action button').focus()
  }
 
   setListeners() {
