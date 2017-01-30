@@ -11,11 +11,6 @@ export class drivingView extends baseView {
     super(widget, state, selector, content)
   }
 
-  /*
-  TODO LIST
-  Autocomplete if exact match then select automatically
-  */
-
   initialize(){
     const service = new WidgetService()
 
