@@ -114,6 +114,8 @@ export class flyingView extends baseView {
 
     // More/fewer options listeners
     this.content.find('.wdgtz_options label').on('click', event => this.toggleMoreFewerOptions(event))
+    this.content.find('.wdgtz_airline').on('change', event => this.setAirVendor(event.target.value))
+    this.content.find('.wdgtz_seat-class').on('change', event => this.setSeatClass(event.target.value))
     // Search
     this.content.find('.wdgtz_action').on('click', event => this.doSearch(event))
   }
@@ -141,6 +143,14 @@ export class flyingView extends baseView {
     if (range.end){
       this.state.returnDate = moment(range.end)
     }
+  }
+
+  setSeatClass(value){
+    this.state.seatClass = value
+  }
+
+  setAirVendor(value){
+    this.state.airVendor = value
   }
 
   updateCalendar(event, calendar) {
