@@ -4,6 +4,7 @@ import 'jquery-ui/ui/widgets/autocomplete'
 import 'jquery-ui/ui/widgets/datepicker'
 import 'jquery-ui/themes/base/base.css'
 import { WidgetService } from './widgetService'
+import GoogleMapsLoader from 'google-maps'
 
 export class drivingView extends baseView {
   constructor(widget, state, selector, content){
@@ -13,12 +14,7 @@ export class drivingView extends baseView {
 
   /*
   TODO LIST
-
-  Get directions
-  View driving time
-
   Autocomplete if exact match then select automatically
-
   */
 
   initialize(){
@@ -103,22 +99,22 @@ export class drivingView extends baseView {
     })
     this.content.find('.wdgtz_starting-location input').on('change', event => this.setStartingLocation(event.target.value))
     this.content.find('.wdgtz_get-directions button').on('click', event => this.getDirections(event))
-    this.content.find('.wdgtz_view-time button')
+    this.content.find('.wdgtz_view-time button').on('click', event => this.viewDrivingTime(event))
     this.content.find('.wdgtz_destination input.wdgtz_full-address').on('blur keyup', (event) => {
       event.preventDefault()
       event.stopPropagation()
       if (event.type === 'blur' && this.content.find('.wdgtz_destination').hasClass('editable')){
         // removing the editable class on enter triggers a blur event
-        if (this.state.fullAddress !== event.currentTarget.value){
+        if (this.state.drivingDestination !== event.currentTarget.value){
           this.getGeoMap(event.currentTarget.value).then(response => {
-            let fullAddress = this.state.fullAddress
+            let drivingDestination = this.state.drivingDestination
             this.state.formatAddress = response[0].formatted_address
             this.setFullAddress(this.state.formatAddress)
-            if (fullAddress !== this.state.fullAddress){
+            if (drivingDestination !== this.state.drivingDestination){
               this.content.find('.wdgtz_destination').addClass('edited')
             }
 
-            if (fullAddress !== this.state.fullAddress){
+            if (drivingDestination !== this.state.drivingDestination){
               this.content.find('.wdgtz_destination').addClass('edited')
             }
 
@@ -138,13 +134,13 @@ export class drivingView extends baseView {
       }
       if (event.keyCode == 13) {
         // removing the editable class on enter triggers a blur event
-        if (this.state.fullAddress !== event.currentTarget.value){
+        if (this.state.drivingDestination !== event.currentTarget.value){
           this.getGeoMap(event.currentTarget.value).then(response => {
-            let fullAddress = this.state.fullAddress
+            let drivingDestination = this.state.drivingDestination
             this.state.formatAddress = response[0].formatted_address
             this.setFullAddress(this.state.formatAddress)
 
-            if (fullAddress !== this.state.fullAddress){
+            if (drivingDestination !== this.state.drivingDestination){
               this.content.find('.wdgtz_destination').addClass('edited')
             }
 
@@ -228,7 +224,7 @@ export class drivingView extends baseView {
   }
 
   setFullAddress(value){
-    this.state.fullAddress = value
+    this.state.drivingDestination = value
     this.content.find('input.wdgtz_full-address').val(value)
     this.content.find('span.wdgtz_full-address').text(value)
   }
@@ -254,12 +250,44 @@ export class drivingView extends baseView {
     $(event.currentTarget.parentElement).toggleClass('wdgtz_expanded')
   }
 
-  getDirections(event){
+  setDrivingTime(value){
+    this.state.drivingTime = value
+  }
 
+  updateDrivingTimeDirections(){
+    this.content.find('.wdgtz_driving-directions > span:first-of-type').text(`${this.state.startingLocation} to ${this.state.drivingDestination}`)
+    this.content.find('.wdgtz_driving-directions > span:last-of-type').text(`Driving Time and Distance: ${this.state.drivingTime} | ${this.state.distance}`)
+  }
+
+  setDistance(value){
+    this.state.distance = value
+  }
+
+  getDirections(event){
+    let url = `://getmywidget.com/NewUXTripPlanz/templates/gmaps.html?` +
+    `from=${encodeURIComponent(this.state.startingLocation)}&to=${encodeURIComponent(this.state.drivingDestination)}`
+
+    window.open(url, '_blank')
   }
 
   viewDrivingTime(event){
+    debugger
+    var directionsService = new google.maps.DirectionsService()
 
+    let request = {
+      origin: this.state.startingLocation,
+      destination: this.state.drivingDestination,
+      travelMode: google.maps.TravelMode.DRIVING
+    }
+    
+    directionsService.route(request, (result, status) => {
+      if (status == google.maps.DirectionsStatus.OK) {
+        this.setDrivingTime(result.routes[0].legs[0].duration.text.replace("horas","hrs"))
+        this.setDistance(result.routes[0].legs[0].distance.text.replace("mi","miles"))
+        this.content.find('.wdgtz_driving-directions').toggleClass('wdgtz_hide')
+        this.updateDrivingTimeDirections()
+      }
+    })
   }
 
   doSearch(event){
@@ -272,7 +300,7 @@ export class drivingView extends baseView {
     let dropOffTime = this.state.dropOff.format('hh:mm')
 
     let fromPlace = this.state.startingLocation
-    let toPlace = this.state.fullAddress
+    let toPlace = this.state.drivingDestination
     let pickUpAirport = this.state.pickUpType === 'AIR' ? this.state.pickUpPlace : '' 
     let pickUpCity = this.state.pickUpType === 'CITY' ? this.state.pickUpPlace : ''
     let dropOffAirport = this.state.dropOffType === 'AIR' ? this.state.dropOffPlace : ''
@@ -287,7 +315,7 @@ export class drivingView extends baseView {
     let refClickId = this.state.refClickId ? encodeURIComponent(this.state.refClickId) : '' // encodeURIComponent
     let refId = this.state.refId
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
-    let fullAddress = encodeURIComponent(this.state.fullAddress)
+    let drivingDestination = encodeURIComponent(this.state.drivingDestination)
 
     let searchUrl = `${this.state.cname}/car_rentals/results/?` +
       `&from_place=${fromPlace}&to_place=${toPlace}&check_time=&check_directions=` +

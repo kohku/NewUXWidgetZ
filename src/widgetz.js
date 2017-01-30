@@ -172,6 +172,7 @@ export class WidgetZ extends Observable {
     state.postalCode = postalCodeParam ? postalCodeParam.value : null
     state.country = countryParam ? countryParam.value : null
     state.fullAddress = `${state.address || ''} ${state.city || ''} ${state.stateProvince || ''} ${state.postalCode || ''} ${state.country || ''}`
+    state.drivingDestination = state.fullAddress
 
     state.currency = currencyParam ? currencyParam.value : 'USD'
     state.checkIn = checkIn
@@ -187,7 +188,7 @@ export class WidgetZ extends Observable {
     state.returnDate = returnDate
 
     state.social = socialParam ? socialParam.value === 'Y' : false
-    state.stylesUrl = stylesUrlParam ? stylesUrlParam.value : 'build/styles.css'
+    state.stylesUrl = stylesUrlParam ? stylesUrlParam.value : '://getmywidget.com/NewUXTripPlanz/styles.css'
 
     return state
   }
