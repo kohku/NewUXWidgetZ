@@ -99,6 +99,9 @@ export class WidgetZ extends Observable {
     } else {
       pickUp = moment(pickUpDateOrDays.value)
     }
+    // default to noon
+    pickUp.set('hour', 12)
+    pickUp.set('minute', 0)
 
     // Set calendar range
     let dropOff = moment()
@@ -112,6 +115,8 @@ export class WidgetZ extends Observable {
     } else {
       dropOff = moment(dropOffDateOrDays.value)
     }
+    dropOff.set('hour', 12)
+    dropOff.set('minute', 0)
 
     let departureDateOrDays = params.find(p => p.key === 'departure')
     let returnDateOrDays = params.find(p => p.key === 'return')
@@ -169,10 +174,13 @@ export class WidgetZ extends Observable {
     state.city = cityParam ? cityParam.value : null
     state.stateProvince = stateProvinceParam ? stateProvinceParam.value : null 
     state.airport = airportParam ? airportParam.value : null
+    state.flyingToType = 'AIR'
+    state.flyingTo = state.airport
     state.postalCode = postalCodeParam ? postalCodeParam.value : null
     state.country = countryParam ? countryParam.value : null
-    state.fullAddress = `${state.address || ''} ${state.city || ''} ${state.stateProvince || ''} ${state.postalCode || ''} ${state.country || ''}`
-    state.drivingDestination = state.fullAddress
+    state.stayingDestination = `${state.address || ''} ${state.city || ''} ${state.stateProvince || ''} ${state.postalCode || ''} ${state.country || ''}`
+    state.drivingDestination = state.stayingDestination
+    state.flyingDestination = `${state.city || ''} ${state.stateProvince || ''} ${state.country || ''}`
 
     state.currency = currencyParam ? currencyParam.value : 'USD'
     state.checkIn = checkIn
@@ -188,7 +196,7 @@ export class WidgetZ extends Observable {
     state.returnDate = returnDate
 
     state.social = socialParam ? socialParam.value === 'Y' : false
-    state.stylesUrl = stylesUrlParam ? stylesUrlParam.value : '://getmywidget.com/NewUXTripPlanz/styles.css'
+    state.stylesUrl = stylesUrlParam ? stylesUrlParam.value : '//getmywidget.com/NewUXTripPlanz/styles.css'
 
     return state
   }

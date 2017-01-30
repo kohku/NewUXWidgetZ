@@ -19,8 +19,12 @@ export class stayingView extends baseView{
     GoogleMapsLoader.LIBRARIES = ['geometry','places']
 
     GoogleMapsLoader.onLoad(google => {
-      this.getGeoMap(this.state.fullAddress).then(response => {
-        this.updateMapAddress(response)
+      this.getGeoMap(this.state.stayingDestination).then(response => {
+        this.setStayingDestination(response[0].formatted_address)
+        if (!this.state.latitude || !this.state.longitude){
+          this.setLatitudeLongitude(response[0])
+        }
+        this.updateMapAddress(response[0])
       })
     })
   }
@@ -112,36 +116,30 @@ export class stayingView extends baseView{
     // More/fewer options listeners
     this.content.find('.wdgtz_details .wdgtz_options label').on('click', event => this.toggleMoreFewerOptions(event))
     // form elements
-    this.content.find('.wdgtz_guest').on('change', (event) => this.setGuests(parseInt(event.currentTarget.value)))
-    this.content.find('.wdgtz_rooms').on('change', (event) => this.setRooms(parseInt(event.currentTarget.value)))
-    this.content.find('.wdgtz_guest').on('change', (event) => this.setHotelChain(parseInt(event.currentTarget.value)))
-    this.content.find('.wdgtz_rooms').on('change', (event) => this.setHotelRating(parseInt(event.currentTarget.value)))
-    this.content.find('.wdgtz_full-address').on('blur keyup', (event) => {
+    this.content.find('.wdgtz_guest').on('change', event => this.setGuests(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_rooms').on('change', event => this.setRooms(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_guest').on('change', event => this.setHotelChain(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_hotel-chain').on('change', event => this.setHotelChain(event.currentTarget.value))
+    this.content.find('.wdgtz_hotel-rating').on('change', event => this.setHotelRating(parseInt(event.currentTarget.value)))
+    this.content.find('.wdgtz_full-address').on('blur keyup', event => {
       event.preventDefault()
       event.stopPropagation()
       if (event.type === 'blur' && this.content.find('.wdgtz_header').hasClass('editable')) {
         // removing the editable class on enter triggers a blur event
-        if (this.state.fullAddress !== event.currentTarget.value){
+        if (this.state.stayingDestination !== event.currentTarget.value){
           this.getGeoMap(event.currentTarget.value).then(response => {
-            let fullAddress = this.state.fullAddress
+            let stayingDestination = this.state.stayingDestination
             this.state.formatAddress = response[0].formatted_address
-            this.setFullAddress(this.state.formatAddress)
+            this.setStayingDestination(this.state.formatAddress)
 
-            if (fullAddress !== this.state.fullAddress){
+            if (stayingDestination !== this.state.stayingDestination){
               this.content.find('.wdgtz_header').addClass('edited')
+              this.setLatitudeLongitude(response[0])
+              this.updateMapAddress(response[0])
             }
-
-            if (!this.state.latitude && !this.state.longitude){
-              this.state.latitude = response[0].geometry.location.lat()
-              this.state.longitude = response[0].geometry.location.lng()
-            }
-
-            this.updateMapAddress(response)
-            this.toggleEditAddress()
           })
-        } else {
-          this.toggleEditAddress()
         }
+        this.toggleEditAddress()
       }
 
       if (event.keyCode == 27) {
@@ -150,27 +148,20 @@ export class stayingView extends baseView{
       
       if (event.keyCode == 13) {
         // removing the editable class on enter triggers a blur event
-        if (this.state.fullAddress !== event.currentTarget.value){
+        if (this.state.stayingDestination !== event.currentTarget.value){
           this.getGeoMap(event.currentTarget.value).then(response => {
-            let fullAddress = this.state.fullAddress
+            let stayingDestination = this.state.stayingDestination
             this.state.formatAddress = response[0].formatted_address
-            this.setFullAddress(this.state.formatAddress)
+            this.setStayingDestination(this.state.formatAddress)
 
-            if (fullAddress !== this.state.fullAddress){
+            if (stayingDestination !== this.state.stayingDestination){
               this.content.find('.wdgtz_header').addClass('edited')
             }
-
-            if (!this.state.latitude && !this.state.longitude){
-              this.state.latitude = response[0].geometry.location.lat()
-              this.state.longitude = response[0].geometry.location.lng()
-            }
-
-            this.toggleEditAddress()
-            this.updateMapAddress(response)
+            this.setLatitudeLongitude(response[0])
+            this.updateMapAddress(response[0])
           })
-        } else {
-          this.toggleEditAddress()
         }
+        this.toggleEditAddress()
       }
     })
     // Search
@@ -191,13 +182,18 @@ export class stayingView extends baseView{
     })
   }
 
+  setLatitudeLongitude(response){
+    this.state.latitude = response.geometry.location.lat()
+    this.state.longitude = response.geometry.location.lng()
+  }
+
   updateMapAddress(response){
     let options = { zoom: 8}
     const map = new google.maps.Map(document.getElementById('wdgtz_hotel-map'), options)
-    map.setCenter(response[0].geometry.location)
-    var marker = new google.maps.Marker({ map: map, position: response[0].geometry.location })
+    map.setCenter(response.geometry.location)
+    var marker = new google.maps.Marker({ map: map, position: response.geometry.location })
     marker.setMap(map)
-    map.setCenter(response[0].geometry.location)
+    map.setCenter(response.geometry.location)
   }
 
   toggleEditAddress(){
@@ -220,8 +216,8 @@ export class stayingView extends baseView{
     this.content.find('.wdgtz_action').toggleClass('wdgtz_expanded')
   }
 
-  setFullAddress(value){
-    this.state.fullAddress = value
+  setStayingDestination(value){
+    this.state.stayingDestination = value
     this.content.find('input.wdgtz_full-address').val(value)
     this.content.find('span.wdgtz_full-address').text(value)
   }
@@ -267,19 +263,25 @@ export class stayingView extends baseView{
   }
 
   setGuests(value){
-    this.state.defaultGuests = isNaN(value) ? null : value
+    if (!isNaN(value)){
+      this.state.defaultGuests = value
+    }
   }
 
   setRooms(value){
-    this.state.defaultRooms = isNaN(value) ? null : value
+    if (!isNaN(value)){
+      this.state.defaultRooms = value
+    }
   }
 
   setHotelChain(value){
-    this.state.hotelChain = isNaN(value) ? null : value
+    this.state.hotelChain = value
   }
 
   setHotelRating(value){
-    this.state.hotelRating = isNaN(value) ? null : value
+    if (!isNaN(value)){
+      this.state.hotelRating = value
+    }
   }
 
   doSearch(event){
@@ -299,7 +301,7 @@ export class stayingView extends baseView{
     let refClickId = this.state.refClickId ? encodeURIComponent(this.state.refClickId) : '' // encodeURIComponent
     let refId = this.state.refId
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
-    let fullAddress = encodeURIComponent(this.state.fullAddress)
+    let stayingDestination = encodeURIComponent(this.state.stayingDestination)
 
     let searchUrl = `${this.state.cname}/hotels/results/?rooms=${rooms}&guests=${guests}` +
       `&check_in=${checkIn}&check_out=${checkOut}&chain_id=${hotelChain}&star_rating=${hotelRating}` +
@@ -312,7 +314,7 @@ export class stayingView extends baseView{
       `search%5Bcheck_out%5D=${this.state.checkOut.format('YYYY-MM-DD')}&` + 
       `search%5Bentry_point%5D=umbrella&` +
       `search%5Bevent_duration%5D=${this.state.checkOut.diff(this.state.checkIn, 'days')}&` +
-      `search%5Bfunction_date%5D=&search%5Blocation%5D=${fullAddress}&` +
+      `search%5Bfunction_date%5D=&search%5Blocation%5D=${stayingDestination}&` +
       `search%5Bmaximum_adults_per_room%5D=2&search%5Bmeeting_space%5D=false&` +
       `search%5Bnumber_of_attendees%5D=&search%5Bpeople%5D=${guests}&` + 
       `search%5Brooms%5D=5&search%5Bsleeping_rooms%5D=true`

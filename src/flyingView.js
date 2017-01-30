@@ -39,20 +39,6 @@ export class flyingView extends baseView {
       },
     })
 
-    let flyingToCity = `${this.state.city}`
-    service.getAirOriginDestination(flyingToCity).then(suggestions => {
-      let matchByKey = suggestions.find(item => item.key === flyingToCity)
-      if (matchByKey){
-        this.state.flyingToType = matchByKey.type 
-        this.state.flyingTo = matchByKey.key
-        this.setFlyingToPlace(matchByKey.value)
-      } else if (suggestions.length > 0){
-        this.state.flyingToType = suggestions[0].type 
-        this.state.flyingTo = suggestions[0].key
-        this.setFlyingToPlace(suggestions[0].value)
-      }
-    })
-
     this.content.find('.wdgtz_flying-to input.wdgtz_full-address').autocomplete({
       source: (request, response) => {
         service.getAirOriginDestination(request.term).then(suggestions => {
@@ -71,13 +57,13 @@ export class flyingView extends baseView {
       select: (event, ui) => {
         this.state.flyingToType = ui.item.type 
         this.state.flyingTo = ui.item.key
-        let fullAddress = this.state.fullAddress
-        this.setFlyingToPlace(ui.item.value)
-        if (fullAddress !== this.state.fullAddress){
+        let flyingDestination = this.state.flyingDestination
+        this.setFlyingDestination(ui.item.value)
+        if (flyingDestination !== this.state.flyingDestination){
           this.content.find('.wdgtz_flying-to').addClass('edited')
         }
 
-        if (fullAddress !== this.state.fullAddress){
+        if (flyingDestination !== this.state.flyingDestination){
           this.content.find('.wdgtz_flying-to').addClass('edited')
         }
         this.toggleEditAddress()
@@ -136,8 +122,8 @@ export class flyingView extends baseView {
     this.content.find('.wdgtz_flying-to').toggleClass('editable')
   }
 
-  setFlyingToPlace(value){
-    this.state.fullAddress = value
+  setFlyingDestination(value){
+    this.state.flyingDestination = value
     this.content.find('input.wdgtz_full-address').val(value)
     this.content.find('span.wdgtz_full-address').text(value)
   }
@@ -206,7 +192,7 @@ export class flyingView extends baseView {
     let returnDate = this.state.returnDate.format('MM/DD/YYYY')
     let airVendor = this.state.airVendor || ''
     let seatClass = this.state.seatClass || ''
-    let stops = false
+    let stops = ''
     let latitude = this.state.latitude
     let longitude = this.state.longitude
     let currency = this.state.currency
@@ -216,11 +202,11 @@ export class flyingView extends baseView {
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
 
     let searchUrl = `${this.state.cname}/flights/search/?rs_adults=${travelers}` +
-      `&rs_o_aircode=${flyingFromAirport}&rs_o_city=${flyingFromCity}` +
-      `&rs_d_aircode=${flyingToAirport}&rs_d_city=${flyingToCity}` + 
+      `&rs_o_aircode=${flyingFromAirport}&rs_o_city=${flyingFromAirport}` +
+      `&rs_d_aircode=${flyingToAirport}&rs_d_city=${flyingToAirport}` + 
       `&rs_chk_in=${departure}&rs_chk_out=${returnDate}` +
       `&preferred_airline=${airVendor}&cabin_class=${seatClass}&preferred_stops=${stops}` +
-      `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}` +
+      `&currency=${currency}&poi_name=${poiName}` +
       `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
 
      window.open(searchUrl, "_blank")

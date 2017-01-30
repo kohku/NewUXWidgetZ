@@ -11,7 +11,6 @@ export class drivingView extends baseView {
     super(widget, state, selector, content)
   }
 
-
   /*
   TODO LIST
   Autocomplete if exact match then select automatically
@@ -77,12 +76,14 @@ export class drivingView extends baseView {
       $(datepicker).datepicker("setDate", this.state.dropOff.toDate())
     })
 
-    const defaultTime = '12:00'
-    $.each(this.content.find('.wdgtz_time-select'), (index, time) => {
-      $(time).val(defaultTime)
+    $.each(this.content.find('.wdgtz_pick-up .wdgtz_time-select'), (index, time) => {
+      $(time).val(this.state.pickUp.format('HH:mm'))
+    })
+    $.each(this.content.find('.wdgtz_drop-off .wdgtz_time-select'), (index, time) => {
+      $(time).val(this.state.dropOff.format('HH:mm'))
     })
 
-    $.each($('.wdgtz_car-company'), (index, element) => {
+    $.each(this.content.find('.wdgtz_car-company'), (index, element) => {
       service.getCarCompanies().then(all => {
         all.forEach(company => {
           $(element).append(`<option value="${company.Code}">${company.Name}</option>`)
@@ -109,7 +110,7 @@ export class drivingView extends baseView {
           this.getGeoMap(event.currentTarget.value).then(response => {
             let drivingDestination = this.state.drivingDestination
             this.state.formatAddress = response[0].formatted_address
-            this.setFullAddress(this.state.formatAddress)
+            this.setDrivingDestination(this.state.formatAddress)
             if (drivingDestination !== this.state.drivingDestination){
               this.content.find('.wdgtz_destination').addClass('edited')
             }
@@ -138,7 +139,7 @@ export class drivingView extends baseView {
           this.getGeoMap(event.currentTarget.value).then(response => {
             let drivingDestination = this.state.drivingDestination
             this.state.formatAddress = response[0].formatted_address
-            this.setFullAddress(this.state.formatAddress)
+            this.setDrivingDestination(this.state.formatAddress)
 
             if (drivingDestination !== this.state.drivingDestination){
               this.content.find('.wdgtz_destination').addClass('edited')
@@ -223,7 +224,7 @@ export class drivingView extends baseView {
     this.state.startingLocation = value
   }
 
-  setFullAddress(value){
+  setDrivingDestination(value){
     this.state.drivingDestination = value
     this.content.find('input.wdgtz_full-address').val(value)
     this.content.find('span.wdgtz_full-address').text(value)
@@ -264,14 +265,13 @@ export class drivingView extends baseView {
   }
 
   getDirections(event){
-    let url = `://getmywidget.com/NewUXTripPlanz/templates/gmaps.html?` +
+    let url = `//getmywidget.com/NewUXTripPlanz/gmaps.html?` +
     `from=${encodeURIComponent(this.state.startingLocation)}&to=${encodeURIComponent(this.state.drivingDestination)}`
 
     window.open(url, '_blank')
   }
 
   viewDrivingTime(event){
-    debugger
     var directionsService = new google.maps.DirectionsService()
 
     let request = {
@@ -295,9 +295,9 @@ export class drivingView extends baseView {
     event.stopPropagation()
 
     let pickUpDate = this.state.pickUp.format('MM/DD/YYYY')
-    let pickUpTime = this.state.pickUp.format('hh:mm')
+    let pickUpTime = this.state.pickUp.format('HH:mm')
     let dropOffDate = this.state.dropOff.format('MM/DD/YYYY')
-    let dropOffTime = this.state.dropOff.format('hh:mm')
+    let dropOffTime = this.state.dropOff.format('HH:mm')
 
     let fromPlace = this.state.startingLocation
     let toPlace = this.state.drivingDestination
@@ -318,7 +318,7 @@ export class drivingView extends baseView {
     let drivingDestination = encodeURIComponent(this.state.drivingDestination)
 
     let searchUrl = `${this.state.cname}/car_rentals/results/?` +
-      `&from_place=${fromPlace}&to_place=${toPlace}&check_time=&check_directions=` +
+      `&from_place=${fromPlace}&to_place=${toPlace}` +
       `&rs_pu_date=${pickUpDate}&rs_pu_time=${pickUpTime}&rs_do_date=${dropOffDate}&rs_do_time=${dropOffTime}` +
       `&rs_pu_airport=${pickUpAirport}&rs_pu_cityid=${pickUpCity}` +
       `&rs_do_airport=${dropOffAirport}&rs_do_cityid=${dropOffCity}` + 
