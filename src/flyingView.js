@@ -15,20 +15,75 @@ export class flyingView extends baseView {
     super(widget, state, selector, content)
   }
 
-  /*
-  TODO LIST
-
-  From and to airport code/city
-
-  Preferred airline
-  Preferred seat class
-
-  Search
-
-  */
-
   initialize(){
     const service = new WidgetService()
+
+    this.content.find('.wdgtz_starting-airport').autocomplete({
+      source: (request, response) => {
+        service.getAirOriginDestination(request.term).then(suggestions => {
+          let matchByKey = suggestions.find(item => item.key === request.term)
+
+          if (matchByKey){
+            response([matchByKey])
+          } else {
+            response(suggestions)
+          }
+        }).catch(error => {
+          response(error.status || error.message)
+        })
+      },
+      minLength: 2,
+      select: (event, ui) => {
+        this.state.flyingFromType = ui.item.type 
+        this.state.flyingFrom = ui.item.key 
+      },
+    })
+
+    let flyingToCity = `${this.state.city}`
+    service.getAirOriginDestination(flyingToCity).then(suggestions => {
+      let matchByKey = suggestions.find(item => item.key === flyingToCity)
+      if (matchByKey){
+        this.state.flyingToType = matchByKey.type 
+        this.state.flyingTo = matchByKey.key
+        this.setFlyingToPlace(matchByKey.value)
+      } else if (suggestions.length > 0){
+        this.state.flyingToType = suggestions[0].type 
+        this.state.flyingTo = suggestions[0].key
+        this.setFlyingToPlace(suggestions[0].value)
+      }
+    })
+
+    this.content.find('.wdgtz_flying-to input.wdgtz_full-address').autocomplete({
+      source: (request, response) => {
+        service.getAirOriginDestination(request.term).then(suggestions => {
+          let matchByKey = suggestions.find(item => item.key === request.term)
+
+          if (matchByKey){
+            response([matchByKey])
+          } else {
+            response(suggestions)
+          }
+        }).catch(error => {
+          response(error.status || error.message)
+        })
+      },
+      minLength: 1,
+      select: (event, ui) => {
+        this.state.flyingToType = ui.item.type 
+        this.state.flyingTo = ui.item.key
+        let fullAddress = this.state.fullAddress
+        this.setFlyingToPlace(ui.item.value)
+        if (fullAddress !== this.state.fullAddress){
+          this.content.find('.wdgtz_flying-to').addClass('edited')
+        }
+
+        if (fullAddress !== this.state.fullAddress){
+          this.content.find('.wdgtz_flying-to').addClass('edited')
+        }
+        this.toggleEditAddress()
+      },
+    })
+
 
     this.rangePicker = this.content.find('input[name="daterange"]')
     this.rangePicker.daterangepicker({
@@ -69,100 +124,36 @@ export class flyingView extends baseView {
       this.toggleEditAddress()
       this.content.find('input.wdgtz_full-address').focus()
     })
+    this.content.find('.wdgtz_traveler').on('change', event => this.setTravelers(event.target.value))
+
     // More/fewer options listeners
     this.content.find('.wdgtz_options label').on('click', event => this.toggleMoreFewerOptions(event))
-    this.content.find('.wdgtz_flying-to input.wdgtz_full-address').on('blur keyup', (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      if (event.type === 'blur' && this.content.find('.wdgtz_flying-to').hasClass('editable')){
-        // removing the editable class on enter triggers a blur event
-        if (this.state.fullAddress !== event.currentTarget.value){
-          this.getGeoMap(event.currentTarget.value).then(response => {
-            let fullAddress = this.state.fullAddress
-            this.state.formatAddress = response[0].formatted_address
-            this.setFullAddress(this.state.formatAddress)
-            if (fullAddress !== this.state.fullAddress){
-              this.content.find('.wdgtz_flying-to').addClass('edited')
-            }
-
-            if (fullAddress !== this.state.fullAddress){
-              this.content.find('.wdgtz_flying-to').addClass('edited')
-            }
-
-            if (!this.state.latitude && !this.state.longitude){
-              this.state.latitude = response[0].geometry.location.lat()
-              this.state.longitude = response[0].geometry.location.lng()
-            }
-            
-            this.toggleEditAddress()
-          })
-        } else {
-          this.toggleEditAddress()
-        }
-      } 
-      if (event.keyCode == 27) {
-        this.toggleEditAddress()
-      }
-      if (event.keyCode == 13) {
-        // removing the editable class on enter triggers a blur event
-        if (this.state.fullAddress !== event.currentTarget.value){
-          this.getGeoMap(event.currentTarget.value).then(response => {
-            let fullAddress = this.state.fullAddress
-            this.state.formatAddress = response[0].formatted_address
-            this.setFullAddress(this.state.formatAddress)
-
-            if (fullAddress !== this.state.fullAddress){
-              this.content.find('.wdgtz_flying-to').addClass('edited')
-            }
-
-            if (!this.state.latitude && !this.state.longitude){
-              this.state.latitude = response[0].geometry.location.lat()
-              this.state.longitude = response[0].geometry.location.lng()
-            }
-
-            this.toggleEditAddress()
-          })
-        } else {
-          this.toggleEditAddress()
-        }
-      }
-    })
     // Search
     this.content.find('.wdgtz_action').on('click', event => this.doSearch(event))
-  }
-
-  getGeoMap(address){
-    return new Promise((resolve, reject) => {
-      const geocoder = new google.maps.Geocoder()
-      // get map
-      geocoder.geocode({'address': address}, (response, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          resolve(response)
-        } else {
-          reject(status)
-        }
-      })
-    })
   }
 
   toggleEditAddress(){
     this.content.find('.wdgtz_flying-to').toggleClass('editable')
   }
 
-  setFullAddress(value){
+  setFlyingToPlace(value){
     this.state.fullAddress = value
     this.content.find('input.wdgtz_full-address').val(value)
     this.content.find('span.wdgtz_full-address').text(value)
+  }
+
+  setTravelers(value){
+    this.state.travelers = value
   }
 
   setDates(event, calendar){
     let range = calendar.instance.getRange()
         
     if (range.start){
-      this.state.checkIn = moment(range.start)
+      this.state.departure = moment(range.start)
     }
     if (range.end){
-      this.state.checkOut = moment(range.end)
+      this.state.returnDate = moment(range.end)
     }
   }
 
@@ -205,12 +196,17 @@ export class flyingView extends baseView {
     event.preventDefault()
     event.stopPropagation()
 
-    let rooms = this.state.defaultRooms
-    let guests = this.state.defaultGuests
-    let checkIn = this.state.checkIn.format('MM/DD/YYYY')
-    let checkOut = this.state.checkOut.format('MM/DD/YYYY')
-    let hotelChain = this.state.hotelChain || ''
-    let hotelRating = this.state.hotelRating || ''
+    let flyingFromAirport = this.state.flyingFromType === 'AIR' ? this.state.flyingFrom : '' 
+    let flyingFromCity = this.state.flyingFromType === 'CITY' ? this.state.flyingFrom : ''
+    let flyingToAirport = this.state.flyingToType === 'AIR' ? this.state.flyingTo : ''
+    let flyingToCity = this.state.flyingToType === 'CITY' ? this.state.flyingTo : ''
+
+    let travelers = this.state.travelers || 1
+    let departure = this.state.departure.format('MM/DD/YYYY')
+    let returnDate = this.state.returnDate.format('MM/DD/YYYY')
+    let airVendor = this.state.airVendor || ''
+    let seatClass = this.state.seatClass || ''
+    let stops = false
     let latitude = this.state.latitude
     let longitude = this.state.longitude
     let currency = this.state.currency
@@ -218,25 +214,15 @@ export class flyingView extends baseView {
     let refClickId = this.state.refClickId ? encodeURIComponent(this.state.refClickId) : '' // encodeURIComponent
     let refId = this.state.refId
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
-    let fullAddress = encodeURIComponent(this.state.fullAddress)
 
-    let searchUrl = `${this.state.cname}/hotels/results/?rooms=${rooms}&guests=${guests}` +
-      `&check_in=${checkIn}&check_out=${checkOut}&chain_id=${hotelChain}&star_rating=${hotelRating}` +
+    let searchUrl = `${this.state.cname}/flights/search/?rs_adults=${travelers}` +
+      `&rs_o_aircode=${flyingFromAirport}&rs_o_city=${flyingFromCity}` +
+      `&rs_d_aircode=${flyingToAirport}&rs_d_city=${flyingToCity}` + 
+      `&rs_chk_in=${departure}&rs_chk_out=${returnDate}` +
+      `&preferred_airline=${airVendor}&cabin_class=${seatClass}&preferred_stops=${stops}` +
       `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}` +
       `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
 
-    if (rooms === 5){
-      searchUrl = `https://tripplanz.groupize.com/search?` + 
-      `search%5Bcheck_in%5D=${this.state.checkIn.format('YYYY-MM-DD')}&` +
-      `search%5Bcheck_out%5D=${this.state.checkOut.format('YYYY-MM-DD')}&` + 
-      `search%5Bentry_point%5D=umbrella&` +
-      `search%5Bevent_duration%5D=${this.state.checkOut.diff(this.state.checkIn, 'days')}&` +
-      `search%5Bfunction_date%5D=&search%5Blocation%5D=${fullAddress}&` +
-      `search%5Bmaximum_adults_per_room%5D=2&search%5Bmeeting_space%5D=false&` +
-      `search%5Bnumber_of_attendees%5D=&search%5Bpeople%5D=${guests}&` + 
-      `search%5Brooms%5D=5&search%5Bsleeping_rooms%5D=true`
-    } 
-    
      window.open(searchUrl, "_blank")
   }
 }

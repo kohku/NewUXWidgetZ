@@ -14,8 +14,6 @@ export class drivingView extends baseView {
   /*
   TODO LIST
 
-  Edit location address
-
   Get directions
   View driving time
 
@@ -275,10 +273,10 @@ export class drivingView extends baseView {
 
     let fromPlace = this.state.startingLocation
     let toPlace = this.state.fullAddress
-    let pickUpAirport = this.state.pickUpType === 'AIR' ? this.state.pickUpPlace : null 
-    let pickUpCity = this.state.pickUpType === 'CITY' ? this.state.pickUpPlace : null
-    let dropOffAirport = this.state.dropOffType === 'AIR' ? this.state.dropOffPlace : null
-    let dropOffCity = this.state.dropOffType === 'CITY' ? this.state.dropOffPlace : null
+    let pickUpAirport = this.state.pickUpType === 'AIR' ? this.state.pickUpPlace : '' 
+    let pickUpCity = this.state.pickUpType === 'CITY' ? this.state.pickUpPlace : ''
+    let dropOffAirport = this.state.dropOffType === 'AIR' ? this.state.dropOffPlace : ''
+    let dropOffCity = this.state.dropOffType === 'CITY' ? this.state.dropOffPlace : ''
     let carCompany = this.state.carCompany
     let oneWay = this.state.oneWay || false
 
