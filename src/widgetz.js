@@ -2,15 +2,8 @@ import './widget.less'
 import { Observable } from './observable'
 import $ from 'jquery'
 import Promise from 'es6-promise'
-// import 'jquery-ui/ui/widget'
-// import 'jquery-ui/ui/widgets/button'
-// import 'jquery-ui/ui/widgets/datepicker'
-// import 'jquery-ui/ui/widgets/menu'
-// import 'jquery-ui/themes/base/base.css'
-// import Moment from 'moment'
+import moment from 'moment'
 import Mustache from 'mustache'
-// import 'imports-loader?jQuery=jquery,moment=moment,this=>window!./jquery.comiseo.daterangepicker.js'
-// import 'style-loader?css-loader!./jquery.comiseo.daterangepicker.css'
 import 'imports-loader?this=>window!./selector-queries.js'
 import { stayingView } from './stayingView'
 import { drivingView } from './drivingView'
@@ -21,12 +14,15 @@ export class WidgetZ extends Observable {
     super()
     this.views = []
     this.params = params
+    this.absoluteUrl = '//getmywidget.com/NewUXTripPlanz'
     this.state = this.initState(params)
     this.initWidget()
   }
 
   initState(params){
     let state = {}
+
+    let absoluteUrlParam = params.find(p => p.key === 'absoluteUrl')
 
     let headerParam = params.find(p => p.key === 'header_text')
     let appendPoiParam = params.find(p => p.key === 'append_poi')
@@ -150,6 +146,7 @@ export class WidgetZ extends Observable {
     let socialParam = params.find(p => p.key === 'social')
     let stylesUrlParam = params.find(p => p.key === 'stylesUrl')
 
+    state.absoluteUrl = absoluteUrlParam ? absoluteUrlParam.value : this.absoluteUrl
     state.headerText = headerParam ? headerParam.value : 'Tripplanz Widget'
     state.appendPoi = !!appendPoiParam && appendPoiParam.value === 'N'
     state.socialPictureUrl = picUrlParam ? picUrlParam.value : 'http://getmywidget.com/graphicalwidget/images/tripplanz_icon.png'
@@ -196,7 +193,7 @@ export class WidgetZ extends Observable {
     state.returnDate = returnDate
 
     state.social = socialParam ? socialParam.value === 'Y' : false
-    state.stylesUrl = stylesUrlParam ? stylesUrlParam.value : '//getmywidget.com/NewUXTripPlanz/styles.css'
+    state.stylesUrl = stylesUrlParam ? stylesUrlParam.value : `${state.absoluteUrl}/styles.css`
 
     return state
   }
@@ -219,7 +216,7 @@ export class WidgetZ extends Observable {
       }
 
       // loading widget
-      $.get('widget.htm', template => {
+      $.get(`${this.state.absoluteUrl}/widget.htm`, template => {
         let rendered = Mustache.render(template, this.state)
         $('#graphical-wdgtz-container').html(rendered)
 
