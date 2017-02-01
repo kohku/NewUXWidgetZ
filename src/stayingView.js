@@ -45,7 +45,7 @@ export class stayingView extends baseView{
 
     let clearText
     if (this.state.eventName && this.state.eventStart && this.state.eventEnd){
-      clearText = `Select dates ${this.state.eventName} ${this.state.eventStart.format("MM/DD")} ${this.state.eventEnd.format("MM/DD")}`
+      clearText = `Select dates ${this.state.eventName} ${this.state.eventStart.format("MM/DD")} - ${this.state.eventEnd.format("MM/DD")}`
     }  
 
     this.rangePicker = this.content.find('input[name="daterange"]')
