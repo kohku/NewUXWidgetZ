@@ -48,11 +48,31 @@ export class WidgetZ extends Observable {
 
     let currencyParam = params.find(p => p.key === 'currency')
 
+    let eventNameParam = params.find(p => p.key === "event_name")
+    let eventStartParam = params.find(p => p.key === "event_start")
+    let eventEndParam = params.find(p => p.key === "event_end")
+
     let checkInDateOrDays = params.find(p => p.key === 'check_in')
     let checkOutDateOrDays = params.find(p => p.key === 'check_out')
     let guestsParam = params.find(p => p.key === 'guests')
     let roomsParam = params.find(p => p.key === 'rooms')
     let hotelStarsParam = params.find(p => p.key === 'hotel_stars')
+
+    // Event variables
+    if(!!eventNameParam && eventNameParam.value){
+      state.eventName = eventNameParam.value
+    }
+
+    if (!!eventStartParam && eventStartParam.value){
+      state.eventStart = eventStartParam.value instanceof moment ? 
+        eventStartParam.value : moment(eventStartParam.value)
+    }
+    let eventStart = null
+
+    if (!!eventEndParam && eventEndParam.value){
+      state.eventEnd = eventEndParam.value instanceof moment ? 
+        eventEndParam.value : moment(eventEndParam.value)
+    }
 
     // Set calendar range
     let checkIn = moment()
@@ -148,7 +168,7 @@ export class WidgetZ extends Observable {
 
     state.absoluteUrl = absoluteUrlParam ? absoluteUrlParam.value : this.absoluteUrl
     state.headerText = headerParam ? headerParam.value : 'Tripplanz Widget'
-    state.appendPoi = !!appendPoiParam && appendPoiParam.value === 'N'
+    state.appendPoi = !!appendPoiParam && appendPoiParam.value !== 'N'
     state.socialPictureUrl = picUrlParam ? picUrlParam.value : 'http://getmywidget.com/graphicalwidget/images/tripplanz_icon.png'
     state.pictureUrl = picUrlParam ? picUrlParam.value : null
     state.widgetUrl = widgetUrlParam ? widgetUrlParam.value : null

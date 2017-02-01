@@ -31,6 +31,12 @@
     min-width: @min-width;
   }
 
+  .wdgtz_header{
+    display: block;
+    padding: 1em;
+    font-size: 13px;
+  }
+
   * {
     box-sizing: border-box;
     line-height: normal;
@@ -381,6 +387,11 @@
             button {
               position: relative;
               margin-right: calc(100% + .5em);
+
+              &:after {
+                margin-left: 6em;
+                margin-top: -1.5em;
+              }
             }
           }
 
@@ -391,6 +402,11 @@
 
           button {
             margin-right: .5em;
+
+            &:after {
+              margin-left: 1em;
+              margin-top: -5em;
+            }
           }
         }
       }
@@ -402,6 +418,8 @@
 
         .wdgtz_my-itineraries {
           margin-top: 1em;
+          text-align: left;
+          padding-left: 1.75em;
         }
 
         .wdgtz_social {
@@ -635,9 +653,19 @@
         border: @border-dev;
         margin-bottom: 1em;
 
-        /*button {
-          width: 86px;
-        }*/
+        button:after {
+          display: block;
+          content: '';
+          width: 2em;
+          height: 2em;
+          background-image: url(../images/best-price-promise.png);
+          background-repeat: no-repeat;
+          background-size: 2em;
+          margin-left: 6em;
+          margin-top: -1.5em;
+          position: absolute;
+          cursor: pointer;
+        }
       }
 
       .wdgtz_picture-maps {
@@ -897,6 +925,12 @@
           &.wdgtz_trip-rule-oneway {
             height: 28.75em;
           }
+
+          .wdgtz_action button:after {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+          }
         }
 
         .wdgtz_params {
@@ -960,6 +994,23 @@
 
           .wdgtz_roundtrip  > label {
             line-height: 1.5em;
+          }
+
+          .wdgtz_action button:after {
+            display: block;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 2s ease;
+            content: '';
+            width: 2em;
+            height: 2em;
+            background-image: url(../images/best-price-promise.png);
+            background-repeat: no-repeat;
+            background-size: 2em;
+            margin-left: 6em;
+            margin-top: -1.5em;
+            position: absolute;
+            cursor: pointer;
           }
         }
       }
@@ -1119,6 +1170,20 @@
       .wdgtz_action {
         margin-bottom: .5em;
 
+        button:after {
+          display: block;
+          content: '';
+          width: 2em;
+          height: 2em;
+          background-image: url(../images/best-price-promise.png);
+          background-repeat: no-repeat;
+          background-size: 2em;
+          margin-left: 6em;
+          margin-top: -1.5em;
+          position: absolute;
+          cursor: pointer;
+        }
+
         button {
           transition: all 0.3s ease;
         }
@@ -1183,6 +1248,7 @@
   border-bottom-right-radius: 4px;  
   height: 17.25em;
   line-height: normal;
+  max-width: 20em;
 
   .ui-state-disabled, .ui-widget-content .ui-state-disabled, 
   .ui-widget-header .ui-state-disabled {
