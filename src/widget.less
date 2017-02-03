@@ -11,7 +11,7 @@
 @grey-40: #939598;
 @grey-20: #a4b0b5; 
 @grey-30: #d3d3d3;
-@content-background: #f9f9f9;
+@content-background: #f3f3f3;
 @input-border: #d8bbab;
 @navy: #0c5973;
 @navy-boder: #5c8fa0;
@@ -759,6 +759,24 @@
         &:hover{
           color: @navy;
         }
+      }
+
+      .wdgtz_tooltip {
+        display: none;
+
+        /*.wdgtz_best-rate-content{
+          border: @border;
+          border-radius: 2px;
+          width: 250px;
+          padding: .75em;
+          text-align: justify;
+          background-color: @white;
+
+          a {
+            display: block;
+            text-align: center;
+          }
+        }*/
       }
     }
 
@@ -1535,3 +1553,27 @@
   }
 }
 
+.tooltipster-sidetip {
+  font-family: "Roboto Regular",Arial,Helvetica,sans-serif;
+  font-size: 11px;
+  box-sizing: border-box;
+  line-height: normal;
+
+  .tooltipster-box {
+    border: solid 1px @input-border;
+    border-radius: 2px;
+    width: 250px;
+    text-align: justify;
+    background-color: @white;
+  }
+
+  .tooltipster-content {
+    color: #000;
+    padding: .75em;
+
+    a {
+      display: block;
+      text-align: center;
+    }
+  }
+}

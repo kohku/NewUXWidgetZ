@@ -5,6 +5,8 @@ import 'jquery-ui/ui/widgets/button'
 import 'jquery-ui/ui/widgets/datepicker'
 import 'jquery-ui/ui/widgets/menu'
 import 'jquery-ui/themes/base/base.css'
+import 'tooltipster'
+import 'tooltipster/src/css/tooltipster.css'
 import moment from 'moment'
 import 'imports-loader?jQuery=jquery,moment=moment,this=>window!./jquery.comiseo.daterangepicker.js'
 import 'style-loader?css-loader!./jquery.comiseo.daterangepicker.css'
@@ -104,6 +106,11 @@ export class stayingView extends baseView{
         })
       })
     })
+
+    this.content.find('.wdgtz_best-rate-promise').tooltipster({
+      interactive: true,
+      side: 'bottom'
+    })
   }
 
   setListeners(){
@@ -119,7 +126,7 @@ export class stayingView extends baseView{
     // Flip for map picture
     this.content.find('.wdgtz_flip').on('click', event => this.flipMapPicture(event))
     // More/fewer options listeners
-    this.content.find('.wdgtz_details .wdgtz_options label').on('click', event => this.toggleMoreFewerOptions(event))
+    this.content.find('.wdgtz_details .wdgtz_options .wdgtz_options-more').on('click', event => this.toggleMoreFewerOptions(event))
     // form elements
     this.content.find('.wdgtz_guest').on('change', event => this.setGuests(parseInt(event.currentTarget.value)))
     this.content.find('.wdgtz_rooms').on('change', event => this.setRooms(parseInt(event.currentTarget.value)))
