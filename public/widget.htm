@@ -1,5 +1,5 @@
 <div class="graphical-wdgtz-container-wrapper">
-    <div class="wdgtz_header">
+    <div class="wdgtz_container_header">
         {{headerText}}{{#appendPoi}}{{poiName}}{{/appendPoi}}
     </div>
     <ul class="wdgtz_tabs">
@@ -62,7 +62,8 @@
                     <option value="5">5+ Rooms</option>
                 </select>
                 <div class="wdgtz_options">
-                    <label><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
+                    <label class="wdgtz_best-rate-promise">Best Rate 110% Guarantee</label>
+                    <label class="wdgtz_options-more"><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
                     <div class="wdgtz_params">
                         <select class="wdgtz_hotel-chain">
                             <option value="">Select Hotel Chain</option>
@@ -75,6 +76,7 @@
             </div>
             <div class="wdgtz_action">
                 <button>Search</button>
+                <label class="wdgtz_best-rate-promise">Best Rate 110% Guarantee</label>
             </div>
         </div>
         <div class="{{#tabs.driving}}wdgtz_car{{/tabs.driving}}" data-content="driving">
@@ -106,7 +108,7 @@
                 <button>View driving time</button>
             </div>
             <div class="wdgtz_options">
-                <label>Need a rental car? Check prices</label>
+                <label class="wdgtz_options-more">Need a rental car? Check prices</label>
                 <form>
                     <div class="wdgtz_params">
                         <div class="wdgtz_trip-rule">
@@ -265,7 +267,7 @@
                     <option value="4">4 Travelers</option>
                 </select>
                 <div class="wdgtz_options">
-                    <label><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
+                    <label class="wdgtz_options-more"><span class="wdgtz_more">More</span><span class="wdgtz_fewer">Fewer</span> search options</label>
                     <div class="wdgtz_params">
                         <select class="wdgtz_airline">
                             <option value="">Select Preferred Airline</option>

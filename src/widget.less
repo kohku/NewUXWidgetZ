@@ -31,10 +31,11 @@
     min-width: @min-width;
   }
 
-  .wdgtz_header{
+  .wdgtz_container_header{
     display: block;
     padding: 1em;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: bold;
   }
 
   * {
@@ -223,6 +224,20 @@
           &.wdgtz_expanded {
             margin-bottom: 1.1em;
           }
+        }
+
+        .wdgtz_best-rate-promise {
+          float: right;
+          width: 50%;
+          margin-top: 0;
+        }
+
+        .wdgtz_action .wdgtz_best-rate-promise {
+          display: none;
+        }
+        
+        .wdgtz_options .wdgtz_best-rate-promise {
+          display: block;
         }
 
         .wdgtz_picture-maps {
@@ -439,31 +454,34 @@
 
     &.wdgtz_mobile {
 
-      .wdgtz_hotel .wdgtz_details {
-        & .wdgtz_guest, & .wdgtz_rooms {
-          display: block;
-          width: 100%;
-          float: none;
-        }
+      .wdgtz_hotel {
 
-        .comiseo-daterangepicker-triggerbutton.ui-widget.comiseo-daterangepicker-active{
-          margin-bottom: @calendar-height;
-        }
-
-        .wdgtz_options {
-          &.wdgtz_expanded .wdgtz_params {
-            height: 8.2em;
+        .wdgtz_details {
+          & .wdgtz_guest, & .wdgtz_rooms {
+            display: block;
+            width: 100%;
+            float: none;
           }
 
-          .wdgtz_params {
-            .wdgtz_hotel-chain {
-              margin-bottom: 1em;
+          .comiseo-daterangepicker-triggerbutton.ui-widget.comiseo-daterangepicker-active{
+            margin-bottom: @calendar-height;
+          }
+
+          .wdgtz_options {
+            &.wdgtz_expanded .wdgtz_params {
+              height: 8.2em;
             }
 
-            .wdgtz_hotel-chain, .wdgtz_hotel-rating {
-              display: block;
-              width: 100%;
-              float: none;
+            .wdgtz_params {
+              .wdgtz_hotel-chain {
+                margin-bottom: 1em;
+              }
+
+              .wdgtz_hotel-chain, .wdgtz_hotel-rating {
+                display: block;
+                width: 100%;
+                float: none;
+              }
             }
           }
         }
@@ -608,7 +626,7 @@
         .wdgtz_options {
 
           &.wdgtz_expanded {
-            label {
+            .wdgtz_options-more {
 
               .wdgtz_more {
                 display: none;
@@ -625,7 +643,7 @@
             }
           }
 
-          label {
+          .wdgtz_options-more {
 
             .wdgtz_more {
               display: inline;
@@ -654,20 +672,6 @@
       .wdgtz_action {
         border: @border-dev;
         margin-bottom: 1em;
-
-        button:after {
-          display: block;
-          content: '';
-          width: 2em;
-          height: 2em;
-          background-image: url(../images/best-price-promise.png);
-          background-repeat: no-repeat;
-          background-size: 2em;
-          margin-left: 6em;
-          margin-top: -1.5em;
-          position: absolute;
-          cursor: pointer;
-        }
       }
 
       .wdgtz_picture-maps {
@@ -724,6 +728,36 @@
           top: 0;
           width: 100%;
           height: 100%;
+        }
+      }
+
+      .wdgtz_options .wdgtz_best-rate-promise {
+        display: none;
+      }
+
+      .wdgtz_best-rate-promise {
+        display: block;
+        float: right;
+        width: 50%;
+        text-align: center;
+        cursor: pointer;
+        float: none;
+        width: 100%;
+        margin-top: 1em;
+
+        &::before{
+          display: inline-block;
+          content: '';
+          background-image: url(../images/check.png);
+          width: 1em;
+          height: 1em;
+          background-repeat: no-repeat;
+          background-size: 1em;
+          margin-right: .25em;
+        }
+
+        &:hover{
+          color: @navy;
         }
       }
     }
@@ -927,12 +961,6 @@
           &.wdgtz_trip-rule-oneway {
             height: 28.75em;
           }
-
-          .wdgtz_action button:after {
-            display: block;
-            visibility: visible;
-            opacity: 1;
-          }
         }
 
         .wdgtz_params {
@@ -997,23 +1025,6 @@
           .wdgtz_roundtrip  > label {
             line-height: 1.5em;
           }
-
-          .wdgtz_action button:after {
-            display: block;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 2s ease;
-            content: '';
-            width: 2em;
-            height: 2em;
-            background-image: url(../images/best-price-promise.png);
-            background-repeat: no-repeat;
-            background-size: 2em;
-            margin-left: 6em;
-            margin-top: -1.5em;
-            position: absolute;
-            cursor: pointer;
-          }
         }
       }
     }
@@ -1041,14 +1052,14 @@
     .wdgtz_options {
       clear: right;
 
-      &.wdgtz_expanded > label::before {
+      &.wdgtz_expanded .wdgtz_options-more::before {
         border-top: .45em solid @navy;
         border-left: .45em solid transparent;
         border-right: .45em solid transparent;
         border-bottom: none;
       }
 
-      > label {
+      .wdgtz_options-more {
         color: @navy;
         display: block;
         width: 100%;
@@ -1171,20 +1182,6 @@
 
       .wdgtz_action {
         margin-bottom: .5em;
-
-        button:after {
-          display: block;
-          content: '';
-          width: 2em;
-          height: 2em;
-          background-image: url(../images/best-price-promise.png);
-          background-repeat: no-repeat;
-          background-size: 2em;
-          margin-left: 6em;
-          margin-top: -1.5em;
-          position: absolute;
-          cursor: pointer;
-        }
 
         button {
           transition: all 0.3s ease;
