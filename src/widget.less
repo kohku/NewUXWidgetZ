@@ -1385,8 +1385,7 @@
         background-color: @date-range;
       }
 
-      &.start-date {
-        // text-align: right;
+      &.start-range {
 
         &::before {
           content: '';
@@ -1397,20 +1396,13 @@
           background-size: 22px 18px;
           width: 20px;
           height: 20px;
-          margin-left: 1.05em;
-          margin-top: -.1em;
-          opacity: 0.25;
+          margin-left: 12px;
+          margin-top: -1px;
+          opacity: 0.45;
         }
-
-        /*a {
-          border-top-left-radius: 50%;
-          border-bottom-left-radius: 50%;
-          display: inline-block;
-        }*/
       }
 
-      &.end-date {
-        // text-align: right;
+      &.end-range {
 
         &::before {
           content: '';
@@ -1421,16 +1413,41 @@
           background-size: 22px 18px;
           width: 20px;
           height: 20px;
-          margin-left: .75em;
-          margin-top: -.1em;
-          opacity: 0.25;
+          margin-left: 12px;
+          margin-top: -1px;
+          opacity: 0.45;
         }
+      }
 
-        /*a {
-          border-top-right-radius: 50%;
-          border-bottom-right-radius: 50%;
-          display: inline-block;
-        }*/
+      &.event-start::before {
+        content: '';
+        display: block;
+        position: absolute;
+        background-color: #ccc;
+        width: 34px;
+        height: 15px;
+        opacity: .75;
+
+      }
+
+      &.event-date::before {
+        content: '';
+        display: block;
+        position: absolute;
+        background-color: #ccc;
+        width: 34px;
+        height: 15px;
+        opacity: .45;
+      }
+
+      &.event-end::before {
+        content: '';
+        display: block;
+        position: absolute;
+        background-color: #ccc;
+        width: 34px;
+        height: 15px;
+        opacity: .75;
       }
     }
   }
