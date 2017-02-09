@@ -1071,11 +1071,29 @@
     .wdgtz_options {
       clear: right;
 
-      &.wdgtz_expanded .wdgtz_options-more::before {
-        border-top: .45em solid @navy;
-        border-left: .45em solid transparent;
-        border-right: .45em solid transparent;
-        border-bottom: none;
+      .wdgtz_more {
+        display: inline;
+      }
+
+      .wdgtz_fewer{
+        display: none;
+      }
+
+      &.wdgtz_expanded {
+        .wdgtz_more {
+          display: none;
+        }
+
+        .wdgtz_fewer{
+          display: inline;
+        }
+
+        .wdgtz_options-more::before {
+          border-top: .45em solid @navy;
+          border-left: .45em solid transparent;
+          border-right: .45em solid transparent;
+          border-bottom: none;
+        }
       }
 
       .wdgtz_options-more {

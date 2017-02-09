@@ -37,7 +37,7 @@ export class drivingView extends baseView {
         this.state.pickUpType = ui.item.type 
         this.state.pickUpPlace = ui.item.key 
       },
-    })
+    }).val(`${this.state.city}, ${this.state.stateProvince}`)
 
     $('.wdgtz__drop-off__location').autocomplete({
       autoFocus: true,
@@ -318,13 +318,15 @@ export class drivingView extends baseView {
     let dropOffDate = this.state.dropOff.format('MM/DD/YYYY')
     let dropOffTime = this.state.dropOff.format('HH:mm')
 
-    let fromPlace = this.state.startingLocation
-    let toPlace = this.state.drivingDestination
-    let pickUpAirport = this.state.pickUpType === 'AIR' ? this.state.pickUpPlace : '' 
-    let pickUpCity = this.state.pickUpType === 'CITY' ? this.state.pickUpPlace : ''
-    let dropOffAirport = this.state.dropOffType === 'AIR' ? this.state.dropOffPlace : ''
-    let dropOffCity = this.state.dropOffType === 'CITY' ? this.state.dropOffPlace : ''
-    let carCompany = this.state.carCompany
+    let fromPlace = this.state.startingLocation || ''
+    let toPlace = this.state.drivingDestination || ''
+    let pickUpAirportId = this.state.pickUpType === 'AIR' ? this.state.pickUpPlace : '' 
+    let pickUpCityId = this.state.pickUpType === 'CITY' ? this.state.pickUpPlace : ''
+    let dropOffAirportId = this.state.dropOffType === 'AIR' ? this.state.dropOffPlace : ''
+    let dropOffCityId = this.state.dropOffType === 'CITY' ? this.state.dropOffPlace : ''
+    let pickUpCity = `${this.state.city}, ${this.state.stateProvince}`
+    let dropOffCity = `${this.state.city}, ${this.state.stateProvince}`
+    let carCompany = this.state.carCompany || ''
     let oneWay = this.state.oneWay || false
 
     let latitude = this.state.latitude
@@ -337,11 +339,11 @@ export class drivingView extends baseView {
     let drivingDestination = encodeURIComponent(this.state.drivingDestination)
 
     let searchUrl = `${this.state.cname}/car_rentals/results/?` +
-      `refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}` +
-      `&from_place=${fromPlace}&to_place=${toPlace}` +
-      `&rs_pu_date=${pickUpDate}&rs_pu_time=${pickUpTime}&rs_do_date=${dropOffDate}&rs_do_time=${dropOffTime}` +
-      `&rs_pu_airport=${pickUpAirport}&rs_pu_cityid=${pickUpCity}` +
-      `&rs_do_airport=${dropOffAirport}&rs_do_cityid=${dropOffCity}` + 
+      `rs_pu_date=${pickUpDate}&rs_do_date=${dropOffDate}` +
+      `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}` +
+      `&rs_pu_cityid=${pickUpCityId}&rs_pu_time=${pickUpTime}&rs_pu_city=${pickUpCity}` +
+      `&rs_do_cityid=${dropOffCityId}&rs_do_time=${dropOffTime}&rs_do_city=${dropOffCity}` + 
+      `&rs_pu_airport=${pickUpAirportId}&rs_do_airport=${dropOffAirportId}` +
       `&rs_company=${carCompany}&dropoff=${oneWay}` +
       `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}`
 
