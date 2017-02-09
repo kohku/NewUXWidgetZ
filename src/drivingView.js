@@ -337,13 +337,13 @@ export class drivingView extends baseView {
     let drivingDestination = encodeURIComponent(this.state.drivingDestination)
 
     let searchUrl = `${this.state.cname}/car_rentals/results/?` +
+      `refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}` +
       `&from_place=${fromPlace}&to_place=${toPlace}` +
       `&rs_pu_date=${pickUpDate}&rs_pu_time=${pickUpTime}&rs_do_date=${dropOffDate}&rs_do_time=${dropOffTime}` +
       `&rs_pu_airport=${pickUpAirport}&rs_pu_cityid=${pickUpCity}` +
       `&rs_do_airport=${dropOffAirport}&rs_do_cityid=${dropOffCity}` + 
       `&rs_company=${carCompany}&dropoff=${oneWay}` +
-      `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}` +
-      `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
+      `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}`
 
      window.open(searchUrl, "_blank")
   }

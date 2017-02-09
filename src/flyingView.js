@@ -224,13 +224,15 @@ export class flyingView extends baseView {
     let refId = this.state.refId
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
 
-    let searchUrl = `${this.state.cname}/flights/search/?rs_adults=${travelers}` +
+    let searchUrl = `${this.state.cname}/flights/search/?` +
+      `refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}` +
+      `&rs_adults=${travelers}` +
       `&rs_o_aircode=${flyingFromAirport}&rs_o_city=${flyingFromAirport}` +
       `&rs_d_aircode=${flyingToAirport}&rs_d_city=${flyingToAirport}` + 
       `&rs_chk_in=${departure}&rs_chk_out=${returnDate}` +
       `&preferred_airline=${airVendor}&cabin_class=${seatClass}&preferred_stops=${stops}` +
-      `&currency=${currency}&poi_name=${poiName}` +
-      `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
+      `&currency=${currency}&poi_name=${poiName}`
+      
 
      window.open(searchUrl, "_blank")
   }

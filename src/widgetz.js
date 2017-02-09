@@ -56,7 +56,7 @@ export class WidgetZ extends Observable {
     let checkOutDateOrDays = params.find(p => p.key === 'check_out')
     let guestsParam = params.find(p => p.key === 'guests')
     let roomsParam = params.find(p => p.key === 'rooms')
-    let hotelStarsParam = params.find(p => p.key === 'hotel_stars')
+    let hotelRatingParam = params.find(p => p.key === 'hotel_stars')
 
     // Event variables
     if(!!eventNameParam && eventNameParam.value){
@@ -204,7 +204,7 @@ export class WidgetZ extends Observable {
     state.checkOut = checkOut
     state.defaultGuests = guestsParam ? guestsParam.value : 1
     state.defaultRooms = roomsParam ? roomsParam.value : 1
-    state.hotelStars = typeof hotelStarsParam !== 'undefined' ? hotelStarsParam.value.split(',').map(key => parseInt(key)) : []
+    state.hotelRating = typeof hotelRatingParam !== 'undefined' ? hotelRatingParam.value.split(',').map(key => parseInt(key)) : []
 
     state.pickUp = pickUp
     state.dropOff = dropOff

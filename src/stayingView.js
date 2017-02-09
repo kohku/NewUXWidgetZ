@@ -100,7 +100,7 @@ export class stayingView extends baseView{
     // load hotel raiting
     $.each(this.content.find('.wdgtz_hotel-rating'), (index, element) => {
       service.getHotelRaiting().then(all => {
-        let ratings = all.filter(rating => this.state.hotelStars.indexOf(rating.key) >= 0)
+        let ratings = all.filter(rating => this.state.hotelRating.indexOf(rating.key) >= 0)
         ratings.forEach(rating => {
           $(element).append(`<option value="${rating.key}">${rating.value}</option>`)
         })
@@ -343,10 +343,10 @@ export class stayingView extends baseView{
     let refClickId2 = this.state.refClickId2 ? encodeURIComponent(this.state.refClickId2) : ''
     let stayingDestination = encodeURIComponent(this.state.stayingDestination)
 
-    let searchUrl = `${this.state.cname}/hotels/results/?rooms=${rooms}&guests=${guests}` +
-      `&check_in=${checkIn}&check_out=${checkOut}&chain_id=${hotelChain}&star_rating=${hotelRating}` +
-      `&latitude=${latitude}&longitude=${longitude}&currency=${currency}&poi_name=${poiName}` +
-      `&refclickid=${refClickId}&refid=${refId}&refclickid2=${refClickId2}`
+    let searchUrl = `${this.state.cname}/hotels/results/?check_in=${checkIn}&check_out=${checkOut}` +
+      `&refid=${refId}&refclickid=${refClickId}refclickid2=${refClickId2}` +
+      `&rooms=${rooms}&guests=${guests}&chain_id=${hotelChain}&star_rating=${hotelRating.join(',')}` +
+      `&poi_name=${poiName}&latitude=${latitude}&longitude=${longitude}&currency=${currency}`      
 
     if (rooms === 5){
       searchUrl = `https://tripplanz.groupize.com/search?` + 
