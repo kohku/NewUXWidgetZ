@@ -20,7 +20,6 @@ export class stayingView extends baseView{
 
   initialize(){
     // Setting up google maps loader
-    debugger
     // Loading maps
     GoogleMapsLoader.KEY = 'AIzaSyDOXBsxcH9pqCRm0NES6EU4wQvBDgql0ZI'
     GoogleMapsLoader.LIBRARIES = ['geometry','places']
