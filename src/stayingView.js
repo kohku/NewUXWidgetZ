@@ -16,7 +16,12 @@ import GoogleMapsLoader from 'google-maps'
 export class stayingView extends baseView{
   constructor(widget, state, selector, content){
     super(widget, state, selector, content)
+  }
+
+  initialize(){
     // Setting up google maps loader
+    debugger
+    // Loading maps
     GoogleMapsLoader.KEY = 'AIzaSyDOXBsxcH9pqCRm0NES6EU4wQvBDgql0ZI'
     GoogleMapsLoader.LIBRARIES = ['geometry','places']
 
@@ -29,10 +34,6 @@ export class stayingView extends baseView{
         this.updateMapAddress(response[0])
       })
     })
-  }
-
-  initialize(){
-    // Loading maps
     GoogleMapsLoader.load()
 
     const service = new WidgetService()
