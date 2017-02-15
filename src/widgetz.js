@@ -64,13 +64,13 @@ export class WidgetZ extends Observable {
     }
 
     if (!!eventStartParam && eventStartParam.value){
-      state.eventStart = eventStartParam.value instanceof moment ? 
+      state.eventStart = moment.isMoment(eventStartParam.value) ? 
         eventStartParam.value : moment(eventStartParam.value)
     }
     let eventStart = null
 
     if (!!eventEndParam && eventEndParam.value){
-      state.eventEnd = eventEndParam.value instanceof moment ? 
+      state.eventEnd = moment.isMoment(eventEndParam.value) ? 
         eventEndParam.value : moment(eventEndParam.value)
     }
 
@@ -80,7 +80,7 @@ export class WidgetZ extends Observable {
     if (Number.isInteger(checkInDateOrDays.value)){
       checkIn.add(parseInt(checkInDateOrDays.value), 'days')
     // is moment?
-    } else if (checkInDateOrDays.value instanceof moment){
+    } else if (moment.isMoment(checkInDateOrDays.value)){
       checkIn = checkInDateOrDays.value
     // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
@@ -93,7 +93,7 @@ export class WidgetZ extends Observable {
     if (Number.isInteger(checkOutDateOrDays.value)){
       checkOut.add(parseInt(checkOutDateOrDays.value), 'days')
     // is moment?
-    } else if (checkOutDateOrDays.value instanceof moment){
+    } else if (moment.isMoment(checkOutDateOrDays.value)){
       checkOut = checkOutDateOrDays.value
     // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
@@ -109,7 +109,7 @@ export class WidgetZ extends Observable {
     if (Number.isInteger(pickUpDateOrDays.value)){
       pickUp.add(parseInt(pickUpDateOrDays.value), 'days')
     // is moment?
-    } else if (pickUpDateOrDays.value instanceof moment){
+    } else if (moment.isMoment(pickUpDateOrDays.value)){
       pickUp = pickUpDateOrDays.value
     // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
@@ -125,7 +125,7 @@ export class WidgetZ extends Observable {
     if (Number.isInteger(dropOffDateOrDays.value)){
       dropOff.add(parseInt(dropOffDateOrDays.value), 'days')
     // is moment?
-    } else if (dropOffDateOrDays.value instanceof moment){
+    } else if (moment.isMoment(dropOffDateOrDays.value)){
       dropOff = dropOffDateOrDays.value
     // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
@@ -143,7 +143,7 @@ export class WidgetZ extends Observable {
     if (Number.isInteger(departureDateOrDays.value)){
       departure.add(parseInt(departureDateOrDays.value), 'days')
     // is moment?
-    } else if (departureDateOrDays.value instanceof moment){
+    } else if (moment.isMoment(departureDateOrDays.value)){
       departure = departureDateOrDays.value
     // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
@@ -156,7 +156,7 @@ export class WidgetZ extends Observable {
     if (Number.isInteger(returnDateOrDays.value)){
       returnDate.add(parseInt(returnDateOrDays.value), 'days')
     // is moment?
-    } else if (returnDateOrDays.value instanceof moment){
+    } else if (moment.isMoment(returnDateOrDays.value)){
       returnDate = returnDateOrDays.value
     // is date string 'YYYY-MM-DD' ISO 8601 or a Date
     } else {
