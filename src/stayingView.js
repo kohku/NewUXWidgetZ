@@ -46,7 +46,7 @@ export class stayingView extends baseView{
     }
 
     let clearText
-    if (this.state.eventName && this.state.eventStart && this.state.eventEnd){
+    if (this.state.eventStart && this.state.eventEnd){
       clearText = `Event Dates: ${this.state.eventStart.format("MM/DD")} - ${this.state.eventEnd.format("MM/DD")}`
     }  
 

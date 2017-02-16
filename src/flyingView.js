@@ -76,13 +76,18 @@ export class flyingView extends baseView {
     })
 
 
+    let clearText
+    if (this.state.eventStart && this.state.eventEnd){
+      clearText = `Event Dates: ${this.state.eventStart.format("MM/DD")} - ${this.state.eventEnd.format("MM/DD")}`
+    }  
+
     this.rangePicker = this.content.find('input[name="daterange"]')
     this.rangePicker.daterangepicker({
         presetRanges: [],
         initialText: 'SELECT TRAVEL DATES',
         autoFitCalendars: true,
         applyButtonText: 'Done',
-        clearButtonText: 'Select dates',
+        clearButtonText: clearText || "Select dates",
         icon: '',
         applyOnMenuSelect: false,
         dateFormat: 'dMy',
