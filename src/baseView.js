@@ -1,3 +1,4 @@
+import $ from 'jquery'
 
 const activeCss = 'wdgtz_active'
 
@@ -28,6 +29,30 @@ export class baseView {
 
   setListeners(){
 
+  }
+
+  toggleLoader(message){
+    $('.wdgtz_loader').toggleClass('wdgtz_hide')
+    if (message){
+      $('.wdgtz_loader-text').text(message)
+    }
+  }
+
+  clearAlert(){
+    const _error = this.content.find('.wdgtz_error')
+    _error.text('')
+  }
+
+  alert(notification){
+    if (notification.message){
+      const _error = this.content.find('.wdgtz_error')
+      if (_error){
+        if (_error.hasClass('wdgtz_hide')){
+          _error.removeClass('wdgtz_hide')
+        }
+        _error.text(notification.message)
+      }
+    }
   }
 
   hide(){

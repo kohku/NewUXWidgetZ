@@ -298,15 +298,39 @@ export class drivingView extends baseView {
       destination: this.state.drivingDestination,
       travelMode: google.maps.TravelMode.DRIVING
     }
+
+    this.clearAlert()
+    this.toggleLoader("Calculating Route")
     
-    directionsService.route(request, (result, status) => {
-      if (status == google.maps.DirectionsStatus.OK) {
-        this.setDrivingTime(result.routes[0].legs[0].duration.text.replace("horas","hrs"))
-        this.setDistance(result.routes[0].legs[0].distance.text.replace("mi","miles"))
-        this.content.find('.wdgtz_driving-directions').toggleClass('wdgtz_hide')
-        this.updateDrivingTimeDirections()
+    try {
+      if (!request.origin || !request.destination){
+        throw Error('Please enter from and to fields.')
       }
-    })
+      directionsService.route(request, (result, status) => {
+        if (status == google.maps.DirectionsStatus.OK) {
+          this.setDrivingTime(result.routes[0].legs[0].duration.text.replace("horas","hrs"))
+          this.setDistance(result.routes[0].legs[0].distance.text.replace("mi","miles"))
+          this.content.find('.wdgtz_driving-directions').toggleClass('wdgtz_hide')
+          this.updateDrivingTimeDirections()
+        } else {
+          this.alert({
+            type: "error",
+            message: "We cannot calculate driving directions for these two points, as they span water and/or continents. It may be that flying is your only logical option for this trip."
+          })
+        }
+      })
+    }
+    catch(e){
+      this.alert({
+        type: "error",
+        message: e.message
+      })
+    }
+    finally {
+      window.setTimeout(() => {
+        this.toggleLoader("Calculating Route")
+      }, 500)
+    }
   }
 
   doSearch(event){

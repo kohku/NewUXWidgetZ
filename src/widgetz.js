@@ -269,6 +269,17 @@ export class WidgetZ extends Observable {
           this.setView(this.views[0])
         }
 
+        // loader
+        window.setTimeout(() => {
+          let resizeLoader = () => {
+            $('.wdgtz_loader').height($('.graphical-wdgtz-container-wrapper').height())
+          }
+          $(window).resize(() => {
+            resizeLoader()
+          })
+          resizeLoader()
+        })
+
         // Footer
         // Social
         if (this.state.social){

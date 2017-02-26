@@ -29,6 +29,46 @@
     max-width: @max-width;
     margin: 0 auto;
     min-width: @min-width;
+
+    .wdgtz_loader {
+      position: absolute;
+      display: block;
+      width: 100%;
+      max-width: @max-width;
+      z-index: 10;
+
+      &.wdgtz_hide {
+        display: none;
+      }
+
+      &-background {
+        width: 100%;
+        z-index: 10;
+        background-color: #fff;
+        opacity: .5;
+        height: 100%;
+      }
+
+      &-image {
+        position: absolute;
+        top: ~"calc(50% - 89px)";
+        left: ~"calc(50% - 89px)";
+        width: 178px;
+        height: 178px;
+        background-image: url(../images/loader.gif);
+        background-repeat: no-repeat;
+        background-position-x: center;
+      }
+
+      &-text {
+        position: absolute;
+        top: ~"calc(50% + 89px)";
+        right: ~"calc(50% - 88px)";
+        font-size: 1.5em;
+        text-transform: uppercase;
+        color: @navy;
+      }
+    }
   }
 
   .wdgtz_container_header{
@@ -838,6 +878,13 @@
         margin: 1em 1.35em;
         font-size: 13px;
         font-weight: bold;
+      }
+
+      .wdgtz_error {
+        font-weight: normal;
+        color: #f00;
+        display: block;
+        width: 97%;
       }
 
       .wdgtz_driving-directions {

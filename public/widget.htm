@@ -1,4 +1,9 @@
 <div class="graphical-wdgtz-container-wrapper">
+    <div class="wdgtz_loader wdgtz_hide">
+        <div class="wdgtz_loader-background"></div>
+        <div class="wdgtz_loader-image"></div>
+        <div class="wdgtz_loader-text"></div>
+    </div>
     <div class="wdgtz_container_header">
         {{headerText}}{{#appendPoi}}{{poiName}}{{/appendPoi}}
     </div>
@@ -88,7 +93,7 @@
             </div>
         </div>
         <div class="{{#tabs.driving}}wdgtz_car{{/tabs.driving}}" data-content="driving">
-            <label>View driving times and directions</label>
+            <label>View driving times and directions<span class="wdgtz_error wdgtz_hide"></span></label>
             <div class="wdgtz_driving-directions wdgtz_hide">
                 <span>[Starting location] to [End location]</span>
                 <span>Driving Time and Distance: [X minutes] | [Y miles]
