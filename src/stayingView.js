@@ -74,6 +74,9 @@ export class stayingView extends baseView{
        end: this.state.checkOut.toDate() 
     });
 
+    $(document).on('click', '.ui-datepicker-next', (event, calendar) => this.updateCalendar(event, calendar))
+    $(document).on('click', '.ui-datepicker-prev', (event, calendar) => this.updateCalendar(event, calendar))  
+
     // load guest
     if (this.state.defaultGuests){
       $.each(this.content.find('.wdgtz_guest'), (index, guests) => {
@@ -261,6 +264,12 @@ export class stayingView extends baseView{
         let dayOfMonth = parseInt(el$.find('a').text())
         if (!isNaN(dayOfMonth) && dayOfMonth === eventStart.date()){
           el$.addClass('event-start')
+        } else if (eventStart && eventStart < eventEnd){
+          if (eventStart.month() < eventEnd.month() && eventStart.date() < dayOfMonth){
+            if (!el$.hasClass('event-date')){
+              el$.addClass('event-date')
+            }
+          }
         }
       })
     }
@@ -274,37 +283,43 @@ export class stayingView extends baseView{
             el$.addClass('event-end')
           } else if (eventStart && eventStart < eventEnd){
             if (eventStart.month() < eventEnd.month() && eventEnd.date() > dayOfMonth){
-              el$.addClass('event-date')
+              if (!el$.hasClass('event-date')){
+                el$.addClass('event-date')
+              }
             } else if (eventStart.date() > dayOfMonth && eventEnd.date() > dayOfMonth){
-              el$.addClass('event-date')
+              if (!el$.hasClass('event-date')){
+                el$.addClass('event-date')
+              }
             }
           }
         }
       })
     }
 
-    let range = calendar.instance.getRange()
+    if (calendar){
+      let range = calendar.instance.getRange()
 
-    if (!!range && range.start){
-      let start = moment(range.start)
-      $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${start.month()}][data-year=${start.year()}]`), function(index, td){
-        let el$ = $(td)
-        let dayOfMonth = parseInt(el$.find('a').text())
-        if (!isNaN(dayOfMonth) && dayOfMonth === start.date()){
-          el$.addClass('start-range')
-        }
-      })
-    }
-    if (!!range && range.end){
-      let end = moment(range.end)
+      if (!!range && range.start){
+        let start = moment(range.start)
+        $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${start.month()}][data-year=${start.year()}]`), function(index, td){
+          let el$ = $(td)
+          let dayOfMonth = parseInt(el$.find('a').text())
+          if (!isNaN(dayOfMonth) && dayOfMonth === start.date()){
+            el$.addClass('start-range')
+          }
+        })
+      }
+      if (!!range && range.end){
+        let end = moment(range.end)
 
-      $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${end.month()}][data-year=${end.year()}]`), function(index, td){
-        let el$ = $(td)
-        let dayOfMonth = parseInt(el$.find('a').text())
-        if (!isNaN(dayOfMonth) && dayOfMonth === end.date()){
-          el$.addClass('end-range')
-        }
-      })
+        $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${end.month()}][data-year=${end.year()}]`), function(index, td){
+          let el$ = $(td)
+          let dayOfMonth = parseInt(el$.find('a').text())
+          if (!isNaN(dayOfMonth) && dayOfMonth === end.date()){
+            el$.addClass('end-range')
+          }
+        })
+      }
     }
   }
 
