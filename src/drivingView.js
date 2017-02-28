@@ -284,10 +284,46 @@ export class drivingView extends baseView {
   }
 
   getDirections(event){
-    let url = `//getmywidget.com/NewUXTripPlanz/gmaps.html?` +
-    `from=${encodeURIComponent(this.state.startingLocation)}&to=${encodeURIComponent(this.state.drivingDestination)}`
+    var directionsService = new google.maps.DirectionsService()
 
-    window.open(url, '_blank')
+    let request = {
+      origin: this.state.startingLocation,
+      destination: this.state.drivingDestination,
+      travelMode: google.maps.TravelMode.DRIVING
+    }
+
+    this.clearAlert()
+    this.toggleLoader("Calculating Route")
+    
+    try {
+      if (!request.origin || !request.destination){
+        throw Error('Please enter from and to fields.')
+      }
+      directionsService.route(request, (result, status) => {
+        if (status == google.maps.DirectionsStatus.OK) {
+          let url = `//getmywidget.com/NewUXTripPlanz/gmaps.html?` +
+          `from=${encodeURIComponent(this.state.startingLocation)}&to=${encodeURIComponent(this.state.drivingDestination)}`
+
+          window.open(url, '_blank')
+        } else {
+          this.alert({
+            type: "error",
+            message: "We cannot calculate driving directions for these two points, as they span water and/or continents. It may be that flying is your only logical option for this trip."
+          })
+        }
+      })
+    }
+    catch(e){
+      this.alert({
+        type: "error",
+        message: e.message
+      })
+    }
+    finally {
+      window.setTimeout(() => {
+        this.toggleLoader("Calculating Route")
+      }, 500)
+    }
   }
 
   viewDrivingTime(event){
