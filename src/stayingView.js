@@ -269,10 +269,17 @@ export class stayingView extends baseView{
       $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${eventEnd.month()}][data-year=${eventEnd.year()}]`), function(index, td){
         let el$ = $(td)
         let dayOfMonth = parseInt(el$.find('a').text())
-        if (!isNaN(dayOfMonth) && dayOfMonth === eventEnd.date()){
-          el$.addClass('event-end')
-        } else if (eventStart && eventStart < eventEnd && dayOfMonth > eventStart.date() && dayOfMonth < eventEnd.date()){
-          el$.addClass('event-date')
+        if (!isNaN(dayOfMonth)){
+          if (dayOfMonth === eventEnd.date()){
+            el$.addClass('event-end')
+          } else if (eventStart && eventStart < eventEnd){
+            if (eventStart.month() < eventEnd.month() && eventEnd.date() > dayOfMonth){
+              el$.addClass('event-date')
+            } else if (eventStart.date() > dayOfMonth && eventEnd.date() > dayOfMonth){
+              el$.addClass('event-date')
+            }
+          // &&  dayOfMonth > eventStart.date() && dayOfMonth < eventEnd.date()){
+          }
         }
       })
     }
