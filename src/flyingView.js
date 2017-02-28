@@ -207,7 +207,7 @@ export class flyingView extends baseView {
           } else if (eventStart && eventStart < eventEnd){
             if (eventStart.month() < eventEnd.month() && eventEnd.date() > dayOfMonth){
               el$.addClass('event-date')
-            } else if (eventStart.date() > dayOfMonth && eventEnd.date() > dayOfMonth){
+            } else if (eventStart.date() < dayOfMonth && eventEnd.date() > dayOfMonth){
               el$.addClass('event-date')
             }
           }

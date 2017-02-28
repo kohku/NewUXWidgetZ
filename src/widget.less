@@ -1469,6 +1469,10 @@
           margin-top: -1px;
           opacity: 0.45;
         }
+
+        &.ui-state-highlight::before {
+          margin-top: 2px;
+        }
       }
 
       &.end-range {
@@ -1485,9 +1489,17 @@
           margin-top: -1px;
           opacity: 0.45;
         }
+
+        &.ui-state-highlight::before {
+          margin-top: 2px;
+        }
       }
 
       &.event-start a {
+        background-color: #ccc;
+      }
+
+      &.event-end a {
         background-color: #ccc;
       }
 
@@ -1505,6 +1517,7 @@
 
       &.ui-state-highlight a, &.ui-state-highlight .ui-state-default a {
         padding: .2em 0px;
+        margin: .35em 0px !important;
         display: block;
         margin: 0;
         color: @link-hover;
