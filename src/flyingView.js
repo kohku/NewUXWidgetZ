@@ -178,24 +178,58 @@ export class flyingView extends baseView {
     this.content.find('.comiseo-daterangepicker.ui-widget').css('top', offset.top + el$.height())
     this.content.find('.comiseo-daterangepicker.ui-widget').css('left', offset.left)
 
-    var range = calendar.instance.getRange()
+    let eventStart = this.state.eventStart
+    let eventEnd = this.state.eventEnd
+
+    if (eventStart){
+      $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${eventStart.month()}][data-year=${eventStart.year()}]`), function(index, td){
+        let el$ = $(td)
+        let dayOfMonth = parseInt(el$.find('a').text())
+        if (!isNaN(dayOfMonth) && dayOfMonth === eventStart.date()){
+          el$.addClass('event-start')
+        }
+      })
+    }
+
+    if (eventEnd){
+      $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${eventEnd.month()}][data-year=${eventEnd.year()}]`), function(index, td){
+        let el$ = $(td)
+        let dayOfMonth = parseInt(el$.find('a').text())
+        if (!isNaN(dayOfMonth)){
+          if (dayOfMonth === eventEnd.date()){
+            el$.addClass('event-end')
+          } else if (eventStart && eventStart < eventEnd){
+            if (eventStart.month() < eventEnd.month() && eventEnd.date() > dayOfMonth){
+              el$.addClass('event-date')
+            } else if (eventStart.date() > dayOfMonth && eventEnd.date() > dayOfMonth){
+              el$.addClass('event-date')
+            }
+          }
+        }
+      })
+    }
+
+    let range = calendar.instance.getRange()
 
     if (!!range && range.start){
-      var start = moment(range.start)
-      $.each(this.content.find('td[data-month='+start.month()+'][data-year='+start.year()+']'), function(index, td){
-          var el$ = $(td)
-          if (el$.find('a').text() == start.date()){
-              el$.addClass('start-date')
-          }
+      let start = moment(range.start)
+      $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${start.month()}][data-year=${start.year()}]`), function(index, td){
+        let el$ = $(td)
+        let dayOfMonth = parseInt(el$.find('a').text())
+        if (!isNaN(dayOfMonth) && dayOfMonth === start.date()){
+          el$.addClass('start-range')
+        }
       })
     }
     if (!!range && range.end){
-      var end = moment(range.end)
-      $.each(this.content.find('td[data-month='+end.month()+'][data-year='+end.year()+']'), function(index, td){
-          var el$ = $(td)
-          if (el$.find('a').text() == end.date()){
-              el$.addClass('end-date')
-          }
+      let end = moment(range.end)
+
+      $.each($(`.comiseo-daterangepicker .comiseo-daterangepicker-calendar .ui-datepicker-calendar td[data-month=${end.month()}][data-year=${end.year()}]`), function(index, td){
+        let el$ = $(td)
+        let dayOfMonth = parseInt(el$.find('a').text())
+        if (!isNaN(dayOfMonth) && dayOfMonth === end.date()){
+          el$.addClass('end-range')
+        }
       })
     }
   }

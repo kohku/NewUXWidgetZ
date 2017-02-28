@@ -278,7 +278,6 @@ export class stayingView extends baseView{
             } else if (eventStart.date() > dayOfMonth && eventEnd.date() > dayOfMonth){
               el$.addClass('event-date')
             }
-          // &&  dayOfMonth > eventStart.date() && dayOfMonth < eventEnd.date()){
           }
         }
       })
