@@ -47,7 +47,7 @@ export class stayingView extends baseView{
 
     let clearText
     if (this.state.eventStart && this.state.eventEnd){
-      clearText = `Event Dates: ${this.state.eventStart.format("MM/DD")} - ${this.state.eventEnd.format("MM/DD")}`
+      clearText = `Event Dates: ${this.state.eventStart.format("DDMMM").toUpperCase()} - ${this.state.eventEnd.format("DDMMM").toUpperCase()}`
     }  
 
     this.rangePicker = this.content.find('input[name="daterange"]')
@@ -264,6 +264,9 @@ export class stayingView extends baseView{
         let dayOfMonth = parseInt(el$.find('a').text())
         if (!isNaN(dayOfMonth) && dayOfMonth === eventStart.date()){
           el$.addClass('event-start')
+          if (!el$.hasClass('event-date')){
+            el$.addClass('event-date')
+          }
         } else if (eventStart && eventStart < eventEnd){
           if (eventStart.month() < eventEnd.month() && eventStart.date() < dayOfMonth){
             if (!el$.hasClass('event-date')){
@@ -281,6 +284,9 @@ export class stayingView extends baseView{
         if (!isNaN(dayOfMonth)){
           if (dayOfMonth === eventEnd.date()){
             el$.addClass('event-end')
+            if (!el$.hasClass('event-date')){
+              el$.addClass('event-date')
+            }
           } else if (eventStart && eventStart < eventEnd){
             if (eventStart.month() < eventEnd.month() && eventEnd.date() > dayOfMonth){
               if (!el$.hasClass('event-date')){
