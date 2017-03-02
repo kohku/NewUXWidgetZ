@@ -200,6 +200,8 @@
         .wdgtz_header {
           float: left;
           width: ~"calc(100% - 114px - 4em)";
+          /* change in layout for picture/map */
+          display: block;
 
           label {
             float: left;
@@ -288,6 +290,8 @@
         .wdgtz_picture-maps {
           float: right;
           width: ~"calc(114px + 4em)";
+          /* change in layout for picture/map */
+          display: block;
         }
       }
 
@@ -502,6 +506,18 @@
 
       .wdgtz_hotel {
 
+        .wdgtz_header {
+          /* change in layout for picture/map */
+          display: block;
+          width: auto;
+        }
+
+        .wdgtz_picture-maps {
+          /* change in layout for picture/map */
+          display: block;
+          width: auto;
+        }
+
         .wdgtz_details {
           & .wdgtz_guest, & .wdgtz_rooms {
             display: block;
@@ -573,6 +589,10 @@
         padding-left: 1.5em;
         margin-bottom: 1em;
         padding-bottom: 0;
+        /* change in layout for picture/map */
+        width: 50%;
+        display: inline-block;
+        vertical-align: top;
 
         > * {
         font-size: 13px;
@@ -726,6 +746,9 @@
 
       .wdgtz_picture-maps {
         border: @border-dev;
+        /* change in layout for picture/map */
+        width: calc(50% - .75em);
+        display: inline-block;
 
         .wdgtz_back .wdgtz_canvas .wdgtz_flip {
           font-size: 8px;
@@ -1288,7 +1311,7 @@
       min-height: 3em;
       width: 100%;
       background-color: @white;
-      height: 100%;
+      height: auto;
       text-align: center;
       padding-top: .5em;
 
