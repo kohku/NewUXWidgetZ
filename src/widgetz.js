@@ -179,6 +179,10 @@ export class WidgetZ extends Observable {
       driving: tabsParam ? (tabsParam.value & 0x010) === 0x010 : false,
       flying: tabsParam ? (tabsParam.value & 0x001) === 0x001 : false
     }
+    state.tabs.staying = state.tabs.staying || (!state.tabs.staying && !state.tabs.driving && !state.tabs.flying)
+    let numberOfTabs = [state.tabs.staying, state.tabs.driving, state.tabs.flying].reduce((total, tab) => { return tab ? total + 1 : total }, 0)
+    state.showTabs = numberOfTabs > 1
+
     state.latitude = latitudeParam ? latitudeParam.value : null
     state.longitude = longitudeParam ? longitudeParam.value : null
 
@@ -251,13 +255,19 @@ export class WidgetZ extends Observable {
           let content = $(`.wdgtz_content > *[data-content=${selector.data('key')}]`)
           switch(key){
             case 'staying':
-              this.views.push(new stayingView(this, this.state, selector, content))
+              if (this.state.tabs.staying){
+                this.views.push(new stayingView(this, this.state, selector, content))
+              }
               break
             case 'driving':
-              this.views.push(new drivingView(this, this.state, selector, content))
+              if (this.state.tabs.driving){
+                this.views.push(new drivingView(this, this.state, selector, content))
+              }
               break
             case 'flying':
-              this.views.push(new flyingView(this, this.state, selector, content))
+              if (this.state.tabs.flying){
+                this.views.push(new flyingView(this, this.state, selector, content))
+              }
               break
             default:
               throw error(`Undefined view ${key}`)

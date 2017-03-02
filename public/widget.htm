@@ -7,7 +7,7 @@
     <div class="wdgtz_container_header">
         {{headerText}}{{#appendPoi}}{{poiName}}{{/appendPoi}}
     </div>
-    <ul class="wdgtz_tabs">
+    <ul class="wdgtz_tabs {{^showTabs}}wdgtz_hide{{/showTabs}}">
         <li class="{{#tabs.staying}}wdgtz_staying{{/tabs.staying}}" data-key="staying">
             <a>I'm staying</a>
         </li>
